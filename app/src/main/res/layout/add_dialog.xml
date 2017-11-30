@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:background="@color/colorPrimary"
+        android:textColor="@color/whire"
+        android:textSize="20sp"
+        android:text="Thêm vào giỏ hàng"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize" />
+
+    <LinearLayout
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_margin="2.5sp"
+            android:textSize="17.5sp"
+            android:text="Số lượng:"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content" />
+
+        <EditText
+            android:hint="Mặc định là 1"
+            android:layout_margin="2.5dp"
+            android:id="@+id/edt_NumberProduct"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_margin="2.5sp"
+            android:textSize="17.5sp"
+            android:text="Giá tiền:"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/tv_price"
+            android:layout_margin="2.5sp"
+            android:textSize="17.5sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+    <TextView
+        android:gravity="center"
+        android:id="@+id/tv_notify"
+        android:visibility="gone"
+        android:textColor="@color/Red"
+        android:layout_margin="2.5sp"
+        android:textSize="17.5sp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <LinearLayout
+        android:gravity="center_vertical"
+        android:weightSum="2"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:text="Xác nhận"
+            android:layout_margin="2.5dp"
+            android:id="@+id/btn_cof"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="55dp" />
+
+        <Button
+            android:text="Hủy bỏ"
+            android:layout_margin="2.5dp"
+            android:id="@+id/btn_exit"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="55dp" />
+
+    </LinearLayout>
+
+</LinearLayout>

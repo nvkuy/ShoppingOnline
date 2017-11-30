@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Uy\'s Shop</string>
+    <string name="Open">Open</string>
+    <string name="Close">Close</string>
+    <string name="notify1">Vui lòng nhập nghiêm túc!</string>
+    <string name="notify2">Giới hạn một lần mua là 15 sản phẩm</string>
+    <string name="notify3">Sản phẩm này đã đạt giới hạn trong giỏ hàng</string>
+</resources>

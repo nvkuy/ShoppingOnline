@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.nguyenvukhanhuygmail.shoppingonline.activity.MainActivity">
+
+    <android.support.v4.widget.DrawerLayout
+        android:id="@+id/DrawerLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <!-- Tool Bar -->
+            <android.support.v7.widget.Toolbar
+                app:title="Trang chủ"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true"
+                android:id="@+id/toolbar_home"
+                android:background="@color/colorPrimary"
+                app:titleTextColor="@color/whire"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize">
+
+            </android.support.v7.widget.Toolbar>
+
+            <!-- Quảng cáo sản phẩm -->
+            <ViewFlipper
+                android:layout_below="@+id/toolbar_home"
+                android:id="@+id/ViewFlipper"
+                android:layout_margin="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="175dp">
+            </ViewFlipper>
+
+            <ScrollView
+                android:layout_below="@+id/ViewFlipper"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <!-- Sản phẩm mới -->
+                    <LinearLayout
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_width="wrap_content">
+
+                        <TextView
+                            android:paddingLeft="20dp"
+                            android:textStyle="italic"
+                            android:layout_margin="5dp"
+                            android:textSize="20sp"
+                            android:text="Mới nhất:"
+                            android:textColor="@color/colorPrimary"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            tools:ignore="HardcodedText" />
+
+                        <android.support.v7.widget.RecyclerView
+                            android:id="@+id/rv_news"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                        </android.support.v7.widget.RecyclerView>
+
+                    </LinearLayout>
+
+                    <!-- Sản phẩm bán chạy nhất -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:paddingLeft="20dp"
+                            android:textStyle="italic"
+                            android:layout_margin="5dp"
+                            android:textColor="@color/colorPrimary"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Phổ biến nhất:"
+                            android:textSize="20sp"
+                            tools:ignore="HardcodedText" />
+
+                        <android.support.v7.widget.RecyclerView
+                            android:id="@+id/rv_popular"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                        </android.support.v7.widget.RecyclerView>
+
+                    </LinearLayout>
+
+                    <!-- Sản phẩm giá tốt nhất -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:paddingLeft="20dp"
+                            android:textStyle="italic"
+                            android:layout_margin="5dp"
+                            android:textColor="@color/colorPrimary"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Giá tốt nhất:"
+                            android:textSize="20sp"
+                            tools:ignore="HardcodedText" />
+
+                        <android.support.v7.widget.RecyclerView
+                            android:id="@+id/rv_sale"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                        </android.support.v7.widget.RecyclerView>
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+            </ScrollView>
+
+        </RelativeLayout>
+
+        <android.support.design.widget.NavigationView
+            android:id="@+id/nav_view"
+            android:layout_gravity="start"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ListView
+                android:id="@+id/lv_home"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            </ListView>
+
+        </android.support.design.widget.NavigationView>
+
+    </android.support.v4.widget.DrawerLayout>
+
+</LinearLayout>
