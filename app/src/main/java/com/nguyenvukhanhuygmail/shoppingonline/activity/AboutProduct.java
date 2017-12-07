@@ -31,7 +31,7 @@ public class AboutProduct extends AppCompatActivity {
     ImageView img_AboutProduct;
     Toolbar toolbar;
 
-    boolean isOk, exits;
+    boolean isOk, isExits, isFull;
     long total_price = 0;
     int numProduct = 0;
 
@@ -52,10 +52,10 @@ public class AboutProduct extends AppCompatActivity {
         final Dialog dialog_rate = new Dialog(this);
         dialog_rate.setContentView(R.layout.rate_dialog);
 
-        Button btn_Send = (Button) dialog_rate.findViewById(R.id.btn_Send);
-        Button btn_Cancel = (Button) dialog_rate.findViewById(R.id.btn_Cancel);
-        final EditText edt_commnent = (EditText) dialog_rate.findViewById(R.id.edit_comment);
-        final RatingBar ratingBar = (RatingBar) dialog_rate.findViewById(R.id.ratingBar);
+        Button btn_Send = dialog_rate.findViewById(R.id.btn_Send);
+        Button btn_Cancel = dialog_rate.findViewById(R.id.btn_Cancel);
+        final EditText edt_commnent = dialog_rate.findViewById(R.id.edit_comment);
+        final RatingBar ratingBar = dialog_rate.findViewById(R.id.ratingBar);
 
         btn_Cancel.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -87,11 +87,11 @@ public class AboutProduct extends AppCompatActivity {
         final Dialog add_dialog = new Dialog(this);
         add_dialog.setContentView(R.layout.add_dialog);
 
-        final EditText edt_number = (EditText) add_dialog.findViewById(R.id.edt_NumberProduct);
-        final TextView tv_price = (TextView) add_dialog.findViewById(R.id.tv_price);
-        final TextView tv_notify = (TextView) add_dialog.findViewById(R.id.tv_notify);
-        Button btn_cof = (Button) add_dialog.findViewById(R.id.btn_cof);
-        Button btn_exit = (Button) add_dialog.findViewById(R.id.btn_exit);
+        final EditText edt_number = add_dialog.findViewById(R.id.edt_NumberProduct);
+        final TextView tv_price = add_dialog.findViewById(R.id.tv_price);
+        final TextView tv_notify = add_dialog.findViewById(R.id.tv_notify);
+        final Button btn_cof = add_dialog.findViewById(R.id.btn_cof);
+        Button btn_exit = add_dialog.findViewById(R.id.btn_exit);
 
         final DecimalFormat formater = new DecimalFormat("###,###,###,###");
         tv_price.setText(formater.format(price) + "đ");
@@ -111,7 +111,7 @@ public class AboutProduct extends AppCompatActivity {
                     isOk = true;
                 } catch (Exception e) {
                     //khi người dùng nhập vào 1 chuỗi ko phải số nguyên
-                    isOk = false;
+                    isOk = edt_number.getText().toString().isEmpty();
                     tv_price.setText(formater.format(price) + "đ");
                 }
             }
@@ -121,10 +121,13 @@ public class AboutProduct extends AppCompatActivity {
                 if (!isOk) {
                     tv_notify.setVisibility(View.VISIBLE);
                     tv_notify.setText(R.string.notify1);
+                    btn_cof.setClickable(false);
                 } else if (numProduct > 15) {
                     tv_notify.setVisibility(View.VISIBLE);
+                    btn_cof.setClickable(false);
                     tv_notify.setText(R.string.notify2);
                 } else {
+                    btn_cof.setClickable(true);
                     tv_notify.setVisibility(View.GONE);
                 }
             }
@@ -134,7 +137,6 @@ public class AboutProduct extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                add_dialog.dismiss();
                 if (edt_number.getText().toString().isEmpty() || edt_number.getText() == null) {
                     //gán số lượng sản phẩm là 1
                     numProduct = 1;
@@ -147,23 +149,26 @@ public class AboutProduct extends AppCompatActivity {
                                     //khi mảng đã có sản phẩm này rồi thì cập nhật lại
                                     long old_price = MainActivity.arr_cart.get(i).getProduct_price();
                                     long new_price = old_price + total_price;
+                                    isExits = true;
 
                                     int old_num = MainActivity.arr_cart.get(i).getProduct_number();
                                     int new_num = old_num + numProduct;
 
                                     MainActivity.arr_cart.get(i).setProduct_price(new_price);
                                     if (old_num == 15) {
-                                        CheckConnection.notification(getApplicationContext(), "Sản phẩm này đã đạt giới hạn trong giỏ hàng");
+                                        isFull = true;
                                     } else if (new_num >= 15) {
+                                        isFull = true;
                                         MainActivity.arr_cart.get(i).setProduct_number(15);
                                     } else {
+                                        isFull = false;
                                         MainActivity.arr_cart.get(i).setProduct_number(new_num);
                                     }
 
                                 }
                             }
 
-                            if (!exits) {
+                            if (!isExits) {
                                 //khi mảng chưa có sản phẩm này thì add vào
                                 MainActivity.arr_cart.add(new Cart(
                                         product.getProduct_id(),
@@ -188,6 +193,13 @@ public class AboutProduct extends AppCompatActivity {
                         CheckConnection.notification(getApplicationContext(), "Thêm vào giỏ hàng thất bại!");
                     }
                 }
+
+                if (isFull) {
+                    tv_notify.setText(R.string.notify3);
+                } else {
+                    add_dialog.dismiss();
+                }
+
             }
         });
 
