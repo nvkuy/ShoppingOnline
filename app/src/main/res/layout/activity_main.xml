@@ -18,51 +18,50 @@
 
             <!-- Tool Bar -->
             <android.support.v7.widget.Toolbar
-                app:title="Trang chủ"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentLeft="true"
                 android:id="@+id/toolbar_home"
-                android:background="@color/colorPrimary"
-                app:titleTextColor="@color/whire"
                 android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize">
+                android:layout_height="?attr/actionBarSize"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:background="@color/colorPrimary"
+                app:title="Trang chủ"
+                app:titleTextColor="@color/whire">
 
             </android.support.v7.widget.Toolbar>
 
             <!-- Quảng cáo sản phẩm -->
             <ViewFlipper
-                android:layout_below="@+id/toolbar_home"
                 android:id="@+id/ViewFlipper"
-                android:layout_margin="5dp"
                 android:layout_width="match_parent"
-                android:layout_height="175dp">
-            </ViewFlipper>
+                android:layout_height="175dp"
+                android:layout_below="@+id/toolbar_home"
+                android:layout_margin="5dp"></ViewFlipper>
 
             <ScrollView
-                android:layout_below="@+id/ViewFlipper"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:layout_below="@+id/ViewFlipper">
 
                 <LinearLayout
-                    android:orientation="vertical"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
 
                     <!-- Sản phẩm mới -->
                     <LinearLayout
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:layout_width="wrap_content">
+                        android:orientation="vertical">
 
                         <TextView
-                            android:paddingLeft="20dp"
-                            android:textStyle="italic"
-                            android:layout_margin="5dp"
-                            android:textSize="20sp"
-                            android:text="Mới nhất:"
-                            android:textColor="@color/colorPrimary"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
+                            android:paddingLeft="20dp"
+                            android:text="Mới nhất:"
+                            android:textColor="@color/colorPrimary"
+                            android:textSize="20sp"
+                            android:textStyle="italic"
                             tools:ignore="HardcodedText" />
 
                         <android.support.v7.widget.RecyclerView
@@ -81,14 +80,14 @@
                         android:orientation="vertical">
 
                         <TextView
-                            android:paddingLeft="20dp"
-                            android:textStyle="italic"
-                            android:layout_margin="5dp"
-                            android:textColor="@color/colorPrimary"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
+                            android:paddingLeft="20dp"
                             android:text="Phổ biến nhất:"
+                            android:textColor="@color/colorPrimary"
                             android:textSize="20sp"
+                            android:textStyle="italic"
                             tools:ignore="HardcodedText" />
 
                         <android.support.v7.widget.RecyclerView
@@ -107,14 +106,14 @@
                         android:orientation="vertical">
 
                         <TextView
-                            android:paddingLeft="20dp"
-                            android:textStyle="italic"
-                            android:layout_margin="5dp"
-                            android:textColor="@color/colorPrimary"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
+                            android:paddingLeft="20dp"
                             android:text="Giá tốt nhất:"
+                            android:textColor="@color/colorPrimary"
                             android:textSize="20sp"
+                            android:textStyle="italic"
                             tools:ignore="HardcodedText" />
 
                         <android.support.v7.widget.RecyclerView
@@ -135,54 +134,92 @@
 
         <android.support.design.widget.NavigationView
             android:id="@+id/nav_view"
-            android:layout_gravity="start"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_gravity="start">
 
             <!--<ListView-->
-                <!--android:id="@+id/lv_home"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content">-->
+            <!--android:id="@+id/lv_home"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content">-->
 
             <!--</ListView>-->
 
             <LinearLayout
-                android:gravity="center_vertical|left"
-                android:weightSum="10"
-                android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:weightSum="10">
 
                 <LinearLayout
-                    android:background="@drawable/background_header"
-                    android:orientation="vertical"
-                    android:layout_weight="3"
                     android:layout_width="match_parent"
-                    android:layout_height="0dp">
+                    android:layout_height="0dp"
+                    android:layout_weight="3"
+                    android:background="@drawable/background_header"
+                    android:orientation="vertical">
 
-                    <ImageView
-                        android:layout_marginTop="30dp"
-                        android:layout_marginLeft="30dp"
-                        android:background="@mipmap/ic_launcher"
-                        android:layout_width="60dp"
-                        android:layout_height="60dp" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
 
-                    <TextView
-                        android:layout_margin="7.5dp"
-                        android:textSize="21sp"
-                        android:textColor="@color/whire"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        <!-- user icon -->
+                        <ImageView
+                            android:scaleType="fitXY"
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
+                            android:layout_marginLeft="30dp"
+                            android:layout_marginTop="30dp"
+                            android:layout_marginBottom="10dp"
+                            android:src="@mipmap/ic_launcher" />
+
+                        <LinearLayout
+                            android:layout_marginBottom="10dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <!-- user name -->
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="5dp"
+                                android:layout_marginLeft="5dp"
+                                android:layout_marginTop="30dp"
+                                android:text="@string/app_name"
+                                android:textColor="@color/whire"
+                                android:textSize="21sp"
+                                android:textStyle="bold" />
+
+                            <!-- user email -->
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="5dp"
+                                android:text="@string/app_name"
+                                android:textColor="@color/whire"
+                                android:textSize="17.5sp" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <Button
+                        android:layout_margin="5dp"
+                        android:layout_gravity="center_horizontal"
+                        android:background="@drawable/logout"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp" />
 
                 </LinearLayout>
 
                 <GridView
-                    android:layout_weight="7"
                     android:id="@+id/gv_category"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentTop="true"
+                    android:layout_weight="7"
                     android:numColumns="3">
 
 
