@@ -107,8 +107,8 @@ public class AboutProduct extends AppCompatActivity {
                 try {
                     numProduct = Integer.parseInt(edt_number.getText().toString().trim());
                     total_price = price * numProduct;
+                    isNum = total_price > 0;
                     tv_price.setText(formater.format(total_price) + "đ");
-                    isNum = true;
                 } catch (Exception e) {
                     //khi người dùng nhập vào 1 chuỗi ko phải số nguyên
                     isNum = false;
@@ -197,6 +197,8 @@ public class AboutProduct extends AppCompatActivity {
                         add_dialog.dismiss();
                     }
 
+                } else {
+                    add_dialog.dismiss();
                 }
 
             }
