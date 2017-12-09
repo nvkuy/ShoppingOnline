@@ -20,7 +20,7 @@
                 android:id="@+id/new_icon"
                 android:src="@drawable/new_icon"
                 android:visibility="invisible"
-                android:layout_gravity="top|left"
+                android:layout_gravity="top|start"
                 android:layout_width="40dp"
                 android:layout_height="40dp" />
 
@@ -28,7 +28,7 @@
                 android:id="@+id/sale_icon"
                 android:visibility="invisible"
                 android:src="@drawable/sale"
-                android:layout_gravity="top|right"
+                android:layout_gravity="top|end"
                 android:layout_width="35dp"
                 android:layout_height="35dp" />
 

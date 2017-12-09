@@ -18,8 +18,8 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
+import android.widget.GridView;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.ViewFlipper;
 
 import com.android.volley.RequestQueue;
@@ -53,7 +53,8 @@ public class MainActivity extends AppCompatActivity {
     ViewFlipper viewFlipper;
     RecyclerView rv_popular, rv_news, rv_sale;
     NavigationView nv_home;
-    ListView lv_home;
+//    ListView lv_home;
+    GridView gv_category;
     DrawerLayout drawerLayout;
     ActionBarDrawerToggle Toggle;
     ArrayList<Category> arr_category;
@@ -159,13 +160,13 @@ public class MainActivity extends AppCompatActivity {
 
     private void onNavItemClick() {
 
-        lv_home.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        gv_category.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
                 if (i == 0) {
                     //click vào trang chính
-                } else if (i == 6) {
+                } else if (i == 8) {
                     //click vào liên hệ
                     ToActivity(ContactActivity.class, i);
                 } else {
@@ -322,7 +323,7 @@ public class MainActivity extends AppCompatActivity {
 
         requesQuese.add(jsonArrRequest);
         categoryAdapter = new CategoryAdapter(arr_category, getApplicationContext());
-        lv_home.setAdapter(categoryAdapter);
+        gv_category.setAdapter(categoryAdapter);
 
     }
 
@@ -364,7 +365,8 @@ public class MainActivity extends AppCompatActivity {
         rv_sale = (RecyclerView) findViewById(R.id.rv_sale);
 
         nv_home = (NavigationView) findViewById(R.id.nav_view);
-        lv_home = (ListView) findViewById(R.id.lv_home);
+//        lv_home = (ListView) findViewById(R.id.lv_home);
+        gv_category = (GridView) findViewById(R.id.gv_category);
         drawerLayout = (DrawerLayout) findViewById(R.id.DrawerLayout);
 
         arr_category = new ArrayList<>();

@@ -1,40 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal" android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:weightSum="10"
     android:gravity="center">
 
-    <!-- Category icon -->
-    <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="3">
+    <!--&lt;!&ndash; Category icon &ndash;&gt;-->
+    <!--<LinearLayout-->
+        <!--android:layout_width="0dp"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_weight="3">-->
 
-        <ImageView
-            android:id="@+id/category_icon"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:layout_margin="5dp"
-            android:src="@mipmap/ic_launcher" />
+        <!--<ImageView-->
+            <!--android:id="@+id/category_icon"-->
+            <!--android:layout_width="60dp"-->
+            <!--android:layout_height="60dp"-->
+            <!--android:layout_margin="5dp"-->
+            <!--android:src="@mipmap/ic_launcher" />-->
 
-    </LinearLayout>
+    <!--</LinearLayout>-->
 
-    <!-- Category text -->
-    <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="7">
+    <!--&lt;!&ndash; Category text &ndash;&gt;-->
+    <!--<LinearLayout-->
+        <!--android:layout_width="0dp"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_weight="7">-->
 
-        <TextView
-            android:text="categories"
-            android:textColor="@color/Black"
-            android:layout_margin="5dp"
-            android:id="@+id/tv_category"
-            android:textSize="17.5sp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+        <!--<TextView-->
+            <!--android:text="categories"-->
+            <!--android:textColor="@color/Black"-->
+            <!--android:layout_margin="5dp"-->
+            <!--android:id="@+id/tv_category"-->
+            <!--android:textSize="17.5sp"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content" />-->
 
-    </LinearLayout>
+    <!--</LinearLayout>-->
+
+    <android.support.v7.widget.CardView
+        android:layout_margin="5dp"
+        app:cardCornerRadius="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:gravity="center"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <!-- category icon -->
+            <ImageView
+                android:src="@mipmap/ic_launcher"
+                android:layout_margin="5dp"
+                android:id="@+id/category_icon"
+                android:layout_width="60dp"
+                android:layout_height="60dp" />
+
+            <!-- category name -->
+            <TextView
+                android:gravity="center"
+                android:layout_margin="2.5dp"
+                android:textColor="@color/Black"
+                android:textSize="17.5sp"
+                android:id="@+id/tv_category"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
 
 </LinearLayout>
