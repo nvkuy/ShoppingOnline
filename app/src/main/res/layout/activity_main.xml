@@ -110,7 +110,7 @@
                             android:layout_height="wrap_content"
                             android:layout_margin="5dp"
                             android:paddingLeft="20dp"
-                            android:text="Giá tốt nhất:"
+                            android:text="Giá rẻ nhất:"
                             android:textColor="@color/colorPrimary"
                             android:textSize="20sp"
                             android:textStyle="italic"

@@ -12,9 +12,9 @@ public class Cart implements Serializable {
     private String product_name;
     private long product_price;
     private String product_image;
-    private int product_number;
+    private long product_number;
 
-    public Cart(int product_id, String product_name, long product_price, String product_image, int product_number) {
+    public Cart(int product_id, String product_name, long product_price, String product_image, long product_number) {
         this.product_id = product_id;
         this.product_name = product_name;
         this.product_price = product_price;
@@ -58,11 +58,11 @@ public class Cart implements Serializable {
         return this;
     }
 
-    public int getProduct_number() {
+    public long getProduct_number() {
         return product_number;
     }
 
-    public Cart setProduct_number(int product_number) {
+    public Cart setProduct_number(long product_number) {
         this.product_number = product_number;
         return this;
     }

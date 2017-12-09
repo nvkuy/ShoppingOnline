@@ -31,7 +31,7 @@ public class AboutProduct extends AppCompatActivity {
     ImageView img_AboutProduct;
     Toolbar toolbar;
 
-    boolean isOk, isExits, isFull;
+    boolean isNum, isExits, isFull;
     long total_price = 0;
     int numProduct = 0;
 
@@ -93,7 +93,7 @@ public class AboutProduct extends AppCompatActivity {
         final Button btn_cof = add_dialog.findViewById(R.id.btn_cof);
         Button btn_exit = add_dialog.findViewById(R.id.btn_exit);
 
-        final DecimalFormat formater = new DecimalFormat("###,###,###,###");
+        final DecimalFormat formater = new DecimalFormat("###,###,###,###,###");
         tv_price.setText(formater.format(price) + "đ");
 
         edt_number.addTextChangedListener(new TextWatcher() {
@@ -108,17 +108,17 @@ public class AboutProduct extends AppCompatActivity {
                     numProduct = Integer.parseInt(edt_number.getText().toString().trim());
                     total_price = price * numProduct;
                     tv_price.setText(formater.format(total_price) + "đ");
-                    isOk = true;
+                    isNum = true;
                 } catch (Exception e) {
                     //khi người dùng nhập vào 1 chuỗi ko phải số nguyên
-                    isOk = edt_number.getText().toString().isEmpty();
+                    isNum = false;
                     tv_price.setText(formater.format(price) + "đ");
                 }
             }
 
             @Override
             public void afterTextChanged(Editable editable) {
-                if (!isOk) {
+                if (!isNum && !edt_number.getText().toString().isEmpty()) {
                     tv_notify.setVisibility(View.VISIBLE);
                     tv_notify.setText(R.string.notify1);
                     btn_cof.setClickable(false);
@@ -137,11 +137,8 @@ public class AboutProduct extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                if (edt_number.getText().toString().isEmpty() || edt_number.getText() == null) {
-                    //gán số lượng sản phẩm là 1
-                    numProduct = 1;
-                } else {
-                    if (isOk) {
+                if (!edt_number.getText().toString().isEmpty()) {
+                    if (isNum && !edt_number.getText().toString().isEmpty()) {
                         if (MainActivity.arr_cart.size() > 0) {
                             //khi size mảng > 0(mảng đã có phần tử) thì kiểm tra xem người dùng đã add sản phẩm này hay chưa
                             for (int i = 1; i < MainActivity.arr_cart.size(); i++) {
@@ -151,8 +148,8 @@ public class AboutProduct extends AppCompatActivity {
                                     long new_price = old_price + total_price;
                                     isExits = true;
 
-                                    int old_num = MainActivity.arr_cart.get(i).getProduct_number();
-                                    int new_num = old_num + numProduct;
+                                    long old_num = MainActivity.arr_cart.get(i).getProduct_number();
+                                    long new_num = old_num + numProduct;
 
                                     MainActivity.arr_cart.get(i).setProduct_price(new_price);
                                     if (old_num == 15) {
@@ -189,15 +186,17 @@ public class AboutProduct extends AppCompatActivity {
                                     numProduct
                             ));
                         }
+
                     } else {
                         CheckConnection.notification(getApplicationContext(), "Thêm vào giỏ hàng thất bại!");
                     }
-                }
 
-                if (isFull) {
-                    tv_notify.setText(R.string.notify3);
-                } else {
-                    add_dialog.dismiss();
+                    if (isFull) {
+                        tv_notify.setText(R.string.notify3);
+                    } else {
+                        add_dialog.dismiss();
+                    }
+
                 }
 
             }

@@ -26,7 +26,7 @@
             android:layout_height="wrap_content" />
 
         <EditText
-            android:hint="Mặc định là 1"
+            android:hint="Nhập số lượng..."
             android:layout_margin="2.5dp"
             android:id="@+id/edt_NumberProduct"
             android:layout_width="match_parent"
