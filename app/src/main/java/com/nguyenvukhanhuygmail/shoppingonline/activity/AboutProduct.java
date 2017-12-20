@@ -17,7 +17,6 @@ import android.widget.TextView;
 import com.nguyenvukhanhuygmail.shoppingonline.R;
 import com.nguyenvukhanhuygmail.shoppingonline.model.Cart;
 import com.nguyenvukhanhuygmail.shoppingonline.model.Product;
-import com.nguyenvukhanhuygmail.shoppingonline.ultil.CheckConnection;
 import com.squareup.picasso.Picasso;
 
 import java.text.DecimalFormat;
@@ -31,7 +30,7 @@ public class AboutProduct extends AppCompatActivity {
     ImageView img_AboutProduct;
     Toolbar toolbar;
 
-    boolean isNum, isExits, isFull;
+    boolean isNum, isExits;
     long total_price = 0;
     int numProduct = 0;
 
@@ -138,7 +137,7 @@ public class AboutProduct extends AppCompatActivity {
             public void onClick(View view) {
 
                 if (!edt_number.getText().toString().isEmpty()) {
-                    if (isNum && !edt_number.getText().toString().isEmpty()) {
+                    if (isNum) {
                         if (MainActivity.arr_cart.size() > 0) {
                             //khi size mảng > 0(mảng đã có phần tử) thì kiểm tra xem người dùng đã add sản phẩm này hay chưa
                             for (int i = 1; i < MainActivity.arr_cart.size(); i++) {
@@ -152,16 +151,13 @@ public class AboutProduct extends AppCompatActivity {
                                     long new_num = old_num + numProduct;
 
                                     MainActivity.arr_cart.get(i).setProduct_price(new_price);
-                                    if (old_num == 15) {
-                                        isFull = true;
-                                    } else if (new_num >= 15) {
-                                        isFull = true;
+                                    if (new_num > 15) {
                                         MainActivity.arr_cart.get(i).setProduct_number(15);
                                     } else {
-                                        isFull = false;
                                         MainActivity.arr_cart.get(i).setProduct_number(new_num);
                                     }
 
+                                    break;
                                 }
                             }
 
@@ -185,21 +181,15 @@ public class AboutProduct extends AppCompatActivity {
                                     product.getProduct_image(),
                                     numProduct
                             ));
+
                         }
 
-                    } else {
-                        CheckConnection.notification(getApplicationContext(), "Thêm vào giỏ hàng thất bại!");
                     }
 
-                    if (isFull) {
-                        tv_notify.setText(R.string.notify3);
-                    } else {
-                        add_dialog.dismiss();
-                    }
 
-                } else {
-                    add_dialog.dismiss();
                 }
+
+                add_dialog.dismiss();
 
             }
         });
