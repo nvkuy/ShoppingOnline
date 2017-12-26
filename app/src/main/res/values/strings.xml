@@ -5,4 +5,8 @@
     <string name="notify1">Vui lòng nhập nghiêm túc!</string>
     <string name="notify2">Giới hạn một lần mua là 15 sản phẩm</string>
     <string name="notify3">Sản phẩm này đã đạt giới hạn trong giỏ hàng</string>
+    <string name="user_name">Tên người dùng</string>
+    <string name="password">Mật khẩu</string>
+    <string name="login">Đăng nhập</string>
+    <string name="forgot">Forgot your password?</string>
 </resources>
