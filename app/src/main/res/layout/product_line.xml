@@ -20,19 +20,12 @@
                 android:id="@+id/new_icon"
                 android:src="@drawable/new_icon"
                 android:visibility="invisible"
-                android:layout_gravity="top|start"
+                android:layout_gravity="top|right"
                 android:layout_width="40dp"
                 android:layout_height="40dp" />
 
-            <ImageView
-                android:id="@+id/sale_icon"
-                android:visibility="invisible"
-                android:src="@drawable/sale"
-                android:layout_gravity="top|end"
-                android:layout_width="35dp"
-                android:layout_height="35dp" />
-
             <LinearLayout
+                android:id="@+id/product_box"
                 android:gravity="center"
                 android:layout_gravity="center"
                 android:orientation="vertical"
@@ -61,6 +54,14 @@
                     android:textStyle="bold"
                     android:id="@+id/txt_ProductPrice"
                     android:textSize="20sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <RatingBar
+                    android:numStars="5"
+                    android:id="@+id/rb_product"
+                    style = "?android:attr/ratingBarStyleSmall"
+                    android:layout_gravity="center|bottom"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
 

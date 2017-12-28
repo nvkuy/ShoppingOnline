@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.nguyenvukhanhuygmail.shoppingonline.R;
@@ -50,16 +51,12 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
         holder.txt_ProductName.setText(product.getProduct_name());
         DecimalFormat format = new DecimalFormat("###,###,###");
         holder.txt_ProductPrice.setText("Giá: " + format.format(product.getProduct_price()) + "đ");
+        holder.ratingBar.setRating((float) product.getRate_point());
 
-        if (code == 1) { //khi một sản phẩm được giảm giá
-            holder.sale_icon.setVisibility(View.VISIBLE);
-            holder.new_icon.setVisibility(View.INVISIBLE);
-        } else if (code == 2) { // khi một sản phẩm mới ra
+        if (code == 1) { //sản phẩm mới
             holder.new_icon.setVisibility(View.VISIBLE);
-            holder.sale_icon.setVisibility(View.INVISIBLE);
-        } else { //khi sản phẩm đó không mới và ko đc giảm giá
+        } else { //sản phẩm bình thường
             holder.new_icon.setVisibility(View.INVISIBLE);
-            holder.sale_icon.setVisibility(View.INVISIBLE);
         }
 
         Picasso.with(context).load(product.getProduct_image())
@@ -79,7 +76,8 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
     public class ViewHolder extends RecyclerView.ViewHolder  {
 
         public TextView txt_ProductPrice, txt_ProductName;
-        public ImageView img_Product, new_icon, sale_icon;
+        public ImageView img_Product, new_icon;
+        public RatingBar ratingBar;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -88,7 +86,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
             txt_ProductPrice = (TextView) itemView.findViewById(R.id.txt_ProductPrice);
             img_Product = (ImageView) itemView.findViewById(R.id.img_NewProduct);
             new_icon = (ImageView) itemView.findViewById(R.id.new_icon);
-            sale_icon = (ImageView) itemView.findViewById(R.id.sale_icon);
+            ratingBar = (RatingBar) itemView.findViewById(R.id.rb_product);
 
         }
 

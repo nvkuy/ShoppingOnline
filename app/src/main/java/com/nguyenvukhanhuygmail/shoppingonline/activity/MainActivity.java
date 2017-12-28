@@ -18,8 +18,10 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.ViewFlipper;
 
 import com.android.volley.RequestQueue;
@@ -51,14 +53,17 @@ public class MainActivity extends AppCompatActivity {
 
     Toolbar toolbar;
     ViewFlipper viewFlipper;
-    RecyclerView rv_popular, rv_news, rv_sale;
+    RecyclerView rv_popular, rv_news, rv_rate;
     NavigationView nv_home;
-//    ListView lv_home;
+    //    ListView lv_home;
     GridView gv_category;
     DrawerLayout drawerLayout;
     ActionBarDrawerToggle Toggle;
     ArrayList<Category> arr_category;
     CategoryAdapter categoryAdapter;
+
+    Button btn_logout;
+    TextView tv_username, tv_email;
 
     int id = 0;
     String Category_name = "";
@@ -72,9 +77,10 @@ public class MainActivity extends AppCompatActivity {
     String product_image = "";
     String product_description = "";
     int orders = 0;
+    double rate_point = 0;
     int category_id = 0;
-    ArrayList<Product> arr_NewProduct, arr_PopularProduct, arr_SaleProduct;
-    ProductAdapter NewProductAdapter, PopularProductAdapter, SaleProductAdapter;
+    ArrayList<Product> arr_NewProduct, arr_PopularProduct, arr_RateProduct;
+    ProductAdapter NewProductAdapter, PopularProductAdapter, RateProductAdapter;
 
     public static ArrayList<Cart> arr_cart;
 
@@ -88,23 +94,37 @@ public class MainActivity extends AppCompatActivity {
         if (CheckConnection.haveNetworkConnection(getApplication())) {
 
             //nếu có kết nối
+            display_user();
             showListView();
             ActionBar();
             showAdvs();
+
+            /*
+            * code = 1: rate_product
+            * code = 2: new_product
+            * else: popular_product
+            * */
+
             //show new product
             showProduct(Server.new_product_path, 2);
             //show popular product
             showProduct(Server.popular_product_path, -1);
-            //show sale product
+            //show rate product
             showProduct(Server.sale_product_path, 1);
 
-            NewProductAdapter = new ProductAdapter(getApplicationContext(), arr_NewProduct, 2);
+            /*
+            * code = 2: rate_product
+            * code = 1: new_product
+            * else: popular_product
+            * */
+
+            NewProductAdapter = new ProductAdapter(getApplicationContext(), arr_NewProduct, 1);
             PopularProductAdapter = new ProductAdapter(getApplicationContext(), arr_PopularProduct, -1);
-            SaleProductAdapter = new ProductAdapter(getApplicationContext(), arr_SaleProduct, 1);
+            RateProductAdapter = new ProductAdapter(getApplicationContext(), arr_RateProduct, 2);
 
             rv_news.setAdapter(NewProductAdapter);
             rv_popular.setAdapter(PopularProductAdapter);
-            rv_sale.setAdapter(SaleProductAdapter);
+            rv_rate.setAdapter(RateProductAdapter);
 
             onNavItemClick();
             onRV_ItemClick();
@@ -116,12 +136,27 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    private void display_user() {
+
+        tv_username.setText("Hello, somebody");
+
+        tv_email.setText("user@company.com");
+
+        btn_logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplication(), LoginAndSignUp.class));
+            }
+        });
+
+    }
+
     private void onRV_ItemClick() {
 
-        rv_sale.addOnItemTouchListener(new RecyclerItemClickListener(getApplication(), new RecyclerItemClickListener.OnItemClickListener() {
+        rv_rate.addOnItemTouchListener(new RecyclerItemClickListener(getApplication(), new RecyclerItemClickListener.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                Product sale_product = arr_SaleProduct.get(position);
+                Product sale_product = arr_RateProduct.get(position);
                 GoToAboutProduct(getApplication(), sale_product);
             }
         }));
@@ -200,21 +235,22 @@ public class MainActivity extends AppCompatActivity {
                             product_image = jsonObject.getString("product_image");
                             product_description = jsonObject.getString("product_description");
                             orders = jsonObject.getInt("orders");
+                            rate_point = jsonObject.getDouble("rate_point");
                             category_id = jsonObject.getInt("category_id");
 
                             if (code == 1) {
-                                //get sản phẩm giảm giá và add vào mảng
-                                arr_SaleProduct.add(i, new Product(product_id, product_name, product_price, product_image, product_description, orders, category_id));
-                                SaleProductAdapter.notifyDataSetChanged();
+                                //get sản phẩm được đánh giá cao và add vào mảng
+                                arr_RateProduct.add(i, new Product(product_id, product_name, product_price, product_image, product_description, orders, rate_point, category_id));
+                                RateProductAdapter.notifyDataSetChanged();
                             } else if (code == 2) {
 
                                 //get sản phẩm mới và add vào mảng
-                                arr_NewProduct.add(i, new Product(product_id, product_name, product_price, product_image, product_description, orders, category_id));
+                                arr_NewProduct.add(i, new Product(product_id, product_name, product_price, product_image, product_description, orders, rate_point, category_id));
                                 NewProductAdapter.notifyDataSetChanged();
                             } else {
 
                                 //get sản phẩm thông dụng và add vào mảng
-                                arr_PopularProduct.add(i, new Product(product_id, product_name, product_price, product_image, product_description, orders, category_id));
+                                arr_PopularProduct.add(i, new Product(product_id, product_name, product_price, product_image, product_description, orders, rate_point, category_id));
                                 PopularProductAdapter.notifyDataSetChanged();
                             }
 
@@ -362,21 +398,25 @@ public class MainActivity extends AppCompatActivity {
 
         rv_popular = (RecyclerView) findViewById(R.id.rv_popular);
         rv_news = (RecyclerView) findViewById(R.id.rv_news);
-        rv_sale = (RecyclerView) findViewById(R.id.rv_sale);
+        rv_rate = (RecyclerView) findViewById(R.id.rv_rate);
 
         nv_home = (NavigationView) findViewById(R.id.nav_view);
 //        lv_home = (ListView) findViewById(R.id.lv_home);
         gv_category = (GridView) findViewById(R.id.gv_category);
         drawerLayout = (DrawerLayout) findViewById(R.id.DrawerLayout);
 
+        btn_logout = (Button) findViewById(R.id.btn_logout);
+        tv_email = (TextView) findViewById(R.id.tv_email);
+        tv_username = (TextView) findViewById(R.id.tv_username);
+
         arr_category = new ArrayList<>();
         arr_NewProduct = new ArrayList<>();
         arr_PopularProduct = new ArrayList<>();
-        arr_SaleProduct = new ArrayList<>();
+        arr_RateProduct = new ArrayList<>();
 
         rv_news.setHasFixedSize(true);
         rv_popular.setHasFixedSize(true);
-        rv_sale.setHasFixedSize(true);
+        rv_rate.setHasFixedSize(true);
 
 //        GridLayoutManager manager = new GridLayoutManager(getApplicationContext(), 2);
 //        LinearLayoutManager manager = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.HORIZONTAL, false);
@@ -391,7 +431,7 @@ public class MainActivity extends AppCompatActivity {
 
         rv_news.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.HORIZONTAL, false));
         rv_popular.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.HORIZONTAL, false));
-        rv_sale.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.HORIZONTAL, false));
+        rv_rate.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.HORIZONTAL, false));
 
         if (arr_cart == null) {
             arr_cart = new ArrayList<>();

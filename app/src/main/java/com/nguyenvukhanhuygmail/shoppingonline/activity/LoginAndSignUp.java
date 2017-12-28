@@ -1,11 +1,14 @@
 package com.nguyenvukhanhuygmail.shoppingonline.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -15,7 +18,9 @@ import com.nguyenvukhanhuygmail.shoppingonline.R;
 public class LoginAndSignUp extends AppCompatActivity {
 
     ImageView img_logo;
+    CheckBox cbox_remember;
     EditText edt_username, edt_password;
+    Button btn_login, btn_signup;
     LinearLayout box, layout;
 
     @Override
@@ -24,6 +29,25 @@ public class LoginAndSignUp extends AppCompatActivity {
         setContentView(R.layout.activity_login_and_sign_up);
 
         start();
+        OnClick();
+
+    }
+
+    private void OnClick() {
+
+        btn_signup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplication(), SignUp.class));
+            }
+        });
+
+        btn_login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplication(), MainActivity.class));
+            }
+        });
 
     }
 
@@ -35,6 +59,9 @@ public class LoginAndSignUp extends AppCompatActivity {
         layout = (LinearLayout) findViewById(R.id.layout);
         edt_username = (EditText) findViewById(R.id.edt_username);
         edt_password = (EditText) findViewById(R.id.edt_password);
+        btn_login = (Button) findViewById(R.id.btn_login);
+        btn_signup = (Button) findViewById(R.id.btn_signup);
+        cbox_remember = (CheckBox) findViewById(R.id.cbox_remember);
 
         Animation alpha_anim = AnimationUtils.loadAnimation(this, R.anim.welcome_alpha);
         final Animation box_anim = AnimationUtils.loadAnimation(this, R.anim.welcome_box);
