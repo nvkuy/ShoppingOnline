@@ -42,7 +42,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="2.5dp"
                     android:gravity="center"
-                    android:text="tên sản phẩm"
+                    android:text="@string/product_name"
                     android:textColor="@color/colorPrimary"
                     android:textSize="20sp"
                     android:textStyle="italic" />
@@ -64,11 +64,44 @@
                     android:textSize="17.5sp"
                     android:textStyle="bold" />
 
+                <!-- Đánh giá sản phẩm -->
+                <RatingBar
+                    android:numStars="5"
+                    style="@style/Base.Widget.AppCompat.RatingBar.Indicator"
+                    android:id="@+id/rb_aboutproduct"
+                    android:layout_gravity="center_horizontal"
+                    android:clickable="false"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <!-- Số lượng sản phẩm còn lại -->
+                <LinearLayout
+                    android:layout_gravity="center_horizontal"
+                    android:orientation="horizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:padding="2.5dp"
+                        android:textSize="17.5sp"
+                        android:text="@string/product_left"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+                        android:padding="2.5dp"
+                        android:textSize="17.5sp"
+                        android:id="@+id/product_left"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                </LinearLayout>
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
-                    android:text="Mô tả sản phẩm"
+                    android:text="@string/about_product"
                     android:textColor="@color/colorPrimary"
                     android:textSize="20sp"
                     android:textStyle="italic" />

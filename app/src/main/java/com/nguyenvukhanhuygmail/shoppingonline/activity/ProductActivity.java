@@ -159,6 +159,7 @@ public class ProductActivity extends AppCompatActivity {
                                     jsonArray.getJSONObject(i).getString("product_description"),
                                     jsonArray.getJSONObject(i).getInt("orders"),
                                     jsonArray.getJSONObject(i).getDouble("rate_point"),
+                                    jsonArray.getJSONObject(i).getInt("product_left"),
                                     jsonArray.getJSONObject(i).getInt("category_id")
 
                             ));

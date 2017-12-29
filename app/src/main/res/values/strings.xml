@@ -10,4 +10,7 @@
     <string name="login">Đăng nhập</string>
     <string name="signup">Đăng kí</string>
     <string name="remember_me">Nhớ mật khẩu!</string>
+    <string name="about_product">Mô tả sản phẩm</string>
+    <string name="product_name">tên sản phẩm</string>
+    <string name="product_left">Còn lại: </string>
 </resources>

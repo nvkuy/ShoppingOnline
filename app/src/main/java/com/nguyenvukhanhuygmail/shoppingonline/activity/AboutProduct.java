@@ -25,8 +25,9 @@ public class AboutProduct extends AppCompatActivity {
 
     Product product;
 
-    TextView fullname_product, AboutProduct_price, AboutProduct_des;
+    TextView fullname_product, AboutProduct_price, AboutProduct_des, product_left;
     Button btn_add, btn_buynow, btn_rate;
+    RatingBar rb_aboutproduct;
     ImageView img_AboutProduct;
     Toolbar toolbar;
 
@@ -125,6 +126,10 @@ public class AboutProduct extends AppCompatActivity {
                     tv_notify.setVisibility(View.VISIBLE);
                     btn_cof.setClickable(false);
                     tv_notify.setText(R.string.notify2);
+                } else if (numProduct > product.getProduct_left()) {
+                    tv_notify.setVisibility(View.VISIBLE);
+                    tv_notify.setText("Hiện tại chỉ còn " + product.getProduct_left() + " sản phẩm!");
+                    btn_cof.setClickable(false);
                 } else {
                     btn_cof.setClickable(true);
                     tv_notify.setVisibility(View.GONE);
@@ -184,6 +189,8 @@ public class AboutProduct extends AppCompatActivity {
 
                         }
 
+                        startActivity(new Intent(getApplication(), CartActivity.class));
+
                     }
 
 
@@ -236,7 +243,8 @@ public class AboutProduct extends AppCompatActivity {
 
         DecimalFormat decimalFormat = new DecimalFormat("###,###,###");
         AboutProduct_price.setText("Giá: " + decimalFormat.format(product.getProduct_price()) + "đ");
-
+        rb_aboutproduct.setRating((float) product.getRate_point());
+        product_left.setText(product.getProduct_left() + " sản phẩm");
 
         Picasso.with(getApplicationContext()).load(product.getProduct_image())
                 .placeholder(R.drawable.wait)
@@ -262,15 +270,16 @@ public class AboutProduct extends AppCompatActivity {
         AboutProduct_des = (TextView) findViewById(R.id.AboutProduct_des);
         AboutProduct_price = (TextView) findViewById(R.id.AboutProduct_price);
         img_AboutProduct = (ImageView) findViewById(R.id.img_AboutProduct);
+        product_left = (TextView) findViewById(R.id.product_left);
         btn_add = (Button) findViewById(R.id.btn_Add);
         btn_buynow = (Button) findViewById(R.id.btn_BuyNow);
         btn_rate = (Button) findViewById(R.id.btn_Rate);
+        rb_aboutproduct = (RatingBar) findViewById(R.id.rb_aboutproduct);
         toolbar = (Toolbar) findViewById(R.id.toolbar_AboutProduct);
     }
 
     private Product getIntentData(String key) {
 
-        Intent i = getIntent();
         Product product = (Product) getIntent().getExtras().getSerializable(key);
 
         return product;

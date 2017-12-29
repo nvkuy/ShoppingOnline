@@ -58,6 +58,7 @@
                     android:layout_height="wrap_content" />
 
                 <RatingBar
+                    android:clickable="false"
                     android:numStars="5"
                     android:id="@+id/rb_product"
                     style = "?android:attr/ratingBarStyleSmall"

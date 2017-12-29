@@ -78,6 +78,7 @@ public class MainActivity extends AppCompatActivity {
     String product_description = "";
     int orders = 0;
     double rate_point = 0;
+    int product_left = 0;
     int category_id = 0;
     ArrayList<Product> arr_NewProduct, arr_PopularProduct, arr_RateProduct;
     ProductAdapter NewProductAdapter, PopularProductAdapter, RateProductAdapter;
@@ -201,7 +202,7 @@ public class MainActivity extends AppCompatActivity {
 
                 if (i == 0) {
                     //click vào trang chính
-                } else if (i == 8) {
+                } else if (i == (arr_category.size() - 1)) {
                     //click vào liên hệ
                     ToActivity(ContactActivity.class, i);
                 } else {
@@ -236,21 +237,22 @@ public class MainActivity extends AppCompatActivity {
                             product_description = jsonObject.getString("product_description");
                             orders = jsonObject.getInt("orders");
                             rate_point = jsonObject.getDouble("rate_point");
+                            product_left = jsonObject.getInt("product_left");
                             category_id = jsonObject.getInt("category_id");
 
                             if (code == 1) {
                                 //get sản phẩm được đánh giá cao và add vào mảng
-                                arr_RateProduct.add(i, new Product(product_id, product_name, product_price, product_image, product_description, orders, rate_point, category_id));
+                                arr_RateProduct.add(i, new Product(product_id, product_name, product_price, product_image, product_description, orders, rate_point, product_left, category_id));
                                 RateProductAdapter.notifyDataSetChanged();
                             } else if (code == 2) {
 
                                 //get sản phẩm mới và add vào mảng
-                                arr_NewProduct.add(i, new Product(product_id, product_name, product_price, product_image, product_description, orders, rate_point, category_id));
+                                arr_NewProduct.add(i, new Product(product_id, product_name, product_price, product_image, product_description, orders, rate_point, product_left, category_id));
                                 NewProductAdapter.notifyDataSetChanged();
                             } else {
 
                                 //get sản phẩm thông dụng và add vào mảng
-                                arr_PopularProduct.add(i, new Product(product_id, product_name, product_price, product_image, product_description, orders, rate_point, category_id));
+                                arr_PopularProduct.add(i, new Product(product_id, product_name, product_price, product_image, product_description, orders, rate_point, product_left, category_id));
                                 PopularProductAdapter.notifyDataSetChanged();
                             }
 
