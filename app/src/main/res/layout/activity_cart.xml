@@ -76,34 +76,24 @@
     </GridView>
 
     <LinearLayout
-        android:weightSum="2.01"
-        android:orientation="horizontal"
+        android:orientation="vertical"
         android:layout_weight="1"
         android:layout_width="match_parent"
         android:layout_height="0dp">
 
-        <TextView
-            android:textStyle="bold"
-            android:textSize="20sp"
-            android:gravity="center"
-            android:text="Tiếp tục mua hàng"
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="match_parent" />
-
         <View
             android:background="@color/Black"
-            android:layout_weight="0.01"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"/>
+            android:layout_width="match_parent"
+            android:layout_height="1dp"/>
 
         <TextView
+            android:textColor="@color/colorPrimary"
+            android:id="@+id/buy_all"
             android:textStyle="bold"
             android:textSize="20sp"
             android:gravity="center"
             android:text="Thanh toán giỏ hàng"
-            android:layout_weight="1"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
     </LinearLayout>

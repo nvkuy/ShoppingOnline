@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.nguyenvukhanhuygmail.shoppingonline.R;
 import com.nguyenvukhanhuygmail.shoppingonline.model.Cart;
 import com.nguyenvukhanhuygmail.shoppingonline.model.Product;
+import com.nguyenvukhanhuygmail.shoppingonline.ultil.CheckConnection;
 import com.squareup.picasso.Picasso;
 
 import java.text.DecimalFormat;
@@ -42,9 +43,12 @@ public class AboutProduct extends AppCompatActivity {
 
         product = getIntentData("product");
         start();
-        ActionBar();
-        showProduct(product);
-        onButtonClickListener();
+
+        if (CheckConnection.haveNetworkConnection(getApplication())) {
+            ActionBar();
+            showProduct(product);
+            onButtonClickListener();
+        }
 
     }
 
@@ -128,7 +132,7 @@ public class AboutProduct extends AppCompatActivity {
                     tv_notify.setText(R.string.notify2);
                 } else if (numProduct > product.getProduct_left()) {
                     tv_notify.setVisibility(View.VISIBLE);
-                    tv_notify.setText("Hiện tại chỉ còn " + product.getProduct_left() + " sản phẩm!");
+                    tv_notify.setText("Hiện tại chỉ còn lại " + product.getProduct_left() + " sản phẩm!");
                     btn_cof.setClickable(false);
                 } else {
                     btn_cof.setClickable(true);
