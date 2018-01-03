@@ -13,4 +13,7 @@
     <string name="about_product">Mô tả sản phẩm</string>
     <string name="product_name">tên sản phẩm</string>
     <string name="product_left">Còn lại: </string>
+    <string name="user_email">Địa chỉ email</string>
+    <string name="re_password">Nhập lại mật khẩu</string>
+    <string name="finish">Hoàn thành</string>
 </resources>

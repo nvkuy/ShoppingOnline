@@ -30,13 +30,14 @@
             android:layout_height="wrap_content">
 
             <EditText
+                android:inputType="textEmailAddress"
                 android:textColor="@color/whire"
                 android:background="@android:color/transparent"
                 android:drawableLeft="@drawable/ic_person_white_24dp"
                 android:id="@+id/edt_username"
                 android:drawablePadding="12dp"
                 android:padding="8dp"
-                android:hint="@string/user_name"
+                android:hint="@string/user_email"
                 android:textColorHint="@color/whire"
                 android:ems="12"
                 android:maxLines="1"
@@ -105,13 +106,30 @@
                 android:layout_height="wrap_content" />
 
             <LinearLayout
-                android:layout_margin="10dp"
+
+                android:gravity="center_horizontal"
                 android:layout_gravity="center|bottom"
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
+                <ImageView
+                    android:padding="10dp"
+                    android:src="@drawable/fb_icon"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp" />
 
+                <ImageView
+                    android:padding="10dp"
+                    android:src="@drawable/gg_icon"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp" />
+
+                <ImageView
+                    android:padding="10dp"
+                    android:src="@drawable/twitter_icon"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp" />
 
             </LinearLayout>
 

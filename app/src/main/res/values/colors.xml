@@ -10,4 +10,5 @@
     <color name="Black">#000</color>
     <color name="Orrange">#FFA500</color>
     <color name="Red">#cd0000</color>
+    <color name="Gray">#808080</color>
 </resources>

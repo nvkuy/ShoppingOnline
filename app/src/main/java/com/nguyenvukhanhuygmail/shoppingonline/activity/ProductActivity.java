@@ -204,6 +204,7 @@ public class ProductActivity extends AppCompatActivity {
     private void ActionToolbar() {
         setSupportActionBar(toolbar_product);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_arrow_back_white_24dp);
         toolbar_product.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

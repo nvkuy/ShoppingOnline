@@ -48,6 +48,9 @@ public class AboutProduct extends AppCompatActivity {
             ActionBar();
             showProduct(product);
             onButtonClickListener();
+        } else {
+            CheckConnection.notification(getApplicationContext(), "Vui lòng kiểm tra kết nối!");
+            finish();
         }
 
     }
@@ -260,6 +263,7 @@ public class AboutProduct extends AppCompatActivity {
     private void ActionBar() {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_arrow_back_white_24dp);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

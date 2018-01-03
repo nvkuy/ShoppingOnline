@@ -30,6 +30,9 @@ public class CartActivity extends AppCompatActivity {
             ActionBar();
             onClick();
             show_cart();
+        } else {
+            CheckConnection.notification(getApplicationContext(), "Vui lòng kiểm tra kết nối!");
+            finish();
         }
 
     }
@@ -65,6 +68,7 @@ public class CartActivity extends AppCompatActivity {
     private void ActionBar() {
         setSupportActionBar(tb_cart);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_arrow_back_white_24dp);
         tb_cart.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

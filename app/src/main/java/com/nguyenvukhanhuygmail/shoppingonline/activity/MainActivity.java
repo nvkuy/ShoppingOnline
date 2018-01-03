@@ -29,6 +29,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.firebase.auth.FirebaseAuth;
 import com.nguyenvukhanhuygmail.shoppingonline.R;
 import com.nguyenvukhanhuygmail.shoppingonline.adapter.CategoryAdapter;
 import com.nguyenvukhanhuygmail.shoppingonline.adapter.ProductAdapter;
@@ -147,6 +148,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(getApplication(), LoginAndSignUp.class));
+                overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+                FirebaseAuth.getInstance().signOut();
             }
         });
 
@@ -282,6 +285,7 @@ public class MainActivity extends AppCompatActivity {
         drawerLayout.addDrawerListener(Toggle);
         Toggle.syncState();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_apps_white_24dp);
 
     }
 
