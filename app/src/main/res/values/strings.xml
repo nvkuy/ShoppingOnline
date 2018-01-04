@@ -16,4 +16,7 @@
     <string name="user_email">Địa chỉ email</string>
     <string name="re_password">Nhập lại mật khẩu</string>
     <string name="finish">Hoàn thành</string>
+    <string name="verification_email">Xác minh địa chỉ email của bạn!</string>
+    <string name="link_to_email">Gửi link xác minh đến địa chỉ email của tôi!</string>
+    <string name="link_verification">Link xác minh đã được gửi đến địa chỉ email:</string>
 </resources>

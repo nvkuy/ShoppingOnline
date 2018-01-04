@@ -56,8 +56,21 @@ public class LoginAndSignUp extends AppCompatActivity {
         super.onStart();
 
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+
         if (currentUser != null) {
             // User is signed in
+            if (currentUser.isEmailVerified()) {
+
+                //khi đã xác minh email
+                startActivity(new Intent(getApplication(), MainActivity.class));
+
+            } else {
+
+                //khi chưa xác minh email
+                startActivity(new Intent(getApplication(), VerificationEmail.class).putExtra("user_name", edt_username.getText().toString()));
+            }
+            overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+
         } else {
             // No user is signed in
         }
@@ -94,7 +107,19 @@ public class LoginAndSignUp extends AppCompatActivity {
                             // Sign in success, update UI with the signed-in user's information
                             FirebaseUser user = mAuth.getCurrentUser();
 
-                            startActivity(new Intent(getApplication(), MainActivity.class));
+                            if (user != null) {
+                                if (user.isEmailVerified()) {
+
+                                    //khi đã xác minh email
+                                    startActivity(new Intent(getApplication(), MainActivity.class));
+
+                                } else {
+
+                                    //khi chưa xác minh email
+                                    startActivity(new Intent(getApplication(), VerificationEmail.class).putExtra("user_name", edt_username.getText().toString()));
+                                }
+                            }
+
                             overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
                             finish();
 
@@ -118,6 +143,7 @@ public class LoginAndSignUp extends AppCompatActivity {
                                 editor.commit();
 
                             }
+
 
                         } else {
                             // If sign in fails, display a message to the user.

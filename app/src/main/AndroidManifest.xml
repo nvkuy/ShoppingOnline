@@ -24,7 +24,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.SignUp"></activity>
+        <activity android:name=".activity.SignUp" />
+        <activity android:name=".activity.VerificationEmail" />
+        <activity android:name=".activity.UserProfile"></activity>
     </application>
 
 </manifest>

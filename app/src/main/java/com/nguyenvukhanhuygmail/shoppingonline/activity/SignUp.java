@@ -14,6 +14,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.nguyenvukhanhuygmail.shoppingonline.R;
 import com.nguyenvukhanhuygmail.shoppingonline.ultil.CheckConnection;
 import com.nguyenvukhanhuygmail.shoppingonline.ultil.CheckEmailType;
@@ -41,7 +42,7 @@ public class SignUp extends AppCompatActivity {
 
     }
 
-    private void signup(String email, String password) {
+    private void signup(final String email, final String password) {
 
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -52,7 +53,22 @@ public class SignUp extends AppCompatActivity {
                             Toast.makeText(getApplication(), "Đăng kí thành công!",
                                     Toast.LENGTH_SHORT).show();
 
-                            startActivity(new Intent(getApplicationContext(), LoginAndSignUp.class));
+                            mAuth.signInWithEmailAndPassword(email, password);
+                            FirebaseUser user = mAuth.getCurrentUser();
+
+                            if (user != null) {
+                                if (user.isEmailVerified()) {
+
+                                    //khi đã xác minh email
+                                    startActivity(new Intent(getApplication(), MainActivity.class));
+
+                                } else {
+
+                                    //khi chưa xác minh email
+                                    startActivity(new Intent(getApplication(), VerificationEmail.class).putExtra("user_name", edt_username.getText().toString()));
+                                }
+                            }
+
                             overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
                             finish();
                         } else {

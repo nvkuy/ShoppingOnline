@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/layout"
-    android:background="@drawable/log_and_signup"
+    android:background="@drawable/background"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -33,7 +33,7 @@
                 android:inputType="textEmailAddress"
                 android:textColor="@color/whire"
                 android:background="@android:color/transparent"
-                android:drawableLeft="@drawable/ic_person_white_24dp"
+                android:drawableLeft="@drawable/ic_email_24dp"
                 android:id="@+id/edt_username"
                 android:drawablePadding="12dp"
                 android:padding="8dp"
@@ -104,34 +104,6 @@
                 android:background="@drawable/background_signup"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
-
-            <LinearLayout
-
-                android:gravity="center_horizontal"
-                android:layout_gravity="center|bottom"
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <ImageView
-                    android:padding="10dp"
-                    android:src="@drawable/fb_icon"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp" />
-
-                <ImageView
-                    android:padding="10dp"
-                    android:src="@drawable/gg_icon"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp" />
-
-                <ImageView
-                    android:padding="10dp"
-                    android:src="@drawable/twitter_icon"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp" />
-
-            </LinearLayout>
 
         </LinearLayout>
     </ScrollView>
