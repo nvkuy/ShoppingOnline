@@ -11,4 +11,6 @@
     <color name="Orrange">#FFA500</color>
     <color name="Red">#cd0000</color>
     <color name="Gray">#808080</color>
+    <color name="start">#D66D75</color>
+    <color name="end">#E29587</color>
 </resources>

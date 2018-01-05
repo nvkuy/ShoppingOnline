@@ -11,5 +11,22 @@ public class UserProfile extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_profile);
+
+//        editText.setDrawableClickListener(new DrawableClickListener() {
+//
+//
+//            public void onClick(DrawablePosition target) {
+//                switch (target) {
+//                    case LEFT:
+//                        //Do something here
+//                        break;
+//
+//                    default:
+//                        break;
+//                }
+//            }
+//
+//        });
+
     }
 }

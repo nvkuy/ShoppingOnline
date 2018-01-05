@@ -1,9 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.nguyenvukhanhuygmail.shoppingonline.activity.UserProfile">
+    
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="250dp">
 
-</android.support.constraint.ConstraintLayout>
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:background="@drawable/profile_gradient"
+                android:layout_width="match_parent"
+                android:layout_height="200dp">
+            </LinearLayout>
+
+            <ImageView
+                android:visibility="invisible"
+                android:layout_gravity="top|left"
+                android:id="@+id/back"
+                android:layout_margin="15dp"
+                android:src="@drawable/ic_arrow_back_white_24dp"
+                android:layout_width="24dp"
+                android:layout_height="24dp" />
+
+        </FrameLayout>
+
+        <ImageView
+            android:src="@drawable/default_user"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentBottom="true"
+            android:layout_width="100dp"
+            android:layout_height="100dp" />
+
+    </RelativeLayout>
+
+    <EditText
+        android:editable="false"
+        android:layout_margin="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:drawableRight="@drawable/ic_edit_black_24dp"
+        android:drawablePadding="12dp"
+        android:ems="12"
+        android:hint="@string/user_name"
+        android:maxLines="1"
+        android:padding="8dp"
+        android:textColor="@color/Gray"
+        android:textColorHint="@color/Gray" />
+
+
+</LinearLayout>

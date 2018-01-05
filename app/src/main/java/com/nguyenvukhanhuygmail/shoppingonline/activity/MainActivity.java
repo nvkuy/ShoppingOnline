@@ -30,6 +30,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.nguyenvukhanhuygmail.shoppingonline.R;
 import com.nguyenvukhanhuygmail.shoppingonline.adapter.CategoryAdapter;
 import com.nguyenvukhanhuygmail.shoppingonline.adapter.ProductAdapter;
@@ -63,8 +64,10 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<Category> arr_category;
     CategoryAdapter categoryAdapter;
 
+    FirebaseUser user;
     Button btn_logout;
     TextView tv_username, tv_email;
+    ImageView user_icon;
 
     int id = 0;
     String Category_name = "";
@@ -140,9 +143,10 @@ public class MainActivity extends AppCompatActivity {
 
     private void display_user() {
 
-        tv_username.setText("Hello, somebody");
+        tv_username.setText("Hello, " + user.getDisplayName());
+        tv_email.setText(user.getEmail());
 
-        tv_email.setText("user@company.com");
+
 
         btn_logout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -150,6 +154,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(getApplication(), LoginAndSignUp.class));
                 overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
                 FirebaseAuth.getInstance().signOut();
+                finish();
             }
         });
 
@@ -411,9 +416,11 @@ public class MainActivity extends AppCompatActivity {
         gv_category = (GridView) findViewById(R.id.gv_category);
         drawerLayout = (DrawerLayout) findViewById(R.id.DrawerLayout);
 
+        user = FirebaseAuth.getInstance().getCurrentUser();
         btn_logout = (Button) findViewById(R.id.btn_logout);
         tv_email = (TextView) findViewById(R.id.tv_email);
         tv_username = (TextView) findViewById(R.id.tv_username);
+        user_icon = (ImageView) findViewById(R.id.user_icon);
 
         arr_category = new ArrayList<>();
         arr_NewProduct = new ArrayList<>();

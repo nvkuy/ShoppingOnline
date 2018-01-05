@@ -19,8 +19,9 @@
         android:textColor="@color/whire"
         android:textSize="30sp" />
 
-    <Button
+    <br.com.simplepass.loading_button_lib.customViews.CircularProgressButton
         android:id="@+id/btn_send_link"
+        android:layout_gravity="center_horizontal"
         style="@style/Base.TextAppearance.AppCompat.Body1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -32,10 +33,13 @@
         android:text="@string/link_to_email"
         android:textAllCaps="false"
         android:textColor="@color/colorAccent"
+        app:spinning_bar_color="@color/Red"
+        app:spinning_bar_padding="5dp"
+        app:spinning_bar_width="5dp"
         android:textSize="18sp" />
 
     <TextView
-        android:visibility="invisible"
+        android:visibility="gone"
         android:id="@+id/txt_link"
         android:text="@string/link_verification"
         android:layout_width="match_parent"
@@ -49,7 +53,7 @@
         android:textSize="18sp" />
 
     <TextView
-        android:visibility="invisible"
+        android:visibility="gone"
         android:id="@+id/txt_email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -62,7 +66,7 @@
         android:textSize="18sp" />
 
     <TextView
-        android:visibility="invisible"
+        android:visibility="gone"
         android:id="@+id/txt_status"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -74,8 +78,9 @@
         android:textColor="@color/whire"
         android:textSize="18sp" />
 
-    <Button
+    <br.com.simplepass.loading_button_lib.customViews.CircularProgressButton
         android:id="@+id/btn_done"
+        android:layout_gravity="center_horizontal"
         style="@style/Base.TextAppearance.AppCompat.Body1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -89,6 +94,24 @@
         android:textAllCaps="true"
         android:textColor="@color/whire"
         android:textSize="20sp"
+        app:spinning_bar_color="@color/whire"
+        app:spinning_bar_padding="5dp"
+        app:spinning_bar_width="5dp"
         android:visibility="gone" />
+
+    <Button
+        android:id="@+id/LogByAnotherAcc"
+        android:layout_gravity="center_horizontal"
+        style="@style/Base.TextAppearance.AppCompat.Body1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/background_login"
+        android:text="@string/LogByAnotherAcc"
+        android:textAllCaps="false"
+        android:textColor="@color/colorAccent"
+        android:textSize="18sp" />
 
 </LinearLayout>

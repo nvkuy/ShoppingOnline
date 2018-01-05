@@ -19,4 +19,5 @@
     <string name="verification_email">Xác minh địa chỉ email của bạn!</string>
     <string name="link_to_email">Gửi link xác minh đến địa chỉ email của tôi!</string>
     <string name="link_verification">Link xác minh đã được gửi đến địa chỉ email:</string>
+    <string name="LogByAnotherAcc">Đăng nhập bằng tài khoản khác</string>
 </resources>
