@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">Uy\'s Shop</string>
+
     <string name="Open">Open</string>
     <string name="Close">Close</string>
     <string name="notify1">Vui lòng nhập nghiêm túc!</string>
@@ -20,4 +21,19 @@
     <string name="link_to_email">Gửi link xác minh đến địa chỉ email của tôi!</string>
     <string name="link_verification">Link xác minh đã được gửi đến địa chỉ email:</string>
     <string name="LogByAnotherAcc">Đăng nhập bằng tài khoản khác</string>
+    <string name="phone_number">Số điện thoại</string>
+    <string name="location">Vị trí địa lý</string>
+    <string name="rate">Xếp hạng và Đánh giá</string>
+    <string name="LogToConti">Đăng nhập để tiếp tục</string>
+    <string name="cancel">Hủy bỏ</string>
+    <string name="conti">Tiếp tục</string>
+    <string name="uIcon">Hình đại điện trang cá nhân</string>
+    <string name="uWall">Hình nền trang cá nhân</string>
+    <string name="forgot_password">Quên mật khẩu?</string>
+
+    <string name="google_place_api">AIzaSyDatjE4KJI4Oh3NCOnF9Ug69a9UGL-HNHU</string>
+    <string name="resetPass1">Địa chỉ email dùng để đăng kí tài khoản:</string>
+    <string name="resetPass2">Vui lòng điền địa chỉ email!</string>
+    <string name="resetPass3">Mail reset mật khẩu đã được gửi đến </string>
+
 </resources>

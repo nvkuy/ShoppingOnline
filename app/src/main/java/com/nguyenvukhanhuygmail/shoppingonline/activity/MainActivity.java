@@ -31,6 +31,11 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.nguyenvukhanhuygmail.shoppingonline.R;
 import com.nguyenvukhanhuygmail.shoppingonline.adapter.CategoryAdapter;
 import com.nguyenvukhanhuygmail.shoppingonline.adapter.ProductAdapter;
@@ -64,6 +69,7 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<Category> arr_category;
     CategoryAdapter categoryAdapter;
 
+    DatabaseReference mData;
     FirebaseUser user;
     Button btn_logout;
     TextView tv_username, tv_email;
@@ -94,12 +100,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        start();
-
         if (CheckConnection.haveNetworkConnection(getApplication())) {
 
             //nếu có kết nối
-            display_user();
+            start();
+
+            display_NavHeader();
             showListView();
             ActionBar();
             showAdvs();
@@ -141,9 +147,31 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void display_user() {
+    private void display_NavHeader() {
 
-        tv_username.setText("Hello, " + user.getDisplayName());
+        mData = FirebaseDatabase.getInstance().getReference();
+        mData.child("Users").child(user.getUid()).child("user_name").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                try {
+                    tv_username.setText(dataSnapshot.getValue().toString());
+                } catch (NullPointerException e) {
+
+                    startActivity(new Intent(getApplication(), UserProfile.class));
+                    overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+                    finish();
+
+                }
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
         tv_email.setText(user.getEmail());
 
 
@@ -151,13 +179,17 @@ public class MainActivity extends AppCompatActivity {
         btn_logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getApplication(), LoginAndSignUp.class));
-                overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
-                FirebaseAuth.getInstance().signOut();
-                finish();
+                LogoutAndBack();
             }
         });
 
+    }
+
+    private void LogoutAndBack() {
+        startActivity(new Intent(getApplication(), LoginAndSignUp.class));
+        overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+        FirebaseAuth.getInstance().signOut();
+        finish();
     }
 
     private void onRV_ItemClick() {

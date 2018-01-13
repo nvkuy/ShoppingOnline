@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.nguyenvukhanhuygmail.shoppingonline.ultil.CustomEditText
+        android:drawablePadding="12dp"
+        android:inputType="none"
+        android:editable="false"
+        android:drawableLeft="@drawable/ic_close_black_24dp"
+        android:background="@android:color/transparent"
+        android:textSize="20sp"
+        android:layout_margin="20dp"
+        android:id="@+id/edtIconOrWall"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <RadioGroup
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RadioButton
+            android:text="@string/uIcon"
+            android:checked="true"
+            android:id="@+id/radiobtn_icon"
+            android:layout_margin="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <RadioButton
+            android:text="@string/uWall"
+            android:id="@+id/radiobtn_wall"
+            android:layout_margin="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </RadioGroup>
+
+    <Button
+        android:id="@+id/Ok"
+        android:textSize="16sp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        style="@style/Base.TextAppearance.AppCompat.Body1"
+        android:layout_margin="10dp"
+        android:padding="16dp"
+        android:textAllCaps="true"
+        android:textColor="@color/whire"
+        android:text="@string/conti"
+        android:background="@drawable/background_signup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+</LinearLayout>

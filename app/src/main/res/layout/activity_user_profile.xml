@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="com.nguyenvukhanhuygmail.shoppingonline.activity.UserProfile">
-    
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="250dp">
@@ -16,45 +16,180 @@
             android:layout_height="wrap_content">
 
             <LinearLayout
-                android:background="@drawable/profile_gradient"
+                android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="200dp">
+
+                <ImageView
+                    android:scaleType="centerCrop"
+                    android:id="@+id/user_wall"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/profile_gradient" />
             </LinearLayout>
 
             <ImageView
-                android:visibility="invisible"
-                android:layout_gravity="top|left"
-                android:id="@+id/back"
-                android:layout_margin="15dp"
-                android:src="@drawable/ic_arrow_back_white_24dp"
+                android:id="@+id/btnBack"
                 android:layout_width="24dp"
-                android:layout_height="24dp" />
+                android:layout_height="24dp"
+                android:layout_gravity="top|left"
+                android:layout_margin="15dp"
+                android:src="@drawable/ic_arrow_back_white_24dp"/>
+
+            <android.support.design.widget.FloatingActionButton
+                app:fabSize="mini"
+                android:src="@drawable/more_action"
+                android:backgroundTint="@color/whire"
+                android:layout_gravity="bottom|right"
+                android:layout_margin="16sp"
+                android:id="@+id/wall_fab"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <include layout="@layout/fab_layout"/>
 
         </FrameLayout>
 
         <ImageView
-            android:src="@drawable/default_user"
-            android:layout_centerHorizontal="true"
-            android:layout_alignParentBottom="true"
+            android:scaleType="centerCrop"
+            android:id="@+id/user_img"
             android:layout_width="100dp"
-            android:layout_height="100dp" />
+            android:layout_height="100dp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/default_user" />
+
+        <!--<LinearLayout-->
+            <!--android:layout_alignParentBottom="true"-->
+            <!--android:layout_centerHorizontal="true"-->
+            <!--android:layout_marginBottom="3dp"-->
+            <!--android:orientation="horizontal"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content">-->
+
+            <!--<android.support.design.widget.FloatingActionButton-->
+                <!--android:id="@+id/icon_fab"-->
+                <!--app:fabSize="mini"-->
+                <!--android:layout_marginRight="95dp"-->
+                <!--android:src="@drawable/more_action"-->
+                <!--android:backgroundTint="@color/whire"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content" />-->
+
+        <!--</LinearLayout>-->
 
     </RelativeLayout>
 
-    <EditText
-        android:editable="false"
-        android:layout_margin="10dp"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@android:color/transparent"
-        android:drawableRight="@drawable/ic_edit_black_24dp"
-        android:drawablePadding="12dp"
-        android:ems="12"
-        android:hint="@string/user_name"
-        android:maxLines="1"
-        android:padding="8dp"
-        android:textColor="@color/Gray"
-        android:textColorHint="@color/Gray" />
+        android:layout_height="match_parent"
+        android:layout_margin="10dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <com.nguyenvukhanhuygmail.shoppingonline.ultil.CustomEditText
+                android:id="@+id/edt_uName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:background="@android:color/transparent"
+                android:drawablePadding="12dp"
+                android:drawableRight="@drawable/ic_edit_black_24dp"
+                android:ems="12"
+                android:enabled="false"
+                android:hint="@string/user_name"
+                android:maxLines="1"
+                android:padding="8dp"
+                android:textColor="@color/Gray"
+                android:textColorHint="@color/Gray" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/Gray" />
+
+            <com.nguyenvukhanhuygmail.shoppingonline.ultil.CustomEditText
+                android:id="@+id/edt_uPass"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:background="@android:color/transparent"
+                android:drawablePadding="12dp"
+                android:drawableRight="@drawable/ic_edit_black_24dp"
+                android:editable="false"
+                android:ems="12"
+                android:enabled="false"
+                android:hint="@string/password"
+                android:inputType="textPassword"
+                android:maxLines="1"
+                android:padding="8dp"
+                android:textColor="@color/Gray"
+                android:textColorHint="@color/Gray" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/Gray" />
+
+            <com.nguyenvukhanhuygmail.shoppingonline.ultil.CustomEditText
+                android:id="@+id/uPhoneNum"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:background="@android:color/transparent"
+                android:drawablePadding="12dp"
+                android:drawableRight="@drawable/ic_edit_black_24dp"
+                android:ems="12"
+                android:enabled="false"
+                android:hint="@string/phone_number"
+                android:inputType="phone"
+                android:maxLines="1"
+                android:padding="8dp"
+                android:textColor="@color/Gray"
+                android:textColorHint="@color/Gray" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/Gray" />
+
+            <com.nguyenvukhanhuygmail.shoppingonline.ultil.CustomEditText
+                android:id="@+id/uLocation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:background="@android:color/transparent"
+                android:drawablePadding="12dp"
+                android:drawableRight="@drawable/ic_location_on_black_24dp"
+                android:ems="12"
+                android:enabled="false"
+                android:hint="@string/location"
+                android:maxLines="1"
+                android:padding="8dp"
+                android:textColor="@color/Gray"
+                android:textColorHint="@color/Gray" />
+
+            <Button
+                android:id="@+id/btn_commit"
+                android:textSize="16sp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                style="@style/Base.TextAppearance.AppCompat.Body1"
+                android:layout_margin="10dp"
+                android:padding="16dp"
+                android:textAllCaps="true"
+                android:textColor="@color/whire"
+                android:text="@string/finish"
+                android:background="@drawable/background_signup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+    </ScrollView>
 
 
 </LinearLayout>

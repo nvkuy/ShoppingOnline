@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.nguyenvukhanhuygmail.shoppingonline.ultil.CustomEditText
+        android:id="@+id/edt_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:background="@android:color/transparent"
+        android:drawableLeft="@drawable/ic_close_black_24dp"
+        android:drawablePadding="12dp"
+        android:editable="false"
+        android:inputType="none"
+        android:textSize="18sp" />
+
+    <EditText
+        android:id="@+id/edt_email"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:drawablePadding="10dp"
+        android:drawableRight="@drawable/ic_email_black_24dp"
+        android:hint="@string/user_email"
+        android:inputType="textEmailAddress"
+        android:visibility="visible" />
+
+    <TextView
+        android:layout_marginBottom="15dp"
+        android:textAlignment="center"
+        android:visibility="gone"
+        android:id="@+id/status"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:textSize="16sp" />
+
+    <br.com.simplepass.loading_button_lib.customViews.CircularProgressButton
+        android:id="@+id/btn_continue"
+        android:layout_gravity="center_horizontal"
+        style="@style/Base.TextAppearance.AppCompat.Body1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/background_signup"
+        android:padding="16dp"
+        android:text="@string/conti"
+        android:textAllCaps="true"
+        android:textColor="@color/whire"
+        android:textSize="20sp"
+        app:spinning_bar_color="@color/whire"
+        app:spinning_bar_padding="5dp"
+        app:spinning_bar_width="5dp" />
+
+</LinearLayout>

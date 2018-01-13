@@ -31,9 +31,8 @@ public class SignUp extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
 
-        start();
-
         if (CheckConnection.haveNetworkConnection(getApplication())) {
+            start();
             onClick();
         } else {
             CheckConnection.notification(getApplicationContext(), "Vui lòng kiểm tra kết nối!");
@@ -56,21 +55,50 @@ public class SignUp extends AppCompatActivity {
                             mAuth.signInWithEmailAndPassword(email, password);
                             FirebaseUser user = mAuth.getCurrentUser();
 
-                            if (user != null) {
-                                if (user.isEmailVerified()) {
-
-                                    //khi đã xác minh email
-                                    startActivity(new Intent(getApplication(), MainActivity.class));
-
-                                } else {
-
-                                    //khi chưa xác minh email
-                                    startActivity(new Intent(getApplication(), VerificationEmail.class).putExtra("user_name", edt_username.getText().toString()));
-                                }
-                            }
-
+//                            if (user != null) {
+//                                if (user.isEmailVerified()) {
+//
+//                                    //khi đã xác minh email
+//
+//                                    String uID = user.getUid();
+//
+//                                    DatabaseReference mData = FirebaseDatabase.getInstance().getReference();
+//                                    mData.child("Users").child(uID).child("user_name").addValueEventListener(new ValueEventListener() {
+//                                        @Override
+//                                        public void onDataChange(DataSnapshot dataSnapshot) {
+//
+//                                            try {
+//                                                dataSnapshot.getValue().toString();
+//                                                //khi đã điền đầy thông tin profile
+//                                                startActivity(new Intent(getApplication(), MainActivity.class));
+//
+//                                            } catch (NullPointerException e) {
+//                                                //khi chưa điền thông tin profile
+//                                                startActivity(new Intent(getApplication(), UserProfile.class).putExtra("isNeedBack", true));
+//
+//                                            }
+//
+//                                            overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+//                                            finish();
+//
+//                                        }
+//
+//                                        @Override
+//                                        public void onCancelled(DatabaseError databaseError) {
+//
+//                                        }
+//                                    });
+//
+//                                } else {
+//
+//                                    //khi chưa xác minh email
+//                                    startActivity(new Intent(getApplication(), VerificationEmail.class).putExtra("user_name", edt_username.getText().toString()));
+//                                }
+//                            }
+                            startActivity(new Intent(getApplication(), VerificationEmail.class).putExtra("user_name", edt_username.getText().toString()));
                             overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
                             finish();
+
                         } else {
                             // If sign in fails, display a message to the user.
                             Toast.makeText(getApplication(), "Đăng kí thất bại!\n" + task.getException(),
@@ -88,6 +116,8 @@ public class SignUp extends AppCompatActivity {
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                startActivity(new Intent(getApplication(), LoginAndSignUp.class));
+                overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
                 finish();
             }
         });

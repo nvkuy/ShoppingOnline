@@ -41,10 +41,8 @@ public class AboutProduct extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about_product);
 
-        product = getIntentData("product");
-        start();
-
         if (CheckConnection.haveNetworkConnection(getApplication())) {
+            start();
             ActionBar();
             showProduct(product);
             onButtonClickListener();
@@ -284,6 +282,9 @@ public class AboutProduct extends AppCompatActivity {
         btn_rate = (Button) findViewById(R.id.btn_Rate);
         rb_aboutproduct = (RatingBar) findViewById(R.id.rb_aboutproduct);
         toolbar = (Toolbar) findViewById(R.id.toolbar_AboutProduct);
+
+        product = getIntentData("product");
+
     }
 
     private Product getIntentData(String key) {

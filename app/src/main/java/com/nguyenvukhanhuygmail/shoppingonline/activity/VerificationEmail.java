@@ -32,15 +32,15 @@ public class VerificationEmail extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_verification_email);
 
-        start();
-
         if (CheckConnection.haveNetworkConnection(getApplication())) {
 
+            start();
             onBtnClick();
             setInfo();
 
         } else {
             CheckConnection.notification(getApplication(), "Vui lòng kiểm tra kết nối internet!");
+            finish();
         }
 
     }
@@ -120,13 +120,15 @@ public class VerificationEmail extends AppCompatActivity {
                                 e.printStackTrace();
                             }
 
-                            startActivity(new Intent(getApplication(), UserProfile.class));
+                            startActivity(new Intent(getApplication(), UserProfile.class).putExtra("isNeedBack", true));
                             overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
                             finish();
                         } else {
                             setInfo();
                             btn_done.doneLoadingAnimation(R.color.whire, BitmapFactory.decodeResource(getResources(), R.drawable.ic_close_white_48dp));
+                            btn_done.setVisibility(View.GONE);
                             btn_done.revertAnimation();
+                            btn_SendLink.setVisibility(View.VISIBLE);
 
                         }
 
@@ -146,6 +148,7 @@ public class VerificationEmail extends AppCompatActivity {
                             txt_status.setVisibility(View.VISIBLE);
                             txt_link.setVisibility(View.VISIBLE);
                             btn_done.setVisibility(View.VISIBLE);
+                            btn_SendLink.revertAnimation();
                         } else {
                             Toast.makeText(getApplication(), String.valueOf(task.getException()), Toast.LENGTH_LONG).show();
                         }
