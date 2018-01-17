@@ -1,16 +1,20 @@
-package com.nguyenvukhanhuygmail.shoppingonline.activity;
+package com.nguyenvukhanhuygmail.shoppingonline.fragment;
 
 import android.app.Dialog;
+import android.app.Fragment;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v7.app.AppCompatActivity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -31,6 +35,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.nguyenvukhanhuygmail.shoppingonline.R;
+import com.nguyenvukhanhuygmail.shoppingonline.activity.MainActivity;
 import com.nguyenvukhanhuygmail.shoppingonline.ultil.CheckConnection;
 import com.nguyenvukhanhuygmail.shoppingonline.ultil.CustomEditText;
 import com.nguyenvukhanhuygmail.shoppingonline.ultil.DrawableClickListener;
@@ -38,9 +43,27 @@ import com.nguyenvukhanhuygmail.shoppingonline.ultil.DrawableClickListener;
 import java.util.HashMap;
 import java.util.Map;
 
-public class UserProfile extends AppCompatActivity {
+/**
+ * A simple {@link Fragment} subclass.
+ * Activities that contain this fragment must implement the
+ * {@link ProfileFragment.OnFragmentInteractionListener} interface
+ * to handle interaction events.
+ * Use the {@link ProfileFragment#newInstance} factory method to
+ * create an instance of this fragment.
+ */
+public class ProfileFragment extends android.support.v4.app.Fragment {
+    // TODO: Rename parameter arguments, choose names that match
+    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+    private static final String ARG_PARAM1 = "param1";
+    private static final String ARG_PARAM2 = "param2";
 
-    ImageView user_icon, user_wall, btn_back;
+    // TODO: Rename and change types of parameters
+    private String mParam1;
+    private String mParam2;
+
+    private OnFragmentInteractionListener mListener;
+
+    ImageView user_icon, user_wall;
     CustomEditText edt_uName, edt_uPass, edt_uPhoneNum, edt_uLocation;
     Button btn_commit;
     FloatingActionButton fab_wall, fabTakePhoto, fabPickPhoto;
@@ -60,20 +83,64 @@ public class UserProfile extends AppCompatActivity {
     FirebaseUser user;
     DatabaseReference mData;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_user_profile);
+    public ProfileFragment() {
+        // Required empty public constructor
+    }
 
-        if (CheckConnection.haveNetworkConnection(getApplication())) {
+    /**
+     * Use this factory method to create a new instance of
+     * this fragment using the provided parameters.
+     *
+     * @param param1 Parameter 1.
+     * @param param2 Parameter 2.
+     * @return A new instance of fragment ProfileFragment.
+     */
+    // TODO: Rename and change types and number of parameters
+    public static ProfileFragment newInstance(String param1, String param2) {
+        ProfileFragment fragment = new ProfileFragment();
+        Bundle args = new Bundle();
+        args.putString(ARG_PARAM1, param1);
+        args.putString(ARG_PARAM2, param2);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            mParam1 = getArguments().getString(ARG_PARAM1);
+            mParam2 = getArguments().getString(ARG_PARAM2);
+        }
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_profile, container, false);
+    }
+
+    // TODO: Rename method, update argument and hook method into UI event
+    public void onButtonPressed(Uri uri) {
+        if (mListener != null) {
+            mListener.onFragmentInteraction(uri);
+        }
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        if (CheckConnection.haveNetworkConnection(getActivity().getApplication())) {
 
             start();
             btnClick();
             drawableEdtClick();
 
         } else {
-            CheckConnection.notification(getApplication(), "Vui lòng kiểm tra kết nối internet!");
-            finish();
+            CheckConnection.notification(getActivity().getApplication(), "Vui lòng kiểm tra kết nối internet!");
+            getActivity().finish();
         }
 
     }
@@ -86,31 +153,31 @@ public class UserProfile extends AppCompatActivity {
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
 
-        if (requestCode == request_code_image1 && resultCode == RESULT_OK && data != null) {
+        if (requestCode == request_code_image1 && resultCode == getActivity().RESULT_OK && data != null) {
 
             Bitmap bitmap = (Bitmap) data.getExtras().get("data");
             user_icon.setImageBitmap(bitmap);
 
-        } else if (requestCode == request_code_image2 && resultCode == RESULT_OK && data != null) {
+        } else if (requestCode == request_code_image2 && resultCode == getActivity().RESULT_OK && data != null) {
 
             Bitmap bitmap = (Bitmap) data.getExtras().get("data");
             user_wall.setImageBitmap(bitmap);
 
-        } else if (requestCode == request_code_image3 && resultCode == RESULT_OK && data != null) {
+        } else if (requestCode == request_code_image3 && resultCode == getActivity().RESULT_OK && data != null) {
 
             Uri selectedImgUri = data.getData();
             user_icon.setImageURI(selectedImgUri);
 
-        } else if (requestCode == request_code_image4 && resultCode == RESULT_OK && data != null) {
+        } else if (requestCode == request_code_image4 && resultCode == getActivity().RESULT_OK && data != null) {
 
             Uri selectedImgUri = data.getData();
             user_wall.setImageURI(selectedImgUri);
 
-        } else if (requestCode == request_code_map && resultCode == RESULT_OK && data != null) {
+        } else if (requestCode == request_code_map && resultCode == getActivity().RESULT_OK && data != null) {
 
-            Place place = PlacePicker.getPlace(data, this);
+            Place place = PlacePicker.getPlace(data, getActivity());
             edt_uLocation.setText(place.getAddress());
 
         }
@@ -124,7 +191,7 @@ public class UserProfile extends AppCompatActivity {
         PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();
 
         try {
-            startActivityForResult(builder.build(UserProfile.this), request_code_map);
+            startActivityForResult(builder.build(getActivity()), request_code_map);
         } catch (GooglePlayServicesRepairableException | GooglePlayServicesNotAvailableException e) {
             e.printStackTrace();
         }
@@ -216,19 +283,11 @@ public class UserProfile extends AppCompatActivity {
 
     private void btnClick() {
 
-        btn_back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                LogoutAndBack();
-            }
-        });
-
         btn_commit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                progressDialog = new ProgressDialog(UserProfile.this);
+                progressDialog = new ProgressDialog(getActivity());
                 progressDialog.setMessage("Đang xử lí dữ liệu..");
                 progressDialog.show();
 
@@ -247,11 +306,11 @@ public class UserProfile extends AppCompatActivity {
 
                     if (uName.isEmpty() || uPhone.isEmpty() || uLocation.isEmpty()) {
 
-                        Toast.makeText(getApplication(), "Vui lòng điền đầy đủ thông tin!", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getActivity().getApplication(), "Vui lòng điền đầy đủ thông tin!", Toast.LENGTH_LONG).show();
 
                     } else if (uNewPass.length() > 0 && uNewPass.length() < 6) {
 
-                        Toast.makeText(getApplication(), "Mật khẩu mới phải dài tối thiểu 6 kí tự!", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getActivity().getApplication(), "Mật khẩu mới phải dài tối thiểu 6 kí tự!", Toast.LENGTH_LONG).show();
 
                     } else {
 
@@ -298,7 +357,7 @@ public class UserProfile extends AppCompatActivity {
 
     private void showDialogPhoto(String title, final boolean isTakePhoto) {
 
-        final Dialog IconOrWallDialog = new Dialog(this);
+        final Dialog IconOrWallDialog = new Dialog(getActivity());
         IconOrWallDialog.setContentView(R.layout.icon_or_wall);
 
         CustomEditText edt_title = (CustomEditText) IconOrWallDialog.findViewById(R.id.edtIconOrWall);
@@ -364,15 +423,15 @@ public class UserProfile extends AppCompatActivity {
                                         @Override
                                         public void onComplete(@NonNull Task<Void> task) {
                                             if (task.isSuccessful()) {
-                                                Toast.makeText(getApplication(), "Cập nhật mật khẩu mới thành công!", Toast.LENGTH_LONG).show();
+                                                Toast.makeText(getActivity().getApplication(), "Cập nhật mật khẩu mới thành công!", Toast.LENGTH_LONG).show();
                                             } else {
-                                                Toast.makeText(getApplication(), "Cập nhật mật khẩu mới thất bại!", Toast.LENGTH_LONG).show();
+                                                Toast.makeText(getActivity().getApplication(), "Cập nhật mật khẩu mới thất bại!", Toast.LENGTH_LONG).show();
                                             }
                                         }
                                     });
 
                         } else {
-                            Toast.makeText(getApplication(), "Cập nhật mật khẩu mới thất bại!", Toast.LENGTH_LONG).show();
+                            Toast.makeText(getActivity().getApplication(), "Cập nhật mật khẩu mới thất bại!", Toast.LENGTH_LONG).show();
                         }
 
                     }
@@ -382,7 +441,7 @@ public class UserProfile extends AppCompatActivity {
 
     private void showDialogUpdatePass(final String uNewPass) {
 
-        final Dialog UserUpdateDialog = new Dialog(this);
+        final Dialog UserUpdateDialog = new Dialog(getActivity());
         UserUpdateDialog.setContentView(R.layout.update_pass_dialog);
 
         Button btn_cancel = (Button) UserUpdateDialog.findViewById(R.id.cancel);
@@ -435,12 +494,12 @@ public class UserProfile extends AppCompatActivity {
             public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
 
                 if (databaseError == null) {
-                    Toast.makeText(getApplication(), "Cập nhật hồ sơ người dùng thành công!", Toast.LENGTH_LONG).show();
-                    startActivity(new Intent(getApplication(), MainActivity.class));
-                    overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
-                    finish();
+                    Toast.makeText(getActivity().getApplication(), "Cập nhật hồ sơ người dùng thành công!", Toast.LENGTH_LONG).show();
+                    startActivity(new Intent(getActivity().getApplication(), MainActivity.class));
+                    getActivity().overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+                    getActivity().finish();
                 } else {
-                    Toast.makeText(getApplication(), "Cập nhật hồ sơ người dùng thất bại!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getActivity().getApplication(), "Cập nhật hồ sơ người dùng thất bại!", Toast.LENGTH_LONG).show();
                 }
 
                 progressDialog.dismiss();
@@ -449,31 +508,53 @@ public class UserProfile extends AppCompatActivity {
         });
     }
 
-    private void LogoutAndBack() {
+    private void start() {
 
-        startActivity(new Intent(getApplication(), LoginAndSignUp.class));
-        overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
-        FirebaseAuth.getInstance().signOut();
-        finish();
+        user_icon = (ImageView) getActivity().findViewById(R.id.user_img);
+        user_wall = (ImageView) getActivity().findViewById(R.id.user_wall);
+
+        btn_commit = (Button) getActivity().findViewById(R.id.btn_commit);
+
+        fab_wall = (FloatingActionButton) getActivity().findViewById(R.id.wall_fab);
+        fabTakePhoto = (FloatingActionButton) getActivity().findViewById(R.id.fabTakePhoto1);
+        fabPickPhoto = (FloatingActionButton) getActivity().findViewById(R.id.fabPickPhoto1);
+
+        edt_uName = (CustomEditText) getActivity().findViewById(R.id.edt_uName);
+        edt_uPass = (CustomEditText) getActivity().findViewById(R.id.edt_uPass);
+        edt_uPhoneNum = (CustomEditText) getActivity().findViewById(R.id.uPhoneNum);
+        edt_uLocation = (CustomEditText) getActivity().findViewById(R.id.uLocation);
 
     }
 
-    private void start() {
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof OnFragmentInteractionListener) {
+            mListener = (OnFragmentInteractionListener) context;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement OnFragmentInteractionListener");
+        }
+    }
 
-        user_icon = (ImageView) findViewById(R.id.user_img);
-        user_wall = (ImageView) findViewById(R.id.user_wall);
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mListener = null;
+    }
 
-        btn_back = (ImageView) findViewById(R.id.btnBack);
-        btn_commit = (Button) findViewById(R.id.btn_commit);
-
-        fab_wall = (FloatingActionButton) findViewById(R.id.wall_fab);
-        fabTakePhoto = (FloatingActionButton) findViewById(R.id.fabTakePhoto1);
-        fabPickPhoto = (FloatingActionButton) findViewById(R.id.fabPickPhoto1);
-
-        edt_uName = (CustomEditText) findViewById(R.id.edt_uName);
-        edt_uPass = (CustomEditText) findViewById(R.id.edt_uPass);
-        edt_uPhoneNum = (CustomEditText) findViewById(R.id.uPhoneNum);
-        edt_uLocation = (CustomEditText) findViewById(R.id.uLocation);
-
+    /**
+     * This interface must be implemented by activities that contain this
+     * fragment to allow an interaction in this fragment to be communicated
+     * to the activity and potentially other fragments contained in that
+     * activity.
+     * <p>
+     * See the Android Training lesson <a href=
+     * "http://developer.android.com/training/basics/fragments/communicating.html"
+     * >Communicating with Other Fragments</a> for more information.
+     */
+    public interface OnFragmentInteractionListener {
+        // TODO: Update argument type and name
+        void onFragmentInteraction(Uri uri);
     }
 }

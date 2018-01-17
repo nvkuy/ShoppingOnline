@@ -36,4 +36,7 @@
     <string name="resetPass2">Vui lòng điền địa chỉ email!</string>
     <string name="resetPass3">Mail reset mật khẩu đã được gửi đến </string>
 
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
 </resources>

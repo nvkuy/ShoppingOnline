@@ -120,7 +120,7 @@ public class VerificationEmail extends AppCompatActivity {
                                 e.printStackTrace();
                             }
 
-                            startActivity(new Intent(getApplication(), UserProfile.class).putExtra("isNeedBack", true));
+                            startActivity(new Intent(getApplication(), UserProfile.class));
                             overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
                             finish();
                         } else {

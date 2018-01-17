@@ -85,7 +85,7 @@ public class LoginAndSignUp extends AppCompatActivity {
                             startActivity(new Intent(getApplication(), MainActivity.class));
                         } catch (NullPointerException e) {
                             //khi chưa điền thông tin profile
-                            startActivity(new Intent(getApplication(), UserProfile.class).putExtra("isNeedBack", true));
+                            startActivity(new Intent(getApplication(), UserProfile.class));
                         }
 
                         overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
