@@ -26,6 +26,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -33,6 +34,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.nguyenvukhanhuygmail.shoppingonline.R;
 import com.nguyenvukhanhuygmail.shoppingonline.adapter.CategoryAdapter;
 import com.nguyenvukhanhuygmail.shoppingonline.adapter.Tabbar_Adapter;
@@ -41,7 +44,9 @@ import com.nguyenvukhanhuygmail.shoppingonline.fragment.ShoppingFragment;
 import com.nguyenvukhanhuygmail.shoppingonline.model.Cart;
 import com.nguyenvukhanhuygmail.shoppingonline.model.Category;
 import com.nguyenvukhanhuygmail.shoppingonline.ultil.CheckConnection;
+import com.nguyenvukhanhuygmail.shoppingonline.ultil.PicassoCircleTransformation;
 import com.nguyenvukhanhuygmail.shoppingonline.ultil.Server;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -51,8 +56,8 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements ShoppingFragment.OnFragmentInteractionListener, ProfileFragment.OnFragmentInteractionListener {
 
-    final int Slide_in = R.anim.slide_in;
-    final int Slide_out = R.anim.slide_out;
+//    final int Slide_in = R.anim.slide_in;
+//    final int Slide_out = R.anim.slide_out;
 
     Toolbar toolbar;
     TabLayout tabLayout;
@@ -67,9 +72,12 @@ public class MainActivity extends AppCompatActivity implements ShoppingFragment.
 
     DatabaseReference mData;
     FirebaseUser user;
+    FirebaseStorage storage;
+    StorageReference storageRef;
+
     Button btn_logout;
     TextView tv_username, tv_email;
-    ImageView user_icon;
+    ImageView user_icon, user_wall;
 
     int id = 0;
     String Category_name = "";
@@ -136,7 +144,7 @@ public class MainActivity extends AppCompatActivity implements ShoppingFragment.
 
     private void display_NavHeader() {
 
-        mData = FirebaseDatabase.getInstance().getReference();
+        // display user name
         mData.child("Users").child(user.getUid()).child("user_name").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -159,9 +167,37 @@ public class MainActivity extends AppCompatActivity implements ShoppingFragment.
             }
         });
 
+        // display uEmail
         tv_email.setText(user.getEmail());
 
+        // display uIcon
+        storageRef.child("uIcon" + user.getUid() + ".png")
+                .getDownloadUrl()
+                .addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+                        Picasso.with(getApplication())
+                                .load(uri)
+                                .placeholder(R.drawable.wait)
+                                .error(R.drawable.default_user)
+                                .transform(new PicassoCircleTransformation())
+                                .into(user_icon);
+                    }
+                });
 
+        //display uWall
+        storageRef.child("uWall" + user.getUid() + ".png")
+                .getDownloadUrl()
+                .addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+                        Picasso.with(getApplication())
+                                .load(uri)
+                                .placeholder(R.drawable.wait)
+                                .error(R.drawable.profile_gradient)
+                                .into(user_wall);
+                    }
+                });
 
         btn_logout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -290,6 +326,15 @@ public class MainActivity extends AppCompatActivity implements ShoppingFragment.
 
     private void start() {
 
+        mData = FirebaseDatabase.getInstance().getReference();
+        user = FirebaseAuth.getInstance().getCurrentUser();
+
+        storage = FirebaseStorage.getInstance();
+        // Create a storage reference from our app
+        storageRef = storage.getReferenceFromUrl("gs://shopping-online-6c182.appspot.com");
+//        StorageReference uIconRef = storageRef.child("uIcon" + user.getUid() + ".png");
+//        StorageReference uWallRef = storageRef.child("uWall" + user.getUid() + ".png");
+
         tabLayout = (TabLayout) findViewById(R.id.tab_layout);
         toolbar = (Toolbar) findViewById(R.id.toolbar_home);
         pager = (ViewPager) findViewById(R.id.paper);
@@ -299,11 +344,11 @@ public class MainActivity extends AppCompatActivity implements ShoppingFragment.
         gv_category = (GridView) findViewById(R.id.gv_category);
         drawerLayout = (DrawerLayout) findViewById(R.id.DrawerLayout);
 
-        user = FirebaseAuth.getInstance().getCurrentUser();
         btn_logout = (Button) findViewById(R.id.btn_logout);
         tv_email = (TextView) findViewById(R.id.tv_email);
         tv_username = (TextView) findViewById(R.id.tv_username);
         user_icon = (ImageView) findViewById(R.id.user_icon);
+        user_wall = (ImageView) findViewById(R.id.user_wall);
 
         arr_category = new ArrayList<>();
 

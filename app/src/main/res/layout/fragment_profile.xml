@@ -12,7 +12,7 @@
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -121,7 +121,7 @@
                         android:editable="false"
                         android:ems="12"
                         android:enabled="false"
-                        android:hint="@string/password"
+                        android:hint="@string/new_pass"
                         android:inputType="textPassword"
                         android:maxLines="1"
                         android:padding="8dp"
@@ -171,7 +171,29 @@
                         android:textColor="@color/Gray"
                         android:textColorHint="@color/Gray" />
 
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/Gray" />
+
+                    <com.nguyenvukhanhuygmail.shoppingonline.ultil.CustomEditText
+                        android:text="Tiền trong tài khoản: 0đ"
+                        android:id="@+id/uMoney"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:background="@android:color/transparent"
+                        android:drawablePadding="12dp"
+                        android:drawableRight="@drawable/ic_attach_money_black_24dp"
+                        android:ems="12"
+                        android:enabled="false"
+                        android:maxLines="1"
+                        android:padding="8dp"
+                        android:textColor="@color/Gray"
+                        android:textColorHint="@color/Gray" />
+
                     <Button
+                        android:visibility="gone"
                         android:id="@+id/btn_commit"
                         android:textSize="16sp"
                         android:layout_marginLeft="10dp"

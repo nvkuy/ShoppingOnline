@@ -22,6 +22,8 @@ import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlacePicker;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.EmailAuthProvider;
@@ -30,11 +32,15 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.nguyenvukhanhuygmail.shoppingonline.R;
 import com.nguyenvukhanhuygmail.shoppingonline.ultil.CheckConnection;
 import com.nguyenvukhanhuygmail.shoppingonline.ultil.CustomEditText;
 import com.nguyenvukhanhuygmail.shoppingonline.ultil.DrawableClickListener;
 
+import java.io.ByteArrayOutputStream;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -58,6 +64,8 @@ public class UserProfile extends AppCompatActivity {
     int request_code_map = 5;
 
     FirebaseUser user;
+    FirebaseStorage storage;
+    StorageReference storageRef;
     DatabaseReference mData;
 
     @Override
@@ -214,6 +222,30 @@ public class UserProfile extends AppCompatActivity {
 
     }
 
+    private void uploadImg(ImageView imageView, StorageReference storageRef) {
+        // Get the data from an ImageView as bytes
+        imageView.setDrawingCacheEnabled(true);
+        imageView.buildDrawingCache();
+        Bitmap bitmap = imageView.getDrawingCache();
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
+        byte[] data = baos.toByteArray();
+
+        UploadTask uploadTask = storageRef.putBytes(data);
+        uploadTask.addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                // Handle unsuccessful uploads
+            }
+        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                // taskSnapshot.getMetadata() contains file metadata such as size, content-type, and download URL.
+                Uri downloadUrl = taskSnapshot.getDownloadUrl();
+            }
+        });
+    }
+
     private void btnClick() {
 
         btn_back.setOnClickListener(new View.OnClickListener() {
@@ -231,6 +263,12 @@ public class UserProfile extends AppCompatActivity {
                 progressDialog = new ProgressDialog(UserProfile.this);
                 progressDialog.setMessage("Đang xử lí dữ liệu..");
                 progressDialog.show();
+
+                StorageReference uIconRef = storageRef.child("uIcon" + uID + ".png");
+                StorageReference uWallRef = storageRef.child("uWall" + uID + ".png");
+
+                uploadImg(user_icon, uIconRef);
+                uploadImg(user_wall, uWallRef);
 
                 user = FirebaseAuth.getInstance().getCurrentUser();
                 if (user != null) {
@@ -394,6 +432,7 @@ public class UserProfile extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 UserUpdateDialog.dismiss();
+                post_user();
             }
         });
 
@@ -459,6 +498,10 @@ public class UserProfile extends AppCompatActivity {
     }
 
     private void start() {
+
+        storage = FirebaseStorage.getInstance();
+        // Create a storage reference from our app
+        storageRef = storage.getReferenceFromUrl("gs://shopping-online-6c182.appspot.com");
 
         user_icon = (ImageView) findViewById(R.id.user_img);
         user_wall = (ImageView) findViewById(R.id.user_wall);

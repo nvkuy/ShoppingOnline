@@ -26,20 +26,29 @@ import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlacePicker;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.nguyenvukhanhuygmail.shoppingonline.R;
-import com.nguyenvukhanhuygmail.shoppingonline.activity.MainActivity;
 import com.nguyenvukhanhuygmail.shoppingonline.ultil.CheckConnection;
 import com.nguyenvukhanhuygmail.shoppingonline.ultil.CustomEditText;
 import com.nguyenvukhanhuygmail.shoppingonline.ultil.DrawableClickListener;
+import com.nguyenvukhanhuygmail.shoppingonline.ultil.PicassoCircleTransformation;
+import com.squareup.picasso.Picasso;
 
+import java.io.ByteArrayOutputStream;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -82,6 +91,8 @@ public class ProfileFragment extends android.support.v4.app.Fragment {
 
     FirebaseUser user;
     DatabaseReference mData;
+    FirebaseStorage storage;
+    StorageReference storageRef;
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -135,6 +146,7 @@ public class ProfileFragment extends android.support.v4.app.Fragment {
         if (CheckConnection.haveNetworkConnection(getActivity().getApplication())) {
 
             start();
+            setInfo();
             btnClick();
             drawableEdtClick();
 
@@ -142,6 +154,84 @@ public class ProfileFragment extends android.support.v4.app.Fragment {
             CheckConnection.notification(getActivity().getApplication(), "Vui lòng kiểm tra kết nối internet!");
             getActivity().finish();
         }
+
+    }
+
+    private void setInfo() {
+
+        //display user name
+        mData.child("Users").child(uID).child("user_name").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot != null) {
+                    edt_uName.setText(dataSnapshot.getValue().toString());
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+        //display phone number
+        mData.child("Users").child(uID).child("phone_number").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot != null) {
+                    edt_uPhoneNum.setText(dataSnapshot.getValue().toString());
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+        //display address
+        mData.child("Users").child(uID).child("address").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot != null) {
+                    edt_uLocation.setText(dataSnapshot.getValue().toString());
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+        //display uIcon
+        storageRef.child("uIcon" + uID + ".png")
+                .getDownloadUrl()
+                .addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+                        Picasso.with(getActivity().getApplication())
+                                .load(uri)
+                                .placeholder(R.drawable.wait)
+                                .error(R.drawable.default_user)
+                                .transform(new PicassoCircleTransformation())
+                                .into(user_icon);
+                    }
+                });
+
+        //display uWall
+        storageRef.child("uWall" + uID + ".png")
+                .getDownloadUrl()
+                .addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+                        Picasso.with(getActivity().getApplication())
+                                .load(uri)
+                                .placeholder(R.drawable.wait)
+                                .error(R.drawable.profile_gradient)
+                                .into(user_wall);
+                    }
+                });
 
     }
 
@@ -159,26 +249,31 @@ public class ProfileFragment extends android.support.v4.app.Fragment {
 
             Bitmap bitmap = (Bitmap) data.getExtras().get("data");
             user_icon.setImageBitmap(bitmap);
+            btn_commit.setVisibility(View.VISIBLE);
 
         } else if (requestCode == request_code_image2 && resultCode == getActivity().RESULT_OK && data != null) {
 
             Bitmap bitmap = (Bitmap) data.getExtras().get("data");
             user_wall.setImageBitmap(bitmap);
+            btn_commit.setVisibility(View.VISIBLE);
 
         } else if (requestCode == request_code_image3 && resultCode == getActivity().RESULT_OK && data != null) {
 
             Uri selectedImgUri = data.getData();
             user_icon.setImageURI(selectedImgUri);
+            btn_commit.setVisibility(View.VISIBLE);
 
         } else if (requestCode == request_code_image4 && resultCode == getActivity().RESULT_OK && data != null) {
 
             Uri selectedImgUri = data.getData();
             user_wall.setImageURI(selectedImgUri);
+            btn_commit.setVisibility(View.VISIBLE);
 
         } else if (requestCode == request_code_map && resultCode == getActivity().RESULT_OK && data != null) {
 
             Place place = PlacePicker.getPlace(data, getActivity());
             edt_uLocation.setText(place.getAddress());
+            btn_commit.setVisibility(View.VISIBLE);
 
         }
 
@@ -217,6 +312,7 @@ public class ProfileFragment extends android.support.v4.app.Fragment {
                         edt_uPass.setEnabled(false);
                         edt_uLocation.setEnabled(false);
                         edt_uPhoneNum.setEnabled(false);
+                        btn_commit.setVisibility(View.VISIBLE);
                         break;
                 }
             }
@@ -231,6 +327,7 @@ public class ProfileFragment extends android.support.v4.app.Fragment {
                         edt_uPass.setEnabled(false);
                         edt_uLocation.setEnabled(false);
                         edt_uName.setEnabled(false);
+                        btn_commit.setVisibility(View.VISIBLE);
                         break;
                 }
             }
@@ -260,6 +357,7 @@ public class ProfileFragment extends android.support.v4.app.Fragment {
                         edt_uName.setEnabled(false);
                         edt_uLocation.setEnabled(false);
                         edt_uPhoneNum.setEnabled(false);
+                        btn_commit.setVisibility(View.VISIBLE);
                         break;
                 }
             }
@@ -281,6 +379,31 @@ public class ProfileFragment extends android.support.v4.app.Fragment {
 
     }
 
+    private void uploadImg(ImageView imageView, StorageReference storageRef) {
+        // Get the data from an ImageView as bytes
+        imageView.setDrawingCacheEnabled(true);
+        imageView.buildDrawingCache();
+        Bitmap bitmap = imageView.getDrawingCache();
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
+        byte[] data = baos.toByteArray();
+
+        UploadTask uploadTask = storageRef.putBytes(data);
+        uploadTask.addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                // Handle unsuccessful uploads
+                Toast.makeText(getActivity().getApplication(), String.valueOf(exception), Toast.LENGTH_LONG).show();
+            }
+        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                // taskSnapshot.getMetadata() contains file metadata such as size, content-type, and download URL.
+                //Uri downloadUrl = taskSnapshot.getDownloadUrl();
+            }
+        });
+    }
+
     private void btnClick() {
 
         btn_commit.setOnClickListener(new View.OnClickListener() {
@@ -291,18 +414,18 @@ public class ProfileFragment extends android.support.v4.app.Fragment {
                 progressDialog.setMessage("Đang xử lí dữ liệu..");
                 progressDialog.show();
 
-                user = FirebaseAuth.getInstance().getCurrentUser();
+                StorageReference uIconRef = storageRef.child("uIcon" + uID + ".png");
+                StorageReference uWallRef = storageRef.child("uWall" + uID + ".png");
+
+                uploadImg(user_icon, uIconRef);
+                uploadImg(user_wall, uWallRef);
+
                 if (user != null) {
 
-                    uID = user.getUid();
-                    uEmail = user.getEmail();
-                    mData = FirebaseDatabase.getInstance().getReference();
-
-
                     uName = edt_uName.getText().toString();
-                    uPhone = edt_uPhoneNum.getText().toString();
+                    uPhone = edt_uPhoneNum.getText().toString().trim();
                     uLocation = edt_uLocation.getText().toString().trim();
-                    uNewPass = edt_uPass.getText().toString();
+                    uNewPass = edt_uPass.getText().toString().trim();
 
                     if (uName.isEmpty() || uPhone.isEmpty() || uLocation.isEmpty()) {
 
@@ -314,6 +437,7 @@ public class ProfileFragment extends android.support.v4.app.Fragment {
 
                     } else {
 
+                        btn_commit.setVisibility(View.GONE);
                         if (uNewPass.length() >= 6) {
                             showDialogUpdatePass(uNewPass);
                         } else {
@@ -453,6 +577,7 @@ public class ProfileFragment extends android.support.v4.app.Fragment {
             @Override
             public void onClick(View view) {
                 UserUpdateDialog.dismiss();
+                post_user();
             }
         });
 
@@ -469,10 +594,10 @@ public class ProfileFragment extends android.support.v4.app.Fragment {
                             .getCredential(uEmail, uOldPass);
 
                     update_pass(credential, uNewPass, user);
-                    post_user();
 
                 }
 
+                post_user();
                 UserUpdateDialog.dismiss();
 
             }
@@ -495,9 +620,6 @@ public class ProfileFragment extends android.support.v4.app.Fragment {
 
                 if (databaseError == null) {
                     Toast.makeText(getActivity().getApplication(), "Cập nhật hồ sơ người dùng thành công!", Toast.LENGTH_LONG).show();
-                    startActivity(new Intent(getActivity().getApplication(), MainActivity.class));
-                    getActivity().overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
-                    getActivity().finish();
                 } else {
                     Toast.makeText(getActivity().getApplication(), "Cập nhật hồ sơ người dùng thất bại!", Toast.LENGTH_LONG).show();
                 }
@@ -509,6 +631,18 @@ public class ProfileFragment extends android.support.v4.app.Fragment {
     }
 
     private void start() {
+
+        storage = FirebaseStorage.getInstance();
+        // Create a storage reference from our app
+        storageRef = storage.getReferenceFromUrl("gs://shopping-online-6c182.appspot.com");
+
+        mData = FirebaseDatabase.getInstance().getReference();
+        user = FirebaseAuth.getInstance().getCurrentUser();
+
+        if (user != null) {
+            uID = user.getUid();
+            uEmail = user.getEmail();
+        }
 
         user_icon = (ImageView) getActivity().findViewById(R.id.user_img);
         user_wall = (ImageView) getActivity().findViewById(R.id.user_wall);
@@ -523,6 +657,7 @@ public class ProfileFragment extends android.support.v4.app.Fragment {
         edt_uPass = (CustomEditText) getActivity().findViewById(R.id.edt_uPass);
         edt_uPhoneNum = (CustomEditText) getActivity().findViewById(R.id.uPhoneNum);
         edt_uLocation = (CustomEditText) getActivity().findViewById(R.id.uLocation);
+        edt_uLocation.setSingleLine();
 
     }
 
