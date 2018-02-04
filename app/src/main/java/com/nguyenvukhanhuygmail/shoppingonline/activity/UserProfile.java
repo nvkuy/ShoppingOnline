@@ -241,7 +241,7 @@ public class UserProfile extends AppCompatActivity {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                 // taskSnapshot.getMetadata() contains file metadata such as size, content-type, and download URL.
-                Uri downloadUrl = taskSnapshot.getDownloadUrl();
+//                Uri downloadUrl = taskSnapshot.getDownloadUrl();
             }
         });
     }
@@ -468,6 +468,7 @@ public class UserProfile extends AppCompatActivity {
         profile_post.put("user_name", uName);
         profile_post.put("phone_number", uPhone);
         profile_post.put("address", uLocation);
+        profile_post.put("money", 0);
 
         mData.child("Users").child(uID).setValue(profile_post, new DatabaseReference.CompletionListener() {
             @Override

@@ -32,7 +32,7 @@ public class AboutProduct extends AppCompatActivity {
     ImageView img_AboutProduct;
     Toolbar toolbar;
 
-    boolean isNum, isExits;
+    boolean isNum, isExits = false;
     long total_price = 0;
     int numProduct = 0;
 
@@ -98,8 +98,8 @@ public class AboutProduct extends AppCompatActivity {
         final Button btn_cof = add_dialog.findViewById(R.id.btn_cof);
         Button btn_exit = add_dialog.findViewById(R.id.btn_exit);
 
-        final DecimalFormat formater = new DecimalFormat("###,###,###,###,###");
-        tv_price.setText(formater.format(price) + "đ");
+        final DecimalFormat formater = new DecimalFormat("###,###,###");
+        tv_price.setText("0đ");
 
         edt_number.addTextChangedListener(new TextWatcher() {
             @Override
@@ -117,7 +117,7 @@ public class AboutProduct extends AppCompatActivity {
                 } catch (Exception e) {
                     //khi người dùng nhập vào 1 chuỗi ko phải số nguyên
                     isNum = false;
-                    tv_price.setText(formater.format(price) + "đ");
+                    tv_price.setText("0đ");
                 }
             }
 
@@ -168,6 +168,9 @@ public class AboutProduct extends AppCompatActivity {
                                     }
 
                                     break;
+
+                                } else {
+                                    isExits = false;
                                 }
                             }
 

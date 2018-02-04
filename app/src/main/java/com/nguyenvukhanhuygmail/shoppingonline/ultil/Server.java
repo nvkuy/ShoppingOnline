@@ -5,7 +5,7 @@ package com.nguyenvukhanhuygmail.shoppingonline.ultil;
  */
 
 public class Server {
-    private static final String mIP = "192.168.229.1";
+    private static final String mIP = "192.168.0.103";
     public static final String category_path = "http://" + mIP + "/server/getCategoryProduct.php";
     public static final String adv_path = "http://" + mIP + "/server/getAdvs.php";
     public static final String new_product_path = "http://" + mIP + "/server/getNewProduct.php";

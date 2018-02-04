@@ -1,6 +1,7 @@
 package com.nguyenvukhanhuygmail.shoppingonline.activity;
 
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.BitmapFactory;
@@ -227,6 +228,10 @@ public class LoginAndSignUp extends AppCompatActivity {
 
     private void SignIn(final String email, final String password) {
 
+        final ProgressDialog progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("Đang đăng nhập..");
+        progressDialog.show();
+
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -257,10 +262,14 @@ public class LoginAndSignUp extends AppCompatActivity {
 
                             }
 
+                            progressDialog.dismiss();
+
                         } else {
                             // If sign in fails, display a message to the user.
                             Toast.makeText(getApplication(), "Đăng nhập thất bại!\n" + task.getException(),
                                     Toast.LENGTH_SHORT).show();
+                            progressDialog.dismiss();
+
                         }
 
                     }

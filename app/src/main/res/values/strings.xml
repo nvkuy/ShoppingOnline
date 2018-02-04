@@ -32,6 +32,8 @@
     <string name="forgot_password">Quên mật khẩu?</string>
 
     <string name="google_place_api">AIzaSyDatjE4KJI4Oh3NCOnF9Ug69a9UGL-HNHU</string>
+    <!--<string name="UrlRef">gs://shopping-online-6c182.appspot.com</string>-->
+
     <string name="resetPass1">Địa chỉ email dùng để đăng kí tài khoản:</string>
     <string name="resetPass2">Vui lòng điền địa chỉ email!</string>
     <string name="resetPass3">Mail reset mật khẩu đã được gửi đến </string>
@@ -39,5 +41,7 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="new_pass">Mật khẩu mới</string>
+    <string name="commit">Xác nhận</string>
+    <string name="money">Tiền trong tài khoản:</string>
 
 </resources>

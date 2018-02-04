@@ -49,6 +49,7 @@ import com.nguyenvukhanhuygmail.shoppingonline.ultil.PicassoCircleTransformation
 import com.squareup.picasso.Picasso;
 
 import java.io.ByteArrayOutputStream;
+import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -73,7 +74,7 @@ public class ProfileFragment extends android.support.v4.app.Fragment {
     private OnFragmentInteractionListener mListener;
 
     ImageView user_icon, user_wall;
-    CustomEditText edt_uName, edt_uPass, edt_uPhoneNum, edt_uLocation;
+    CustomEditText edt_uName, edt_uPass, edt_uPhoneNum, edt_uLocation, edt_uMoney;
     Button btn_commit;
     FloatingActionButton fab_wall, fabTakePhoto, fabPickPhoto;
     ProgressDialog progressDialog;
@@ -195,6 +196,22 @@ public class ProfileFragment extends android.support.v4.app.Fragment {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot != null) {
                     edt_uLocation.setText(dataSnapshot.getValue().toString());
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+        // display money
+        mData.child("Users").child(uID).child("money").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot != null) {
+                    DecimalFormat formater = new DecimalFormat("###,###,###");
+                    edt_uMoney.setText("Tiền trong tài khoản: " + formater.format(dataSnapshot.getValue()) + "đ");
                 }
             }
 
@@ -358,6 +375,20 @@ public class ProfileFragment extends android.support.v4.app.Fragment {
                         edt_uLocation.setEnabled(false);
                         edt_uPhoneNum.setEnabled(false);
                         btn_commit.setVisibility(View.VISIBLE);
+                        break;
+                }
+            }
+        });
+
+        edt_uMoney.setDrawableClickListener(new DrawableClickListener() {
+            @Override
+            public void onClick(DrawablePosition target) {
+                switch (target) {
+                    case RIGHT:
+                        edt_uPass.setEnabled(false);
+                        edt_uName.setEnabled(false);
+                        edt_uLocation.setEnabled(false);
+                        edt_uPhoneNum.setEnabled(false);
                         break;
                 }
             }
@@ -655,6 +686,7 @@ public class ProfileFragment extends android.support.v4.app.Fragment {
 
         edt_uName = (CustomEditText) getActivity().findViewById(R.id.edt_uName);
         edt_uPass = (CustomEditText) getActivity().findViewById(R.id.edt_uPass);
+        edt_uMoney = (CustomEditText) getActivity().findViewById(R.id.uMoney);
         edt_uPhoneNum = (CustomEditText) getActivity().findViewById(R.id.uPhoneNum);
         edt_uLocation = (CustomEditText) getActivity().findViewById(R.id.uLocation);
         edt_uLocation.setSingleLine();

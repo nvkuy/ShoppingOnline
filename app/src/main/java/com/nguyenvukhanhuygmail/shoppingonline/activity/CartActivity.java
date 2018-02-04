@@ -4,10 +4,11 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.ImageView;
+import android.widget.GridView;
 import android.widget.TextView;
 
 import com.nguyenvukhanhuygmail.shoppingonline.R;
+import com.nguyenvukhanhuygmail.shoppingonline.adapter.CartGridAdapter;
 import com.nguyenvukhanhuygmail.shoppingonline.ultil.CheckConnection;
 
 import java.text.DecimalFormat;
@@ -15,8 +16,10 @@ import java.text.DecimalFormat;
 public class CartActivity extends AppCompatActivity {
 
     Toolbar tb_cart;
-    ImageView show_grid, show_list;
     TextView btn_buyall, total_money;
+    GridView gv_cart;
+
+    CartGridAdapter cartGridAdapter;
 
     long money = 0;
 
@@ -28,8 +31,8 @@ public class CartActivity extends AppCompatActivity {
         if (CheckConnection.haveNetworkConnection(getApplication())) {
             start();
             ActionBar();
+            showCart();
             onClick();
-            show_cart();
         } else {
             CheckConnection.notification(getApplicationContext(), "Vui lòng kiểm tra kết nối!");
             finish();
@@ -37,20 +40,15 @@ public class CartActivity extends AppCompatActivity {
 
     }
 
+    private void showCart() {
+
+        cartGridAdapter = new CartGridAdapter(getApplicationContext(), MainActivity.arr_cart);
+        cartGridAdapter.notifyDataSetChanged();
+        gv_cart.setAdapter(cartGridAdapter);
+
+    }
+
     private void onClick() {
-
-        show_list.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
-        });
-
-        show_grid.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-            }
-        });
 
         btn_buyall.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,10 +56,6 @@ public class CartActivity extends AppCompatActivity {
 
             }
         });
-
-    }
-
-    private void show_cart() {
 
     }
 
@@ -78,9 +72,9 @@ public class CartActivity extends AppCompatActivity {
     }
 
     private void start() {
+
+        gv_cart = (GridView) findViewById(R.id.gv_cart);
         tb_cart = (Toolbar) findViewById(R.id.tb_cart);
-        show_grid = (ImageView) findViewById(R.id.show_grid);
-        show_list = (ImageView) findViewById(R.id.show_list);
         btn_buyall = (TextView) findViewById(R.id.buy_all);
         total_money = (TextView) findViewById(R.id.total_money);
 
