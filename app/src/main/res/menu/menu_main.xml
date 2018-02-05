@@ -6,6 +6,6 @@
         android:icon="@drawable/ic_search_whire_24dp"
         app:actionViewClass="android.support.v7.widget.SearchView"
         app:showAsAction="ifRoom|collapseActionView"
-        android:title="SearchProduct" />
+        android:title="Tìm kiếm sản phẩm.." />
 
 </menu>
