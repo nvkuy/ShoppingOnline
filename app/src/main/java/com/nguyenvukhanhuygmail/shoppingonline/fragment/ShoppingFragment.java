@@ -116,28 +116,26 @@ public class ShoppingFragment extends android.support.v4.app.Fragment {
 
         showAdvs();
 
-            /*
-            * code = 1: rate_product
-            * code = 2: new_product
-            * else: popular_product
-            * */
-
         //show new product
-        showProduct(Server.new_product_path, 2);
+        showProduct(Server.new_product_path, arr_NewProduct);
         //show popular product
-        showProduct(Server.popular_product_path, -1);
+        showProduct(Server.popular_product_path, arr_PopularProduct);
         //show rate product
-        showProduct(Server.sale_product_path, 1);
+        showProduct(Server.rate_product_path, arr_RateProduct);
 
-            /*
-            * code = 2: rate_product
+        /*
             * code = 1: new_product
+            * code = 2: rate_product
             * else: popular_product
             * */
 
         NewProductAdapter = new ProductAdapter(getActivity().getApplicationContext(), arr_NewProduct, 1);
         PopularProductAdapter = new ProductAdapter(getActivity().getApplicationContext(), arr_PopularProduct, -1);
         RateProductAdapter = new ProductAdapter(getActivity().getApplicationContext(), arr_RateProduct, 2);
+
+        NewProductAdapter.notifyDataSetChanged();
+        PopularProductAdapter.notifyDataSetChanged();
+        RateProductAdapter.notifyDataSetChanged();
 
         rv_news.setAdapter(NewProductAdapter);
         rv_popular.setAdapter(PopularProductAdapter);
@@ -154,7 +152,8 @@ public class ShoppingFragment extends android.support.v4.app.Fragment {
         getActivity().overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
     }
 
-    private void showProduct(String url, final int code) {
+    private void showProduct(final String url, final ArrayList<Product> arrProduct) {
+
         RequestQueue requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext());
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(url, new Response.Listener<JSONArray>() {
             @Override
@@ -176,26 +175,31 @@ public class ShoppingFragment extends android.support.v4.app.Fragment {
                             product_left = jsonObject.getInt("product_left");
                             category_id = jsonObject.getInt("category_id");
 
-                            if (code == 1) {
-                                //get sản phẩm được đánh giá cao và add vào mảng
-                                arr_RateProduct.add(i, new Product(product_id, product_name, product_price, product_image, product_description, orders, rate_point, product_left, category_id));
-                                RateProductAdapter.notifyDataSetChanged();
-                            } else if (code == 2) {
+                            arrProduct.add(i, new Product(product_id, product_name, product_price, product_image, product_description, orders, rate_point, product_left, category_id));
 
-                                //get sản phẩm mới và add vào mảng
-                                arr_NewProduct.add(i, new Product(product_id, product_name, product_price, product_image, product_description, orders, rate_point, product_left, category_id));
-                                NewProductAdapter.notifyDataSetChanged();
-                            } else {
-
-                                //get sản phẩm thông dụng và add vào mảng
-                                arr_PopularProduct.add(i, new Product(product_id, product_name, product_price, product_image, product_description, orders, rate_point, product_left, category_id));
-                                PopularProductAdapter.notifyDataSetChanged();
-                            }
+//                            if (code == 1) {
+//
+//                                //get sản phẩm được đánh giá cao và add vào mảng
+//                                arr_RateProduct.add(i, new Product(product_id, product_name, product_price, product_image, product_description, orders, rate_point, product_left, category_id));
+//                                RateProductAdapter.notifyDataSetChanged();
+//                            } else if (code == 2) {
+//
+//                                //get sản phẩm mới và add vào mảng
+//                                arr_NewProduct.add(i, new Product(product_id, product_name, product_price, product_image, product_description, orders, rate_point, product_left, category_id));
+//                                NewProductAdapter.notifyDataSetChanged();
+//                            } else {
+//
+//                                //get sản phẩm thông dụng và add vào mảng
+//                                arr_PopularProduct.add(i, new Product(product_id, product_name, product_price, product_image, product_description, orders, rate_point, product_left, category_id));
+//                                PopularProductAdapter.notifyDataSetChanged();
+//                            }
 
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
                     }
+
+//                    Log.d("sizetest", String.valueOf(arrProduct.size()) + "\n" + response.length() + "\n" + url);
 
                 }
 

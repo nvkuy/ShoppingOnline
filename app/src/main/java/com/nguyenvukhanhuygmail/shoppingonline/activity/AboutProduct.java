@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.nguyenvukhanhuygmail.shoppingonline.R;
 import com.nguyenvukhanhuygmail.shoppingonline.model.Cart;
@@ -150,7 +151,7 @@ public class AboutProduct extends AppCompatActivity {
                     if (isNum) {
                         if (MainActivity.arr_cart.size() > 0) {
                             //khi size mảng > 0(mảng đã có phần tử) thì kiểm tra xem người dùng đã add sản phẩm này hay chưa
-                            for (int i = 1; i < MainActivity.arr_cart.size(); i++) {
+                            for (int i = 0; i < MainActivity.arr_cart.size(); i++) {
                                 if (MainActivity.arr_cart.get(i).getProduct_id() == product.getProduct_id()) {
                                     //khi mảng đã có sản phẩm này rồi thì cập nhật lại
                                     long old_price = MainActivity.arr_cart.get(i).getProduct_price();
@@ -160,17 +161,20 @@ public class AboutProduct extends AppCompatActivity {
                                     long old_num = MainActivity.arr_cart.get(i).getProduct_number();
                                     long new_num = old_num + numProduct;
 
-                                    MainActivity.arr_cart.get(i).setProduct_price(new_price);
-                                    if (new_num > 15) {
-                                        MainActivity.arr_cart.get(i).setProduct_number(15);
+                                    if (new_num <= product.getProduct_left()) {
+                                        if (new_num > 15) {
+                                            MainActivity.arr_cart.get(i).setProduct_number(15);
+                                            MainActivity.arr_cart.get(i).setProduct_price(15 * product.getProduct_price());
+                                        } else {
+                                            MainActivity.arr_cart.get(i).setProduct_price(new_price);
+                                            MainActivity.arr_cart.get(i).setProduct_number(new_num);
+                                        }
                                     } else {
-                                        MainActivity.arr_cart.get(i).setProduct_number(new_num);
+                                        Toast.makeText(getApplication(), "Hiện tại chỉ còn lại " + product.getProduct_left() + " sản phẩm!", Toast.LENGTH_LONG).show();
                                     }
 
                                     break;
 
-                                } else {
-                                    isExits = false;
                                 }
                             }
 
