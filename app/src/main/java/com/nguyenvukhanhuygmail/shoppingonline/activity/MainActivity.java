@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
@@ -18,6 +19,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -37,10 +39,12 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.miguelcatalan.materialsearchview.MaterialSearchView;
 import com.nguyenvukhanhuygmail.shoppingonline.R;
 import com.nguyenvukhanhuygmail.shoppingonline.adapter.CategoryAdapter;
 import com.nguyenvukhanhuygmail.shoppingonline.adapter.Tabbar_Adapter;
 import com.nguyenvukhanhuygmail.shoppingonline.fragment.ProfileFragment;
+import com.nguyenvukhanhuygmail.shoppingonline.fragment.SearchProductFragment;
 import com.nguyenvukhanhuygmail.shoppingonline.fragment.ShoppingFragment;
 import com.nguyenvukhanhuygmail.shoppingonline.model.Cart;
 import com.nguyenvukhanhuygmail.shoppingonline.model.Category;
@@ -55,11 +59,12 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity implements ShoppingFragment.OnFragmentInteractionListener, ProfileFragment.OnFragmentInteractionListener {
+public class MainActivity extends AppCompatActivity implements ShoppingFragment.OnFragmentInteractionListener, ProfileFragment.OnFragmentInteractionListener, SearchProductFragment.OnFragmentInteractionListener {
 
 //    final int Slide_in = R.anim.slide_in;
 //    final int Slide_out = R.anim.slide_out;
 
+    android.support.v7.widget.SearchView sview_main;
     Toolbar toolbar;
     TabLayout tabLayout;
     ViewPager pager;
@@ -79,6 +84,7 @@ public class MainActivity extends AppCompatActivity implements ShoppingFragment.
     Button btn_logout;
     TextView tv_username, tv_email;
     ImageView user_icon, user_wall;
+    MaterialSearchView searchView;
 
     int id = 0;
     String Category_name = "";
@@ -87,7 +93,10 @@ public class MainActivity extends AppCompatActivity implements ShoppingFragment.
     String[] tab_name = {"Cửa hàng", "Người dùng"};
     int[] tab_icon = {R.drawable.ic_shopping_cart_white_24dp, R.drawable.ic_person_outline_white_24dp};
 
+    final String tag = "SearchProductFragment";
+
     Tabbar_Adapter tabbar_adapter;
+    FrameLayout container;
 
     public static ArrayList<Cart> arr_cart;
 
@@ -304,6 +313,52 @@ public class MainActivity extends AppCompatActivity implements ShoppingFragment.
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_main, menu);
 
+        MenuItem item = menu.findItem(R.id.action_search);
+        searchView.setMenuItem(item);
+
+        searchView.setOnSearchViewListener(new MaterialSearchView.SearchViewListener() {
+            @Override
+            public void onSearchViewShown() {
+                container.setVisibility(View.VISIBLE);
+                progressFragment(new SearchProductFragment(), true, tag);
+            }
+
+            @Override
+            public void onSearchViewClosed() {
+                SearchProductFragment fragment = (SearchProductFragment) getSupportFragmentManager().findFragmentByTag(tag);
+                progressFragment(fragment, false, tag);
+                container.setVisibility(View.GONE);
+            }
+        });
+
+        searchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
+
+//        sview_main = (android.support.v7.widget.SearchView) item.getActionView();
+//        sview_main.setIconifiedByDefault(true);
+//
+//        sview_main.setOnCloseListener(new SearchView.OnCloseListener() {
+//            @Override
+//            public boolean onClose() {
+//
+//                SearchProductFragment fragment = (SearchProductFragment) getSupportFragmentManager().findFragmentByTag(tag);
+//                progressFragment(fragment, false, tag);
+//                container.setVisibility(View.GONE);
+//
+//                return false;
+//            }
+//        });
+
+
         // Associate searchable configuration with the SearchView
 //        SearchManager searchManager =
 //                (SearchManager) getSystemService(Context.SEARCH_SERVICE);
@@ -319,6 +374,21 @@ public class MainActivity extends AppCompatActivity implements ShoppingFragment.
     public boolean onOptionsItemSelected(MenuItem item) {
 
         int id = item.getItemId();
+
+//        switch (id) {
+//            case R.id.sview_main:
+//                container.setVisibility(View.VISIBLE);
+//                progressFragment(new SearchProductFragment(), true, tag);
+//
+////                getSupportFragmentManager()
+////                        .beginTransaction()
+////                        .setCustomAnimations(R.anim.slide_in,
+////                                R.anim.slide_out)
+////                        .replace(R.id.paper, new SearchProductFragment())
+////                        .commit();
+//
+//                break;
+//        }
 
         if (Toggle.onOptionsItemSelected(item)) {
             return true;
@@ -337,6 +407,29 @@ public class MainActivity extends AppCompatActivity implements ShoppingFragment.
         }
     }
 
+    private void progressFragment(Fragment fragment, boolean isAdd, String tag) {
+//        getSupportFragmentManager()
+//                .beginTransaction()
+//                .setCustomAnimations(R.anim.slide_in,
+//                        R.anim.slide_out)
+//                .replace(R.id.container, fragment)
+//                .addToBackStack("ShoppingFragment")
+//                .commit();
+        if (isAdd) {
+            //add fragment
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .add(R.id.container, fragment, tag)
+                    .commit();
+        } else {
+            //remove fragment
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .remove(fragment)
+                    .commit();
+        }
+    }
+
     private void start() {
 
         mData = FirebaseDatabase.getInstance().getReference();
@@ -351,6 +444,7 @@ public class MainActivity extends AppCompatActivity implements ShoppingFragment.
         tabLayout = (TabLayout) findViewById(R.id.tab_layout);
         toolbar = (Toolbar) findViewById(R.id.toolbar_home);
         pager = (ViewPager) findViewById(R.id.paper);
+        container = (FrameLayout) findViewById(R.id.container);
 
         nv_home = (NavigationView) findViewById(R.id.nav_view);
 //        lv_home = (ListView) findViewById(R.id.lv_home);
@@ -362,6 +456,7 @@ public class MainActivity extends AppCompatActivity implements ShoppingFragment.
         tv_username = (TextView) findViewById(R.id.tv_username);
         user_icon = (ImageView) findViewById(R.id.user_icon);
         user_wall = (ImageView) findViewById(R.id.user_wall);
+        searchView = (MaterialSearchView) findViewById(R.id.sview_main);
 
         arr_category = new ArrayList<>();
 
