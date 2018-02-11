@@ -30,7 +30,7 @@
                     android:layout_height="90dp" />
 
                 <TextView
-                    android:maxLines="3"
+                    android:maxLines="2"
                     android:gravity="center"
                     android:text="test"
                     android:id="@+id/CartProductName"
@@ -38,11 +38,24 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
 
-                <TextView
-                    android:gravity="center"
-                    android:text="test"
-                    android:id="@+id/CartProductNum"
+                <!--<TextView-->
+                    <!--android:gravity="center"-->
+                    <!--android:text="test"-->
+                    <!--android:id="@+id/CartProductNum"-->
+                    <!--android:textSize="17.5sp"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content" />-->
+
+                <com.nguyenvukhanhuygmail.shoppingonline.ultil.CustomEditText
+                    android:inputType="none"
+                    android:editable="false"
+                    android:text="15"
+                    android:drawableRight="@drawable/ic_add_box_black_24dp"
+                    android:drawableLeft="@drawable/ic_indeterminate_check_box_black_24dp"
+                    android:drawablePadding="5dp"
                     android:textSize="17.5sp"
+                    android:gravity="center"
+                    android:id="@+id/CartProductNum"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
 
@@ -56,6 +69,7 @@
                     android:textSize="20sp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
+
             </LinearLayout>
 
         </FrameLayout>

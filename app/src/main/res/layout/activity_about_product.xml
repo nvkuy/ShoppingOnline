@@ -129,25 +129,25 @@
         android:layout_height="wrap_content">
 
         <Button
-            android:layout_margin="7.5dp"
-            android:background="@drawable/buynow"
+            android:layout_margin="7.25dp"
+            android:background="@drawable/ic_attach_money_primary_24dp"
             android:id="@+id/btn_BuyNow"
-            android:layout_width="40dp"
-            android:layout_height="40dp" />
+            android:layout_width="35dp"
+            android:layout_height="35dp" />
 
         <Button
-            android:layout_margin="7.5dp"
-            android:background="@drawable/add"
+            android:layout_margin="7.25dp"
+            android:background="@drawable/ic_add_shopping_cart_primary_24dp"
             android:id="@+id/btn_Add"
-            android:layout_width="40dp"
-            android:layout_height="40dp" />
+            android:layout_width="35dp"
+            android:layout_height="35dp" />
 
         <Button
-            android:layout_margin="7.5dp"
-            android:background="@drawable/rate"
+            android:layout_margin="7.25dp"
+            android:background="@drawable/ic_star_half_primary_24dp"
             android:id="@+id/btn_Rate"
-            android:layout_width="40dp"
-            android:layout_height="40dp" />
+            android:layout_width="35dp"
+            android:layout_height="35dp" />
 
     </LinearLayout>
 

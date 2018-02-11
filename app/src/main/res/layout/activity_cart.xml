@@ -3,74 +3,102 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     xmlns:tools="http://schemas.android.com/tools"
-    android:weightSum="10"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.nguyenvukhanhuygmail.shoppingonline.activity.CartActivity">
 
-    <android.support.v7.widget.Toolbar
-        app:titleTextColor="@color/whire"
-        android:background="@color/colorPrimary"
-        app:title="Giỏ hàng của tôi"
-        android:id="@+id/tb_cart"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize">
+        android:layout_height="match_parent">
 
-    </android.support.v7.widget.Toolbar>
+        <android.support.v7.widget.Toolbar
+            android:layout_alignParentStart="true"
+            app:titleTextColor="@color/whire"
+            android:background="@color/colorPrimary"
+            app:title="Giỏ hàng của tôi"
+            android:id="@+id/tb_cart"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize">
 
-    <LinearLayout
-        android:gravity="center_vertical"
-        android:padding="2dp"
-        android:layout_weight="0.75"
-        android:layout_width="match_parent"
-        android:layout_height="0dp">
+        </android.support.v7.widget.Toolbar>
 
         <TextView
-            android:paddingRight="10dp"
-            android:paddingLeft="10dp"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
-            android:text="Tổng số tiền: "
-            android:textSize="20sp"
-            android:id="@+id/total_money"
-            android:layout_width="match_parent"
+            android:layout_margin="15dp"
+            android:visibility="gone"
+            android:textAlignment="center"
+            android:textSize="25sp"
+            android:text="@string/NullCartNotify"
+            android:layout_centerInParent="true"
+            android:id="@+id/tvNullCart"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
-
-    </LinearLayout>
-
-    <GridView
-        android:layout_margin="10dp"
-        android:numColumns="2"
-        android:id="@+id/gv_cart"
-        android:layout_weight="8.25"
-        android:layout_width="match_parent"
-        android:layout_height="0dp">
-
-    </GridView>
-
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_weight="1"
-        android:layout_width="match_parent"
-        android:layout_height="0dp">
-
-        <View
-            android:background="@color/Gray"
+        <LinearLayout
+            android:layout_below="@+id/tb_cart"
+            android:visibility="visible"
+            android:id="@+id/container_cart"
+            android:orientation="vertical"
+            android:weightSum="10"
             android:layout_width="match_parent"
-            android:layout_height="1dp"/>
+            android:layout_height="match_parent">
 
-        <TextView
-            android:textColor="@color/colorPrimary"
-            android:id="@+id/buy_all"
-            android:textStyle="bold"
-            android:textSize="20sp"
-            android:gravity="center"
-            android:text="Thanh toán giỏ hàng"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            <LinearLayout
+                android:gravity="center_vertical"
+                android:padding="2dp"
+                android:layout_weight="0.75"
+                android:layout_width="match_parent"
+                android:layout_height="0dp">
 
-    </LinearLayout>
+                <TextView
+                    android:paddingRight="10dp"
+                    android:paddingLeft="10dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:text="Tổng số tiền: "
+                    android:textSize="20sp"
+                    android:id="@+id/total_money"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+
+            </LinearLayout>
+
+            <GridView
+                android:layout_margin="10dp"
+                android:numColumns="2"
+                android:id="@+id/gv_cart"
+                android:layout_weight="8.25"
+                android:layout_width="match_parent"
+                android:layout_height="0dp">
+
+            </GridView>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="0dp">
+
+                <View
+                    android:background="@color/Gray"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"/>
+
+                <TextView
+                    android:textColor="@color/colorPrimary"
+                    android:id="@+id/buy_all"
+                    android:textStyle="bold"
+                    android:textSize="20sp"
+                    android:gravity="center"
+                    android:text="Thanh toán giỏ hàng"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </RelativeLayout>
 
 
 </LinearLayout>

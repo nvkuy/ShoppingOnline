@@ -13,13 +13,15 @@ public class Cart implements Serializable {
     private long product_price;
     private String product_image;
     private long product_number;
+    private long limit_num;
 
-    public Cart(int product_id, String product_name, long product_price, String product_image, long product_number) {
+    public Cart(int product_id, String product_name, long product_price, String product_image, long product_number, long limit_num) {
         this.product_id = product_id;
         this.product_name = product_name;
         this.product_price = product_price;
         this.product_image = product_image;
         this.product_number = product_number;
+        this.limit_num = limit_num;
     }
 
     public int getProduct_id() {
@@ -64,6 +66,15 @@ public class Cart implements Serializable {
 
     public Cart setProduct_number(long product_number) {
         this.product_number = product_number;
+        return this;
+    }
+
+    public long getLimit_num() {
+        return limit_num;
+    }
+
+    public Cart setLimit_num(long limit_num) {
+        this.limit_num = limit_num;
         return this;
     }
 }

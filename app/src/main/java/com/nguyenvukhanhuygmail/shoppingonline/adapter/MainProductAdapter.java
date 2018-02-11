@@ -15,6 +15,7 @@ import com.squareup.picasso.Picasso;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Locale;
 
 /**
  * Created by toannq on 11/10/2017.
@@ -84,4 +85,23 @@ public class MainProductAdapter extends BaseAdapter {
 
         return view;
     }
+
+    //filter
+    public void filter(String query, ArrayList<Product> arrFound, ArrayList<Product> arrProduct) {
+
+        query = query.toLowerCase(Locale.getDefault());
+        arrFound.clear();
+
+        if (query.length() == 0) {
+            arrFound.addAll(arrProduct);
+        } else {
+            for (Product product : arrProduct) {
+                if (product.getProduct_name().toLowerCase(Locale.getDefault()).contains(query)) {
+                    arrFound.add(product);
+                }
+            }
+        }
+
+    }
+
 }

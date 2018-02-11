@@ -185,7 +185,8 @@ public class AboutProduct extends AppCompatActivity {
                                         product.getProduct_name(),
                                         total_price,
                                         product.getProduct_image(),
-                                        numProduct
+                                        numProduct,
+                                        product.getProduct_left()
                                 ));
                             }
 
@@ -196,7 +197,8 @@ public class AboutProduct extends AppCompatActivity {
                                     product.getProduct_name(),
                                     total_price,
                                     product.getProduct_image(),
-                                    numProduct
+                                    numProduct,
+                                    product.getProduct_left()
                             ));
 
                         }

@@ -43,5 +43,6 @@
     <string name="new_pass">Mật khẩu mới</string>
     <string name="commit">Xác nhận</string>
     <string name="money">Tiền trong tài khoản:</string>
+    <string name="NullCartNotify">Giỏ hàng của bạn hiện tại không có mặt hàng nào!</string>
 
 </resources>

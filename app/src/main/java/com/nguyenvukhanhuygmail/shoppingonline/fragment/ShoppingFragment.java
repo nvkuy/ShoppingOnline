@@ -1,20 +1,22 @@
 package com.nguyenvukhanhuygmail.shoppingonline.fragment;
 
 import android.app.Fragment;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
+import android.widget.Toast;
 import android.widget.ViewFlipper;
 
 import com.android.volley.RequestQueue;
@@ -26,7 +28,6 @@ import com.nguyenvukhanhuygmail.shoppingonline.R;
 import com.nguyenvukhanhuygmail.shoppingonline.activity.AboutProduct;
 import com.nguyenvukhanhuygmail.shoppingonline.adapter.ProductAdapter;
 import com.nguyenvukhanhuygmail.shoppingonline.model.Product;
-import com.nguyenvukhanhuygmail.shoppingonline.ultil.CheckConnection;
 import com.nguyenvukhanhuygmail.shoppingonline.ultil.RecyclerItemClickListener;
 import com.nguyenvukhanhuygmail.shoppingonline.ultil.Server;
 import com.squareup.picasso.Picasso;
@@ -58,6 +59,8 @@ public class ShoppingFragment extends android.support.v4.app.Fragment {
     final int Slide_in = R.anim.slide_in;
     final int Slide_out = R.anim.slide_out;
 
+    ProgressDialog progressDialog;
+
     ViewFlipper viewFlipper;
     RecyclerView rv_popular, rv_news, rv_rate;
 
@@ -73,6 +76,7 @@ public class ShoppingFragment extends android.support.v4.app.Fragment {
     double rate_point = 0;
     int product_left = 0;
     int category_id = 0;
+
     ArrayList<Product> arr_NewProduct, arr_PopularProduct, arr_RateProduct;
     ProductAdapter NewProductAdapter, PopularProductAdapter, RateProductAdapter;
 
@@ -114,34 +118,84 @@ public class ShoppingFragment extends android.support.v4.app.Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        showAdvs();
-
-        //show new product
-        showProduct(Server.new_product_path, arr_NewProduct);
-        //show popular product
-        showProduct(Server.popular_product_path, arr_PopularProduct);
-        //show rate product
-        showProduct(Server.rate_product_path, arr_RateProduct);
-
-        /*
-            * code = 1: new_product
-            * code = 2: rate_product
-            * else: popular_product
-            * */
-
-        NewProductAdapter = new ProductAdapter(getActivity().getApplicationContext(), arr_NewProduct, 1);
-        PopularProductAdapter = new ProductAdapter(getActivity().getApplicationContext(), arr_PopularProduct, -1);
-        RateProductAdapter = new ProductAdapter(getActivity().getApplicationContext(), arr_RateProduct, 2);
-
-        NewProductAdapter.notifyDataSetChanged();
-        PopularProductAdapter.notifyDataSetChanged();
-        RateProductAdapter.notifyDataSetChanged();
-
-        rv_news.setAdapter(NewProductAdapter);
-        rv_popular.setAdapter(PopularProductAdapter);
-        rv_rate.setAdapter(RateProductAdapter);
+        new ProgressFrag().execute();
 
         onRV_ItemClick();
+
+    }
+
+    private class ProgressFrag extends AsyncTask<Void, Void, Void> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+            progressDialog = new ProgressDialog(getActivity());
+            progressDialog.setCanceledOnTouchOutside(false);
+            progressDialog.setMessage("Đang xử lí dữ liệu..");
+            progressDialog.show();
+//            Log.d("isShow", String.valueOf(progressDialog.isShowing()));
+
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+
+            showAdvs();
+
+            //show new product
+            showProduct(Server.new_product_path, arr_NewProduct);
+            //show popular product
+            showProduct(Server.popular_product_path, arr_PopularProduct);
+            //show rate product
+            showProduct(Server.rate_product_path, arr_RateProduct);
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+
+            /*
+                * code = 1: new_product
+                * code = 2: rate_product
+                * else: popular_product
+                * */
+
+            NewProductAdapter = new ProductAdapter(getActivity().getApplicationContext(), arr_NewProduct, 1);
+            PopularProductAdapter = new ProductAdapter(getActivity().getApplicationContext(), arr_PopularProduct, -1);
+            RateProductAdapter = new ProductAdapter(getActivity().getApplicationContext(), arr_RateProduct, 2);
+
+            NewProductAdapter.notifyDataSetChanged();
+            PopularProductAdapter.notifyDataSetChanged();
+            RateProductAdapter.notifyDataSetChanged();
+
+            rv_news.setAdapter(NewProductAdapter);
+            rv_popular.setAdapter(PopularProductAdapter);
+            rv_rate.setAdapter(RateProductAdapter);
+
+//            Log.d("isNull", String.valueOf(adv_links[0]));
+            if (adv_links[0] != null || arr_PopularProduct.size() != 0 || arr_NewProduct.size() != 0 || arr_RateProduct.size() != 0) {
+
+                progressDialog.dismiss();
+
+            }
+
+//            if (rv_news.getChildCount() > 0 || rv_popular.getChildCount() > 0 || rv_rate.getChildCount() > 0) {
+//                progressDialog.dismiss();
+//            }
+
+            //            Log.d("isShow", String.valueOf(progressDialog.isShowing()));
+
+        }
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        // new ProgressFrag().execute();
 
     }
 
@@ -149,7 +203,7 @@ public class ShoppingFragment extends android.support.v4.app.Fragment {
         Intent i = new Intent(context, AboutProduct.class);
         i.putExtra("product", product);
         startActivity(i);
-        getActivity().overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+        getActivity().overridePendingTransition(Slide_in, Slide_out);
     }
 
     private void showProduct(final String url, final ArrayList<Product> arrProduct) {
@@ -201,13 +255,15 @@ public class ShoppingFragment extends android.support.v4.app.Fragment {
 
 //                    Log.d("sizetest", String.valueOf(arrProduct.size()) + "\n" + response.length() + "\n" + url);
 
+                } else {
+
                 }
 
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-
+                Toast.makeText(getActivity().getApplication(), String.valueOf(error), Toast.LENGTH_LONG).show();
             }
         });
 
@@ -220,9 +276,7 @@ public class ShoppingFragment extends android.support.v4.app.Fragment {
         JsonArrayRequest jsArrRequest = new JsonArrayRequest(Server.adv_path, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
-                if (response == null) {
-                    CheckConnection.notification(getActivity().getApplication(), "Error!");
-                } else {
+                if (response != null) {
                     for (int i = 0; i < response.length(); i++) {
                         try {
                             JSONObject jsonObject = response.getJSONObject(i);
@@ -241,20 +295,11 @@ public class ShoppingFragment extends android.support.v4.app.Fragment {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.d("Error", error.toString());
+                Toast.makeText(getActivity().getApplication(), String.valueOf(error), Toast.LENGTH_LONG).show();
             }
         });
 
         requesQuese.add(jsArrRequest);
-
-        viewFlipper.setFlipInterval(7500);
-        viewFlipper.setAutoStart(true);
-
-        Animation anim_in = AnimationUtils.loadAnimation(getActivity().getApplicationContext(), Slide_in);
-        Animation anim_out = AnimationUtils.loadAnimation(getActivity().getApplicationContext(), Slide_out);
-
-        viewFlipper.setInAnimation(anim_in);
-        viewFlipper.setOutAnimation(anim_out);
 
     }
 
@@ -288,6 +333,15 @@ public class ShoppingFragment extends android.support.v4.app.Fragment {
         rv_news.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext(), LinearLayoutManager.HORIZONTAL, false));
         rv_popular.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext(), LinearLayoutManager.HORIZONTAL, false));
         rv_rate.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext(), LinearLayoutManager.HORIZONTAL, false));
+
+        viewFlipper.setFlipInterval(7500);
+        viewFlipper.setAutoStart(true);
+
+        Animation anim_in = AnimationUtils.loadAnimation(getActivity().getApplicationContext(), Slide_in);
+        Animation anim_out = AnimationUtils.loadAnimation(getActivity().getApplicationContext(), Slide_out);
+
+        viewFlipper.setInAnimation(anim_in);
+        viewFlipper.setOutAnimation(anim_out);
     }
 
     @Override

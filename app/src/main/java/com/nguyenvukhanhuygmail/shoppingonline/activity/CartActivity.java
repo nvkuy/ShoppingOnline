@@ -5,23 +5,26 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.GridView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.nguyenvukhanhuygmail.shoppingonline.R;
 import com.nguyenvukhanhuygmail.shoppingonline.adapter.CartGridAdapter;
+import com.nguyenvukhanhuygmail.shoppingonline.model.Cart;
 import com.nguyenvukhanhuygmail.shoppingonline.ultil.CheckConnection;
 
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 
 public class CartActivity extends AppCompatActivity {
 
     Toolbar tb_cart;
-    TextView btn_buyall, total_money;
+    TextView btn_buyall, total_money, tvNullCart;
     GridView gv_cart;
 
-    CartGridAdapter cartGridAdapter;
+    LinearLayout container_cart;
 
-    long money = 0;
+    CartGridAdapter cartGridAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +45,7 @@ public class CartActivity extends AppCompatActivity {
 
     private void showCart() {
 
-        cartGridAdapter = new CartGridAdapter(getApplicationContext(), MainActivity.arr_cart);
+        cartGridAdapter = new CartGridAdapter(getApplicationContext(), CartActivity.this, MainActivity.arr_cart);
         cartGridAdapter.notifyDataSetChanged();
         gv_cart.setAdapter(cartGridAdapter);
 
@@ -71,19 +74,35 @@ public class CartActivity extends AppCompatActivity {
         });
     }
 
-    private void start() {
+    public void DisplayTotalMoney(ArrayList<Cart> arr_cart) {
 
-        gv_cart = (GridView) findViewById(R.id.gv_cart);
-        tb_cart = (Toolbar) findViewById(R.id.tb_cart);
-        btn_buyall = (TextView) findViewById(R.id.buy_all);
-        total_money = (TextView) findViewById(R.id.total_money);
+        long money = 0;
 
-        for (int i = 0; i < MainActivity.arr_cart.size(); i++) {
-            money += MainActivity.arr_cart.get(i).getProduct_price();
+        for (int i = 0; i < arr_cart.size(); i++) {
+            money += arr_cart.get(i).getProduct_price();
         }
 
         DecimalFormat formater = new DecimalFormat("###,###,###");
         total_money.setText("Tổng số tiền: " + formater.format(money) + "đ");
+
+    }
+
+    private void start() {
+
+        container_cart = (LinearLayout) findViewById(R.id.container_cart);
+
+        gv_cart = (GridView) findViewById(R.id.gv_cart);
+        tb_cart = (Toolbar) findViewById(R.id.tb_cart);
+        tvNullCart = (TextView) findViewById(R.id.tvNullCart);
+        btn_buyall = (TextView) findViewById(R.id.buy_all);
+        total_money = (TextView) findViewById(R.id.total_money);
+
+        if (MainActivity.arr_cart.size() == 0) {
+            tvNullCart.setVisibility(View.VISIBLE);
+            container_cart.setVisibility(View.GONE);
+        }
+
+        DisplayTotalMoney(MainActivity.arr_cart);
 
     }
 }

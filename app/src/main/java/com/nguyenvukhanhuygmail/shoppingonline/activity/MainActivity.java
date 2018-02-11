@@ -61,8 +61,8 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements ShoppingFragment.OnFragmentInteractionListener, ProfileFragment.OnFragmentInteractionListener, SearchProductFragment.OnFragmentInteractionListener {
 
-//    final int Slide_in = R.anim.slide_in;
-//    final int Slide_out = R.anim.slide_out;
+    final int slide_in = R.anim.slide_in;
+    final int slide_out = R.anim.slide_out;
 
     android.support.v7.widget.SearchView sview_main;
     Toolbar toolbar;
@@ -90,8 +90,9 @@ public class MainActivity extends AppCompatActivity implements ShoppingFragment.
     String Category_name = "";
     String Category_image = "";
 
-    String[] tab_name = {"Cửa hàng", "Người dùng"};
-    int[] tab_icon = {R.drawable.ic_shopping_cart_white_24dp, R.drawable.ic_person_outline_white_24dp};
+    String[] tab_name = {"Trang chính", "Người dùng"};
+    int[] tab_icon = {R.drawable.ic_home_white_24dp,
+            R.drawable.ic_person_outline_white_24dp};
 
     final String tag = "SearchProductFragment";
 
@@ -164,7 +165,7 @@ public class MainActivity extends AppCompatActivity implements ShoppingFragment.
                 } catch (NullPointerException e) {
 
                     startActivity(new Intent(getApplication(), UserProfile.class));
-                    overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+                    overridePendingTransition(slide_in, slide_out);
                     finish();
 
                 }
@@ -220,7 +221,7 @@ public class MainActivity extends AppCompatActivity implements ShoppingFragment.
 
     private void LogoutAndBack() {
         startActivity(new Intent(getApplication(), LoginAndSignUp.class));
-        overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+        overridePendingTransition(slide_in, slide_out);
         FirebaseAuth.getInstance().signOut();
         finish();
     }
@@ -230,7 +231,7 @@ public class MainActivity extends AppCompatActivity implements ShoppingFragment.
         i.putExtra("title", arr_category.get(pos).getCategoty_name());
         i.putExtra("product_id", arr_category.get(pos).getId());
         startActivity(i);
-        overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+        overridePendingTransition(slide_in, slide_out);
     }
 
     private void onNavItemClick() {
@@ -239,9 +240,7 @@ public class MainActivity extends AppCompatActivity implements ShoppingFragment.
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
-                if (i == 0) {
-                    //click vào trang chính
-                } else if (i == (arr_category.size() - 1)) {
+                if (i == (arr_category.size() - 1)) {
                     //click vào liên hệ
                     ToActivity(ContactActivity.class, i);
                 } else {
@@ -321,6 +320,7 @@ public class MainActivity extends AppCompatActivity implements ShoppingFragment.
             public void onSearchViewShown() {
                 container.setVisibility(View.VISIBLE);
                 progressFragment(new SearchProductFragment(), true, tag);
+
             }
 
             @Override
@@ -331,17 +331,25 @@ public class MainActivity extends AppCompatActivity implements ShoppingFragment.
             }
         });
 
-        searchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                return false;
-            }
-        });
+//        searchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
+//            @Override
+//            public boolean onQueryTextSubmit(String query) {
+//
+//                if (query != null) {
+//                    SearchProductFragment fragment = (SearchProductFragment) getSupportFragmentManager().findFragmentByTag(tag);
+//                    ArrayList<Product> arrProduct = fragment.onQuery(query);
+//                    fragment.DisplayListView(arrProduct);
+//                }
+//
+//                return false;
+//            }
+//
+//            @Override
+//            public boolean onQueryTextChange(String newText) {
+//
+//                return false;
+//            }
+//        });
 
 //        sview_main = (android.support.v7.widget.SearchView) item.getActionView();
 //        sview_main.setIconifiedByDefault(true);
@@ -374,6 +382,13 @@ public class MainActivity extends AppCompatActivity implements ShoppingFragment.
     public boolean onOptionsItemSelected(MenuItem item) {
 
         int id = item.getItemId();
+
+        switch (id) {
+            case R.id.action_cart:
+                startActivity(new Intent(getApplication(), CartActivity.class));
+                overridePendingTransition(slide_in, slide_out);
+                break;
+        }
 
 //        switch (id) {
 //            case R.id.sview_main:

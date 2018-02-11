@@ -25,6 +25,7 @@ import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlacePicker;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -81,7 +82,9 @@ public class ProfileFragment extends android.support.v4.app.Fragment {
 
     final String[] arr_action = {"Chụp ảnh cho:", "Chọn ảnh cho:"};
     String uName, uPhone, uLocation, uID, uNewPass, uOldPass, uEmail;
+    double lat, lng;
     Boolean isShow = false;
+    long money;
 
     int request_code_image1 = 1;
     int request_code_image2 = 2;
@@ -210,9 +213,12 @@ public class ProfileFragment extends android.support.v4.app.Fragment {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot != null) {
-                    DecimalFormat formater = new DecimalFormat("###,###,###");
-                    edt_uMoney.setText("Tiền trong tài khoản: " + formater.format(dataSnapshot.getValue()) + "đ");
+                    money = Long.parseLong(String.valueOf(dataSnapshot.getValue()));
+                } else {
+                    money = 0;
                 }
+                DecimalFormat formater = new DecimalFormat("###,###,###");
+                edt_uMoney.setText("Tiền trong tài khoản: " + formater.format(money) + "đ");
             }
 
             @Override
@@ -289,6 +295,10 @@ public class ProfileFragment extends android.support.v4.app.Fragment {
         } else if (requestCode == request_code_map && resultCode == getActivity().RESULT_OK && data != null) {
 
             Place place = PlacePicker.getPlace(data, getActivity());
+            LatLng latLng = place.getLatLng();
+            lat = latLng.latitude;
+            lng = latLng.longitude;
+
             edt_uLocation.setText(place.getAddress());
             btn_commit.setVisibility(View.VISIBLE);
 
@@ -644,6 +654,9 @@ public class ProfileFragment extends android.support.v4.app.Fragment {
         profile_post.put("user_name", uName);
         profile_post.put("phone_number", uPhone);
         profile_post.put("address", uLocation);
+        profile_post.put("money", money);
+        profile_post.put("lat", lat);
+        profile_post.put("lng", lng);
 
         mData.child("Users").child(uID).setValue(profile_post, new DatabaseReference.CompletionListener() {
             @Override
