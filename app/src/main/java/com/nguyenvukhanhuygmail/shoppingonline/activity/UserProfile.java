@@ -21,6 +21,7 @@ import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlacePicker;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -55,6 +56,7 @@ public class UserProfile extends AppCompatActivity {
     final String[] arr_action = {"Chụp ảnh cho:", "Chọn ảnh cho:"};
     String uName, uPhone, uLocation, uID, uNewPass, uOldPass, uEmail;
     Boolean isShow = false;
+    double lat, lng;
 
     int request_code_image1 = 1;
     int request_code_image2 = 2;
@@ -120,6 +122,10 @@ public class UserProfile extends AppCompatActivity {
 
             Place place = PlacePicker.getPlace(data, this);
             edt_uLocation.setText(place.getAddress());
+
+            LatLng mLatLng = place.getLatLng();
+            lat = mLatLng.latitude;
+            lng = mLatLng.longitude;
 
         }
 
@@ -468,6 +474,8 @@ public class UserProfile extends AppCompatActivity {
         profile_post.put("user_name", uName);
         profile_post.put("phone_number", uPhone);
         profile_post.put("address", uLocation);
+        profile_post.put("lat", lat);
+        profile_post.put("lng", lng);
         profile_post.put("money", 0);
 
         mData.child("Users").child(uID).setValue(profile_post, new DatabaseReference.CompletionListener() {

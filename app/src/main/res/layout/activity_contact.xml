@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.nguyenvukhanhuygmail.shoppingonline.activity.ContactActivity">
@@ -19,10 +18,80 @@
     </android.support.v7.widget.Toolbar>
 
     <FrameLayout
+        android:layout_below="@+id/tb_contact"
         android:id="@+id/container_map"
         android:layout_width="match_parent"
-        android:layout_height="230dp">
+        android:layout_height="250dp">
 
     </FrameLayout>
 
-</LinearLayout>
+    <ScrollView
+        android:layout_below="@+id/container_map"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.nguyenvukhanhuygmail.shoppingonline.ultil.CustomEditText
+                android:minLines="1"
+                android:id="@+id/contactLocation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:background="@android:color/transparent"
+                android:drawablePadding="12dp"
+                android:drawableLeft="@drawable/ic_location_on_black_24dp"
+                android:ems="12"
+                android:enabled="false"
+                android:padding="8dp"
+                android:textColor="@color/Gray"
+                android:textColorHint="@color/Gray" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/Gray" />
+
+            <com.nguyenvukhanhuygmail.shoppingonline.ultil.CustomEditText
+                android:id="@+id/contactPhone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:background="@android:color/transparent"
+                android:drawablePadding="12dp"
+                android:drawableLeft="@drawable/ic_phone_black_24dp"
+                android:ems="12"
+                android:enabled="false"
+                android:minLines="1"
+                android:padding="8dp"
+                android:textColor="@color/Gray"
+                android:textColorHint="@color/Gray" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/Gray" />
+
+            <com.nguyenvukhanhuygmail.shoppingonline.ultil.CustomEditText
+                android:id="@+id/contactEmail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:background="@android:color/transparent"
+                android:drawablePadding="12dp"
+                android:drawableLeft="@drawable/ic_email_black_24dp"
+                android:ems="12"
+                android:enabled="false"
+                android:minLines="1"
+                android:padding="8dp"
+                android:textColor="@color/Gray"
+                android:textColorHint="@color/Gray" />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</RelativeLayout>

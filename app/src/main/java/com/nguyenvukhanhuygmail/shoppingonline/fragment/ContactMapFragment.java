@@ -1,18 +1,28 @@
 package com.nguyenvukhanhuygmail.shoppingonline.fragment;
 
+import android.app.Fragment;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
-import android.app.Fragment;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.nguyenvukhanhuygmail.shoppingonline.R;
+import com.nguyenvukhanhuygmail.shoppingonline.model.Contact;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -31,6 +41,18 @@ public class ContactMapFragment extends Fragment implements OnMapReadyCallback {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    private GoogleMap mMap;
+    private DatabaseReference mData;
+
+//    final LatLng mCompany = new LatLng(16.089367, 108.230046);
+
+//    double lat, lng;
+//    String title, snippet;
+
+    final float ZOOM_MODE = 15f;
+    final float MAX_ZOOM = 17f;
+    final float MIN_ZOOM = 13f;
 
     private OnFragmentInteractionListener mListener;
 
@@ -89,6 +111,18 @@ public class ContactMapFragment extends Fragment implements OnMapReadyCallback {
     }
 
     @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        start();
+
+    }
+
+    private void start() {
+        mData = FirebaseDatabase.getInstance().getReference();
+    }
+
+    @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         if (context instanceof OnFragmentInteractionListener) {
@@ -108,8 +142,48 @@ public class ContactMapFragment extends Fragment implements OnMapReadyCallback {
     @Override
     public void onMapReady(GoogleMap googleMap) {
 
-        googleMap.getUiSettings().setScrollGesturesEnabled(false);
+        mMap = googleMap;
+        setUpMap(mMap);
 
+    }
+
+    public void setUpMap(final GoogleMap mMap){
+
+        mMap.setMinZoomPreference(MIN_ZOOM);
+
+        mData.child("Contact").child("Company").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                //get Data
+                Contact contact = dataSnapshot.getValue(Contact.class);
+                LatLng mLatlng = new LatLng(
+                        contact.getLat(),
+                        contact.getLng()
+                );
+
+//                Log.d("latlng", String.valueOf(mLatlng));
+
+                mMap.addMarker(new MarkerOptions()
+                        .position(mLatlng)
+                        .title(contact.getTitle())
+                        .snippet(contact.getSnippet())
+                        .draggable(false)
+                        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_MAGENTA)));
+
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(mLatlng, ZOOM_MODE));
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+        mMap.setMapType(GoogleMap.MAP_TYPE_TERRAIN);
+        mMap.setMaxZoomPreference(MAX_ZOOM);
+        mMap.getUiSettings().setScrollGesturesEnabled(false);
     }
 
     /**

@@ -82,8 +82,8 @@ public class ProfileFragment extends android.support.v4.app.Fragment {
 
     final String[] arr_action = {"Chụp ảnh cho:", "Chọn ảnh cho:"};
     String uName, uPhone, uLocation, uID, uNewPass, uOldPass, uEmail;
-    double lat, lng;
     Boolean isShow = false;
+    double lat, lng;
     long money;
 
     int request_code_image1 = 1;
@@ -295,12 +295,13 @@ public class ProfileFragment extends android.support.v4.app.Fragment {
         } else if (requestCode == request_code_map && resultCode == getActivity().RESULT_OK && data != null) {
 
             Place place = PlacePicker.getPlace(data, getActivity());
-            LatLng latLng = place.getLatLng();
-            lat = latLng.latitude;
-            lng = latLng.longitude;
 
             edt_uLocation.setText(place.getAddress());
             btn_commit.setVisibility(View.VISIBLE);
+
+            LatLng mLatLng = place.getLatLng();
+            lat = mLatLng.latitude;
+            lng = mLatLng.longitude;
 
         }
 
@@ -654,9 +655,9 @@ public class ProfileFragment extends android.support.v4.app.Fragment {
         profile_post.put("user_name", uName);
         profile_post.put("phone_number", uPhone);
         profile_post.put("address", uLocation);
-        profile_post.put("money", money);
         profile_post.put("lat", lat);
         profile_post.put("lng", lng);
+        profile_post.put("money", money);
 
         mData.child("Users").child(uID).setValue(profile_post, new DatabaseReference.CompletionListener() {
             @Override

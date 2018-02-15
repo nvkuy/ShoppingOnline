@@ -175,12 +175,7 @@ public class ShoppingFragment extends android.support.v4.app.Fragment {
             rv_popular.setAdapter(PopularProductAdapter);
             rv_rate.setAdapter(RateProductAdapter);
 
-//            Log.d("isNull", String.valueOf(adv_links[0]));
-            if (adv_links[0] != null || arr_PopularProduct.size() != 0 || arr_NewProduct.size() != 0 || arr_RateProduct.size() != 0) {
-
-                progressDialog.dismiss();
-
-            }
+            progressDialog.dismiss();
 
 //            if (rv_news.getChildCount() > 0 || rv_popular.getChildCount() > 0 || rv_rate.getChildCount() > 0) {
 //                progressDialog.dismiss();
