@@ -281,6 +281,7 @@ public class AboutProduct extends AppCompatActivity {
 
 
     private void start() {
+
         fullname_product = (TextView) findViewById(R.id.fullname_product);
         AboutProduct_des = (TextView) findViewById(R.id.AboutProduct_des);
         AboutProduct_price = (TextView) findViewById(R.id.AboutProduct_price);
@@ -293,6 +294,8 @@ public class AboutProduct extends AppCompatActivity {
         toolbar = (Toolbar) findViewById(R.id.toolbar_AboutProduct);
 
         product = getIntentData("product");
+
+//        getWindow().setAllowEnterTransitionOverlap(false);
 
     }
 

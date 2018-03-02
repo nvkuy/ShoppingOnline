@@ -4,14 +4,14 @@
 
     <!-- di chuyển slide ra -->
     <translate
-        android:duration="1500"
+        android:duration="1250"
         android:fromXDelta="0%"
         android:toXDelta="-100%"
         />
 
     <!-- slide nhạt dần khi ra -->
     <alpha
-        android:duration="1500"
+        android:duration="1250"
         android:fromAlpha="1"
         android:toAlpha="0"
         />

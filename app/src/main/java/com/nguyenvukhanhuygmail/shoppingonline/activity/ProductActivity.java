@@ -99,7 +99,7 @@ public class ProductActivity extends AppCompatActivity {
 
             @Override
             public void onScroll(AbsListView absListView, int FirstItem, int VisibleItem, int TotalItem) {
-                if (FirstItem + VisibleItem == TotalItem && TotalItem != 0 && isLoading == false && isLimit == false) {
+                if (FirstItem + VisibleItem == TotalItem && TotalItem != 0 && !isLoading && !isLimit) {
 
                     isLoading = true;
                     mThread thread = new mThread();
@@ -134,24 +134,21 @@ public class ProductActivity extends AppCompatActivity {
     private void getProductByCategoryId(int Page) {
         RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
         String url = Server.main_product_path + Page;
+//        Log.d("url_product", url);
         StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
 
                 lv_product.removeFooterView(footer);
 
-                /*
-                * response.length() > 2 vì response là 1 string có dạng json arr nên luôn có 2 phẩn tủ là: []
-                * */
-
                 if (response.length() > 2) {
                     try {
 
                         JSONArray jsonArray = new JSONArray(response);
+//                        Log.d("json_arr_length", String.valueOf(jsonArray.length()));
 
                         for (int i = 0; i < jsonArray.length(); i++) {
                             arr_product.add(new Product(
-
                                     jsonArray.getJSONObject(i).getInt("product_id"),
                                     jsonArray.getJSONObject(i).getString("product_name"),
                                     jsonArray.getJSONObject(i).getInt("product_price"),
@@ -164,6 +161,7 @@ public class ProductActivity extends AppCompatActivity {
 
                             ));
 
+//                            Log.d("json_arr", String.valueOf(arr_product.size()));
                             mainProductAdapter.notifyDataSetChanged();
 
                         }
@@ -173,6 +171,7 @@ public class ProductActivity extends AppCompatActivity {
                     }
                 } else {
                     isLimit = true;
+                    page--;
                     lv_product.removeFooterView(footer);
                 }
             }
@@ -190,6 +189,7 @@ public class ProductActivity extends AppCompatActivity {
 
                 HashMap<String, String> param = new HashMap<>();
                 param.put("category_id", String.valueOf(id_product));
+//                Log.d("category_id", String.valueOf(id_product));
 
                 return param;
             }

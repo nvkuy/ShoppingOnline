@@ -33,6 +33,7 @@
                 android:layout_height="200dp">
 
                 <ImageView
+                    android:transitionName="product_image"
                     android:layout_margin="5dp"
                     android:src="@mipmap/ic_launcher"
                     android:id="@+id/img_NewProduct"

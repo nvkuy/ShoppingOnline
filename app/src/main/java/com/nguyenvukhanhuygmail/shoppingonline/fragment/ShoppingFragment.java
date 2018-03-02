@@ -1,5 +1,6 @@
 package com.nguyenvukhanhuygmail.shoppingonline.fragment;
 
+import android.app.ActivityOptions;
 import android.app.Fragment;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -194,11 +195,17 @@ public class ShoppingFragment extends android.support.v4.app.Fragment {
 
     }
 
-    public void GoToAboutProduct(Context context, Product product) {
-        Intent i = new Intent(context, AboutProduct.class);
-        i.putExtra("product", product);
-        startActivity(i);
-        getActivity().overridePendingTransition(Slide_in, Slide_out);
+    public void GoToAboutProduct(Context context, Product product, View view) {
+
+        Intent intent = new Intent(context, AboutProduct.class);
+        intent.putExtra("product", product);
+
+        Bundle scaleBundle = ActivityOptions.makeScaleUpAnimation(
+                view, 0, 0, view.getWidth(), view.getHeight()
+        ).toBundle();
+
+        startActivity(intent, scaleBundle);
+//        getActivity().overridePendingTransition(Slide_in, Slide_out);
     }
 
     private void showProduct(final String url, final ArrayList<Product> arrProduct) {
@@ -357,7 +364,7 @@ public class ShoppingFragment extends android.support.v4.app.Fragment {
             @Override
             public void onItemClick(View view, int position) {
                 Product sale_product = arr_RateProduct.get(position);
-                GoToAboutProduct(getActivity().getApplication(), sale_product);
+                GoToAboutProduct(getActivity().getApplication(), sale_product, view);
             }
         }));
 
@@ -365,7 +372,7 @@ public class ShoppingFragment extends android.support.v4.app.Fragment {
             @Override
             public void onItemClick(View view, int position) {
                 Product popular_product = arr_PopularProduct.get(position);
-                GoToAboutProduct(getActivity().getApplication(), popular_product);
+                GoToAboutProduct(getActivity().getApplication(), popular_product, view);
             }
         }));
 
@@ -373,7 +380,7 @@ public class ShoppingFragment extends android.support.v4.app.Fragment {
             @Override
             public void onItemClick(View view, int position) {
                 Product new_product = arr_NewProduct.get(position);
-                GoToAboutProduct(getActivity().getApplication(), new_product);
+                GoToAboutProduct(getActivity().getApplication(), new_product, view);
             }
         }));
     }
