@@ -145,7 +145,7 @@ public class ProductActivity extends AppCompatActivity {
                     try {
 
                         JSONArray jsonArray = new JSONArray(response);
-//                        Log.d("json_arr_length", String.valueOf(jsonArray.length()));
+//                        Log.d("jsonArray", String.valueOf(jsonArray));
 
                         for (int i = 0; i < jsonArray.length(); i++) {
                             arr_product.add(new Product(
@@ -162,9 +162,12 @@ public class ProductActivity extends AppCompatActivity {
                             ));
 
 //                            Log.d("json_arr", String.valueOf(arr_product.size()));
-                            mainProductAdapter.notifyDataSetChanged();
 
                         }
+
+                        mainProductAdapter = new MainProductAdapter(getApplicationContext(), arr_product);
+                        lv_product.setAdapter(mainProductAdapter);
+                        mainProductAdapter.notifyDataSetChanged();
 
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -223,10 +226,8 @@ public class ProductActivity extends AppCompatActivity {
     private void start() {
 
         arr_product = new ArrayList<>();
-        mainProductAdapter = new MainProductAdapter(getApplicationContext(), arr_product);
         toolbar_product = (Toolbar) findViewById(R.id.toolbar_product);
         lv_product = (ListView) findViewById(R.id.lv_product);
-        lv_product.setAdapter(mainProductAdapter);
 
         LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
         footer = inflater.inflate(R.layout.progressbar, null);
