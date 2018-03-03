@@ -210,7 +210,7 @@ public class ShoppingFragment extends android.support.v4.app.Fragment {
 
     private void showProduct(final String url, final ArrayList<Product> arrProduct) {
 
-        RequestQueue requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext());
+        RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(url, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
@@ -335,6 +335,10 @@ public class ShoppingFragment extends android.support.v4.app.Fragment {
         rv_news.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext(), LinearLayoutManager.HORIZONTAL, false));
         rv_popular.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext(), LinearLayoutManager.HORIZONTAL, false));
         rv_rate.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext(), LinearLayoutManager.HORIZONTAL, false));
+
+//        rv_news.setNestedScrollingEnabled(false);
+//        rv_popular.setNestedScrollingEnabled(false);
+//        rv_rate.setNestedScrollingEnabled(false);
 
         viewFlipper.setFlipInterval(7500);
         viewFlipper.setAutoStart(true);

@@ -2,6 +2,7 @@ package com.nguyenvukhanhuygmail.shoppingonline.adapter;
 
 import android.content.Context;
 import android.icu.text.DecimalFormat;
+import android.os.Build;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -49,8 +50,13 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
         holder.txt_ProductName.setMaxLines(1);
         holder.txt_ProductName.setEllipsize(TextUtils.TruncateAt.END);
         holder.txt_ProductName.setText(product.getProduct_name());
-        DecimalFormat format = new DecimalFormat("###,###,###");
-        holder.txt_ProductPrice.setText("Giá: " + format.format(product.getProduct_price()) + "đ");
+        DecimalFormat format = null;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            format = new DecimalFormat("###,###,###");
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            holder.txt_ProductPrice.setText("Giá: " + format.format(product.getProduct_price()) + "đ");
+        }
         holder.ratingBar.setRating((float) product.getRate_point());
 
         if (code == 1) { //sản phẩm mới

@@ -132,7 +132,7 @@ public class ProductActivity extends AppCompatActivity {
 
 
     private void getProductByCategoryId(int Page) {
-        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
         String url = Server.main_product_path + Page;
 //        Log.d("url_product", url);
         StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
@@ -226,6 +226,7 @@ public class ProductActivity extends AppCompatActivity {
     private void start() {
 
         arr_product = new ArrayList<>();
+
         toolbar_product = (Toolbar) findViewById(R.id.toolbar_product);
         lv_product = (ListView) findViewById(R.id.lv_product);
 
