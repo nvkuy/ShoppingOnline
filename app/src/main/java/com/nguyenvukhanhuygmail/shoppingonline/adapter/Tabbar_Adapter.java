@@ -5,6 +5,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
 import com.nguyenvukhanhuygmail.shoppingonline.fragment.ProfileFragment;
+import com.nguyenvukhanhuygmail.shoppingonline.fragment.ShipperFragment;
 import com.nguyenvukhanhuygmail.shoppingonline.fragment.ShoppingFragment;
 
 /**
@@ -29,6 +30,8 @@ public class Tabbar_Adapter  extends FragmentStatePagerAdapter{
                 return new ShoppingFragment();
             case 1:
                 return new ProfileFragment();
+            case 2:
+                return new ShipperFragment();
             default:
                 return null;
         }

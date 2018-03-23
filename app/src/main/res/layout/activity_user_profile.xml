@@ -39,7 +39,7 @@
             <android.support.design.widget.FloatingActionButton
                 app:fabSize="mini"
                 android:src="@drawable/more_action"
-                android:backgroundTint="@color/whire"
+                android:backgroundTint="@color/white"
                 android:layout_gravity="bottom|right"
                 android:layout_margin="16sp"
                 android:id="@+id/wall_fab"
@@ -181,7 +181,7 @@
                 android:layout_margin="10dp"
                 android:padding="16dp"
                 android:textAllCaps="true"
-                android:textColor="@color/whire"
+                android:textColor="@color/white"
                 android:text="@string/finish"
                 android:background="@drawable/background_signup"
                 android:layout_width="match_parent"

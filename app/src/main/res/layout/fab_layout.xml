@@ -11,7 +11,7 @@
         android:layout_gravity="bottom|end"
         android:layout_marginBottom="105sp"
         android:layout_marginRight="16sp"
-        android:backgroundTint="@color/whire"
+        android:backgroundTint="@color/white"
         android:src="@drawable/take_photo"
         android:visibility="gone"
         app:fabSize="mini" />
@@ -23,7 +23,7 @@
         android:layout_gravity="bottom|end"
         android:layout_marginBottom="60sp"
         android:layout_marginRight="16sp"
-        android:backgroundTint="@color/whire"
+        android:backgroundTint="@color/white"
         android:src="@drawable/pick_photo"
         android:visibility="gone"
         app:fabSize="mini" />

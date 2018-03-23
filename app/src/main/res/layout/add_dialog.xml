@@ -5,7 +5,7 @@
 
     <TextView
         android:background="@color/colorPrimary"
-        android:textColor="@color/whire"
+        android:textColor="@color/white"
         android:textSize="20sp"
         android:text="Thêm vào giỏ hàng"
         android:gravity="center"

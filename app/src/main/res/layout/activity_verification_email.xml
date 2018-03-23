@@ -16,7 +16,7 @@
         android:layout_margin="30dp"
         android:gravity="center"
         android:text="@string/verification_email"
-        android:textColor="@color/whire"
+        android:textColor="@color/white"
         android:textSize="30sp" />
 
     <br.com.simplepass.loading_button_lib.customViews.CircularProgressButton
@@ -49,7 +49,7 @@
         android:layout_marginTop="50dp"
         android:padding="5dp"
         android:textAlignment="center"
-        android:textColor="@color/whire"
+        android:textColor="@color/white"
         android:textSize="18sp" />
 
     <TextView
@@ -62,7 +62,7 @@
         android:layout_marginTop="10dp"
         android:padding="5dp"
         android:textAlignment="center"
-        android:textColor="@color/whire"
+        android:textColor="@color/white"
         android:textSize="18sp" />
 
     <TextView
@@ -75,7 +75,7 @@
         android:layout_marginTop="10dp"
         android:padding="5dp"
         android:textAlignment="center"
-        android:textColor="@color/whire"
+        android:textColor="@color/white"
         android:textSize="18sp" />
 
     <br.com.simplepass.loading_button_lib.customViews.CircularProgressButton
@@ -92,9 +92,9 @@
         android:padding="16dp"
         android:text="@string/finish"
         android:textAllCaps="true"
-        android:textColor="@color/whire"
+        android:textColor="@color/white"
         android:textSize="20sp"
-        app:spinning_bar_color="@color/whire"
+        app:spinning_bar_color="@color/white"
         app:spinning_bar_padding="5dp"
         app:spinning_bar_width="5dp"
         android:visibility="gone" />

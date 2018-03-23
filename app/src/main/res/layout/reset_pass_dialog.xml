@@ -53,9 +53,9 @@
         android:padding="16dp"
         android:text="@string/conti"
         android:textAllCaps="true"
-        android:textColor="@color/whire"
+        android:textColor="@color/white"
         android:textSize="20sp"
-        app:spinning_bar_color="@color/whire"
+        app:spinning_bar_color="@color/white"
         app:spinning_bar_padding="5dp"
         app:spinning_bar_width="5dp" />
 

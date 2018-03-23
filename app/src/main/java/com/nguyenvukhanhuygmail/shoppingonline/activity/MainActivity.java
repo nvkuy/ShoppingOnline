@@ -45,6 +45,7 @@ import com.nguyenvukhanhuygmail.shoppingonline.adapter.CategoryAdapter;
 import com.nguyenvukhanhuygmail.shoppingonline.adapter.Tabbar_Adapter;
 import com.nguyenvukhanhuygmail.shoppingonline.fragment.ProfileFragment;
 import com.nguyenvukhanhuygmail.shoppingonline.fragment.SearchProductFragment;
+import com.nguyenvukhanhuygmail.shoppingonline.fragment.ShipperFragment;
 import com.nguyenvukhanhuygmail.shoppingonline.fragment.ShoppingFragment;
 import com.nguyenvukhanhuygmail.shoppingonline.model.Cart;
 import com.nguyenvukhanhuygmail.shoppingonline.model.Category;
@@ -59,12 +60,13 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity implements ShoppingFragment.OnFragmentInteractionListener, ProfileFragment.OnFragmentInteractionListener, SearchProductFragment.OnFragmentInteractionListener {
+public class MainActivity extends AppCompatActivity implements ShoppingFragment.OnFragmentInteractionListener, ProfileFragment.OnFragmentInteractionListener,
+        SearchProductFragment.OnFragmentInteractionListener, ShipperFragment.OnFragmentInteractionListener {
 
     final int slide_in = R.anim.slide_in;
     final int slide_out = R.anim.slide_out;
 
-    android.support.v7.widget.SearchView sview_main;
+//    android.support.v7.widget.SearchView sview_main;
     Toolbar toolbar;
     TabLayout tabLayout;
     ViewPager pager;
@@ -90,9 +92,12 @@ public class MainActivity extends AppCompatActivity implements ShoppingFragment.
     String Category_name = "";
     String Category_image = "";
 
-    String[] tab_name = {"Trang chính", "Người dùng"};
-    int[] tab_icon = {R.drawable.ic_home_white_24dp,
-            R.drawable.ic_person_outline_white_24dp};
+    String[] tab_name = {"Trang chính", "Người dùng", "Ship deal"};
+    int[] tab_icon = {
+            R.drawable.ic_home_white_24dp,
+            R.drawable.ic_person_outline_white_24dp,
+            R.drawable.ic_local_shipping_white_24dp
+    };
 
     final String tag = "SearchProductFragment";
 
@@ -129,10 +134,33 @@ public class MainActivity extends AppCompatActivity implements ShoppingFragment.
 
         tabLayout.addTab(tabLayout.newTab().setText(tab_name[0]).setIcon(tab_icon[0]));
         tabLayout.addTab(tabLayout.newTab().setText(tab_name[1]).setIcon(tab_icon[1]));
+
+        mData.child("Users").child(user.getUid()).child("shipper_mode").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (Boolean.parseBoolean(dataSnapshot.getValue().toString())) {
+                    tabLayout.addTab(tabLayout.newTab().setText(tab_name[2]).setIcon(tab_icon[2]));
+                } else {
+                    try {
+                        tabLayout.removeTabAt(2);
+                    } catch (Exception e) {
+                        //khi tab 3 ko tồn tại
+                    }
+                }
+                tabbar_adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
         tabbar_adapter = new Tabbar_Adapter(getSupportFragmentManager(), tabLayout.getTabCount());
         pager.setAdapter(tabbar_adapter);
+
         pager.setOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override

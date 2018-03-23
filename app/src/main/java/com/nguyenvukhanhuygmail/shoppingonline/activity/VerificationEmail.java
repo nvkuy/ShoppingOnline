@@ -112,7 +112,7 @@ public class VerificationEmail extends AppCompatActivity {
                         if (user.isEmailVerified()) {
 
                             setInfo();
-                            btn_done.doneLoadingAnimation(R.color.whire, BitmapFactory.decodeResource(getResources(), R.drawable.ic_done_white_48dp));
+                            btn_done.doneLoadingAnimation(R.color.white, BitmapFactory.decodeResource(getResources(), R.drawable.ic_done_white_48dp));
 
                             try {
                                 Thread.sleep(1500);
@@ -125,7 +125,7 @@ public class VerificationEmail extends AppCompatActivity {
                             finish();
                         } else {
                             setInfo();
-                            btn_done.doneLoadingAnimation(R.color.whire, BitmapFactory.decodeResource(getResources(), R.drawable.ic_close_white_48dp));
+                            btn_done.doneLoadingAnimation(R.color.white, BitmapFactory.decodeResource(getResources(), R.drawable.ic_close_white_48dp));
                             btn_done.setVisibility(View.GONE);
                             btn_done.revertAnimation();
                             btn_SendLink.setVisibility(View.VISIBLE);

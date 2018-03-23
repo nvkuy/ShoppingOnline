@@ -10,7 +10,7 @@
     <!-- Action bar -->
     <android.support.v7.widget.Toolbar
         android:background="@color/colorPrimary"
-        app:titleTextColor="@color/whire"
+        app:titleTextColor="@color/white"
         android:id="@+id/toolbar_product"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize">

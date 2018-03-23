@@ -16,9 +16,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
+import android.widget.Switch;
 import android.widget.Toast;
 
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
@@ -73,6 +75,8 @@ public class ProfileFragment extends android.support.v4.app.Fragment {
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+
+    Switch shipper_mode;
 
     ImageView user_icon, user_wall;
     CustomEditText edt_uName, edt_uPass, edt_uPhoneNum, edt_uLocation, edt_uMoney;
@@ -153,12 +157,22 @@ public class ProfileFragment extends android.support.v4.app.Fragment {
             setInfo();
             btnClick();
             drawableEdtClick();
+            OnOrOff_ShipperMode();
 
         } else {
             CheckConnection.notification(getActivity().getApplication(), "Vui lòng kiểm tra kết nối internet!");
             getActivity().finish();
         }
 
+    }
+
+    private void OnOrOff_ShipperMode() {
+        shipper_mode.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                mData.child("Users").child(uID).child("shipper_mode").setValue(shipper_mode.isChecked());
+            }
+        });
     }
 
     private void setInfo() {
@@ -219,6 +233,19 @@ public class ProfileFragment extends android.support.v4.app.Fragment {
                 }
                 DecimalFormat formater = new DecimalFormat("###,###,###");
                 edt_uMoney.setText("Tiền trong tài khoản: " + formater.format(money) + "đ");
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+        //display mode
+        mData.child("Users").child(uID).child("shipper_mode").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                shipper_mode.setChecked(Boolean.parseBoolean(dataSnapshot.getValue().toString()));
             }
 
             @Override
@@ -688,6 +715,8 @@ public class ProfileFragment extends android.support.v4.app.Fragment {
             uID = user.getUid();
             uEmail = user.getEmail();
         }
+
+        shipper_mode = (Switch) getActivity().findViewById(R.id.shipper_mode);
 
         user_icon = (ImageView) getActivity().findViewById(R.id.user_img);
         user_wall = (ImageView) getActivity().findViewById(R.id.user_wall);

@@ -171,7 +171,7 @@ public class LoginAndSignUp extends AppCompatActivity {
 
                     tv_status.setVisibility(View.VISIBLE);
                     tv_status.setText(R.string.resetPass2);
-                    btn_continue.doneLoadingAnimation(R.color.whire, BitmapFactory.decodeResource(getResources(), R.drawable.ic_close_white_48dp));
+                    btn_continue.doneLoadingAnimation(R.color.white, BitmapFactory.decodeResource(getResources(), R.drawable.ic_close_white_48dp));
                     btn_continue.revertAnimation();
 
                 } else {
@@ -210,11 +210,11 @@ public class LoginAndSignUp extends AppCompatActivity {
                             tv_status.setVisibility(View.VISIBLE);
                             tv_status.setText(getString(R.string.resetPass3) + email);
                             edt_email.setVisibility(View.GONE);
-                            btn_continue.doneLoadingAnimation(R.color.whire, BitmapFactory.decodeResource(getResources(), R.drawable.ic_done_white_48dp));
+                            btn_continue.doneLoadingAnimation(R.color.white, BitmapFactory.decodeResource(getResources(), R.drawable.ic_done_white_48dp));
                         } else {
 
                             tv_status.setText(String.valueOf(task.getException()));
-                            btn_continue.doneLoadingAnimation(R.color.whire, BitmapFactory.decodeResource(getResources(), R.drawable.ic_close_white_48dp));
+                            btn_continue.doneLoadingAnimation(R.color.white, BitmapFactory.decodeResource(getResources(), R.drawable.ic_close_white_48dp));
 
                         }
 

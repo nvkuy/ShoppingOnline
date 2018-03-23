@@ -477,6 +477,7 @@ public class UserProfile extends AppCompatActivity {
         profile_post.put("lat", lat);
         profile_post.put("lng", lng);
         profile_post.put("money", 0);
+        profile_post.put("shipper_mode", false);
 
         mData.child("Users").child(uID).setValue(profile_post, new DatabaseReference.CompletionListener() {
             @Override

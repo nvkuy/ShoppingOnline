@@ -8,7 +8,7 @@
 
     <android.support.v7.widget.Toolbar
         android:layout_alignParentStart="true"
-        app:titleTextColor="@color/whire"
+        app:titleTextColor="@color/white"
         android:background="@color/colorPrimary"
         app:title="Liên hệ"
         android:id="@+id/tb_contact"
@@ -26,6 +26,8 @@
     </FrameLayout>
 
     <ScrollView
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         android:layout_below="@+id/container_map"
         android:layout_width="match_parent"
         android:layout_height="match_parent">

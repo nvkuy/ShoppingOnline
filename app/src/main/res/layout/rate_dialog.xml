@@ -6,7 +6,7 @@
     android:layout_height="match_parent">
     
     <TextView
-        android:textColor="@color/whire"
+        android:textColor="@color/white"
         android:text="@string/rate"
         android:gravity="center"
         android:textSize="20sp"

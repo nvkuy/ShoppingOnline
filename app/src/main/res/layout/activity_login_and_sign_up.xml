@@ -31,26 +31,26 @@
 
             <EditText
                 android:inputType="textEmailAddress"
-                android:textColor="@color/whire"
+                android:textColor="@color/white"
                 android:background="@android:color/transparent"
                 android:drawableLeft="@drawable/ic_email_24dp"
                 android:id="@+id/edt_username"
                 android:drawablePadding="12dp"
                 android:padding="8dp"
                 android:hint="@string/user_email"
-                android:textColorHint="@color/whire"
+                android:textColorHint="@color/white"
                 android:ems="12"
                 android:maxLines="1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
             <View
-                android:background="@color/whire"
+                android:background="@color/white"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"/>
 
             <EditText
-                android:textColor="@color/whire"
+                android:textColor="@color/white"
                 android:drawableLeft="@drawable/ic_lock_white_24dp"
                 android:background="@android:color/transparent"
                 android:id="@+id/edt_password"
@@ -58,7 +58,7 @@
                 android:drawablePadding="12dp"
                 android:padding="8dp"
                 android:hint="@string/password"
-                android:textColorHint="@color/whire"
+                android:textColorHint="@color/white"
                 android:ems="12"
                 android:maxLines="1"
                 android:layout_width="match_parent"
@@ -72,7 +72,7 @@
                 android:layout_margin="5dp"
                 android:padding="8dp"
                 android:text="@string/remember_me"
-                android:textColor="@color/whire"
+                android:textColor="@color/white"
                 android:textSize="15dp" />
 
             <Button
@@ -99,7 +99,7 @@
                 android:layout_margin="10dp"
                 android:padding="16dp"
                 android:textAllCaps="true"
-                android:textColor="@color/whire"
+                android:textColor="@color/white"
                 android:text="@string/signup"
                 android:background="@drawable/background_signup"
                 android:layout_width="match_parent"
@@ -111,7 +111,7 @@
                 android:layout_marginBottom="16dp"
                 android:clickable="true"
                 android:padding="16dp"
-                android:textColor="@color/whire"
+                android:textColor="@color/white"
                 style="@style/TextAppearance.AppCompat.Body2"
                 android:text="@string/forgot_password"
                 android:layout_width="wrap_content"

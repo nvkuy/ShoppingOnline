@@ -10,7 +10,7 @@
         android:background="@color/colorPrimary"
         android:gravity="center"
         android:text="@string/LogToConti"
-        android:textColor="@color/whire"
+        android:textColor="@color/white"
         android:textSize="20sp" />
 
     <EditText
