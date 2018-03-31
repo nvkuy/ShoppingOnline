@@ -17,6 +17,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.FrameLayout;
@@ -88,11 +89,13 @@ public class MainActivity extends AppCompatActivity implements ShoppingFragment.
     ImageView user_icon, user_wall;
     MaterialSearchView searchView;
 
+    boolean isFirst = true;
+
     int id = 0;
     String Category_name = "";
     String Category_image = "";
 
-    String[] tab_name = {"Trang chính", "Người dùng", "Ship deal"};
+    String[] tab_name = {"Trang chính", "Hồ sơ", "Ship deal"};
     int[] tab_icon = {
             R.drawable.ic_home_white_24dp,
             R.drawable.ic_person_outline_white_24dp,
@@ -134,20 +137,34 @@ public class MainActivity extends AppCompatActivity implements ShoppingFragment.
 
         tabLayout.addTab(tabLayout.newTab().setText(tab_name[0]).setIcon(tab_icon[0]));
         tabLayout.addTab(tabLayout.newTab().setText(tab_name[1]).setIcon(tab_icon[1]));
+        tabLayout.addTab(tabLayout.newTab().setText(tab_name[2]).setIcon(tab_icon[2]));
 
         mData.child("Users").child(user.getUid()).child("shipper_mode").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (Boolean.parseBoolean(dataSnapshot.getValue().toString())) {
-                    tabLayout.addTab(tabLayout.newTab().setText(tab_name[2]).setIcon(tab_icon[2]));
+                    ((ViewGroup) tabLayout.getChildAt(0)).getChildAt(2).setVisibility(View.VISIBLE);
+//                    if (tabLayout.getTabCount() < 3) {
+//                        tabLayout.addTab(tabLayout.newTab().setText(tab_name[2]).setIcon(tab_icon[2]));
+//                        tabbar_adapter.notifyDataSetChanged();
+//                    }
+//                    tabLayout.addTab(tabLayout.newTab().setText(tab_name[2]).setIcon(tab_icon[2]));
                 } else {
                     try {
-                        tabLayout.removeTabAt(2);
+//                        tabLayout.removeTabAt(2);
+//                        tabbar_adapter.notifyDataSetChanged();
+                        ((ViewGroup) tabLayout.getChildAt(0)).getChildAt(2).setVisibility(View.GONE);
                     } catch (Exception e) {
                         //khi tab 3 ko tồn tại
                     }
                 }
-                tabbar_adapter.notifyDataSetChanged();
+
+//                if (!isFirst) {
+//                    recreate();
+//                }
+//
+//                isFirst = false;
+
             }
 
             @Override
@@ -162,6 +179,7 @@ public class MainActivity extends AppCompatActivity implements ShoppingFragment.
         pager.setAdapter(tabbar_adapter);
 
         pager.setOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+
         tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
@@ -259,7 +277,7 @@ public class MainActivity extends AppCompatActivity implements ShoppingFragment.
         i.putExtra("title", arr_category.get(pos).getCategoty_name());
         i.putExtra("product_id", arr_category.get(pos).getId());
         startActivity(i);
-        overridePendingTransition(slide_in, slide_out);
+//        overridePendingTransition(slide_in, slide_out);
     }
 
     private void onNavItemClick() {

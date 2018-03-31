@@ -83,6 +83,10 @@ public class MainProductAdapter extends BaseAdapter {
         viewHolder.txt_mainProductDes.setEllipsize(TextUtils.TruncateAt.END);
         viewHolder.txt_mainProductDes.setText(product.getProduct_description());
 
+//        Animation
+//        Animation mAnim = AnimationUtils.loadAnimation(context, R.anim.list_item_anim);
+//        view.startAnimation(mAnim);
+
         return view;
     }
 

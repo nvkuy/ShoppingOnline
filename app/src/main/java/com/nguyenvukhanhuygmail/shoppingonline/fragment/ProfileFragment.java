@@ -680,6 +680,7 @@ public class ProfileFragment extends android.support.v4.app.Fragment {
 
         Map profile_post = new HashMap();
         profile_post.put("user_name", uName);
+        profile_post.put("shipper_mode", shipper_mode.isChecked());
         profile_post.put("phone_number", uPhone);
         profile_post.put("address", uLocation);
         profile_post.put("lat", lat);

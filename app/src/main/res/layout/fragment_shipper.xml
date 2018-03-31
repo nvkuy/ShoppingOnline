@@ -4,11 +4,10 @@
     android:layout_height="match_parent"
     tools:context="com.nguyenvukhanhuygmail.shoppingonline.fragment.ShipperFragment">
 
-    <fragment
-        class="com.google.android.gms.maps.MapFragment"
-        android:id="@+id/contact_map"
-        android:layout_margin="7dp"
+    <!-- TODO: Update blank fragment layout -->
+    <TextView
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:text="@string/hello_blank_fragment" />
 
 </FrameLayout>

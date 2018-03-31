@@ -8,6 +8,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.animation.AnimationUtils;
+import android.view.animation.LayoutAnimationController;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -42,6 +44,8 @@ public class ProductActivity extends AppCompatActivity {
     boolean isLoading = false;
     boolean isLimit = false;
     mHandler handler;
+
+    LayoutAnimationController controller;
 
     ArrayList<Product> arr_product;
     MainProductAdapter mainProductAdapter;
@@ -165,8 +169,6 @@ public class ProductActivity extends AppCompatActivity {
 
                         }
 
-                        mainProductAdapter = new MainProductAdapter(getApplicationContext(), arr_product);
-                        lv_product.setAdapter(mainProductAdapter);
                         mainProductAdapter.notifyDataSetChanged();
 
                     } catch (JSONException e) {
@@ -229,6 +231,14 @@ public class ProductActivity extends AppCompatActivity {
 
         toolbar_product = (Toolbar) findViewById(R.id.toolbar_product);
         lv_product = (ListView) findViewById(R.id.lv_product);
+
+        mainProductAdapter = new MainProductAdapter(getApplicationContext(), arr_product);
+        lv_product.setAdapter(mainProductAdapter);
+
+        controller = AnimationUtils.loadLayoutAnimation(getApplicationContext(), R.anim.list_item_anim_controller);
+        lv_product.setLayoutAnimation(controller);
+        lv_product.scheduleLayoutAnimation();
+
 
         LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
         footer = inflater.inflate(R.layout.progressbar, null);

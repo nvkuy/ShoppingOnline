@@ -65,8 +65,9 @@ public class ShoppingFragment extends android.support.v4.app.Fragment {
     ViewFlipper viewFlipper;
     RecyclerView rv_popular, rv_news, rv_rate;
 
-    String links = "";
-    String[] adv_links = new String[5];
+    String link;
+    boolean isFirst = true;
+    //String[] adv_links = new String[5];
 
     int product_id = 0;
     String product_name = "";
@@ -106,6 +107,21 @@ public class ShoppingFragment extends android.support.v4.app.Fragment {
     }
 
     @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+//        if (isVisibleToUser) {
+//            if (isFirst) {
+//                isFirst = false;
+//            } else {
+//                FragmentTransaction ft = getFragmentManager().beginTransaction();
+//                ft.detach(ShoppingFragment.this).attach(ShoppingFragment.this).commit();
+////                getActivity().recreate();
+//            }
+//        }
+
+    }
+
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
@@ -120,7 +136,6 @@ public class ShoppingFragment extends android.support.v4.app.Fragment {
         super.onActivityCreated(savedInstanceState);
 
         new ProgressFrag().execute();
-
         onRV_ItemClick();
 
     }
@@ -158,24 +173,7 @@ public class ShoppingFragment extends android.support.v4.app.Fragment {
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
 
-            /*
-                * code = 1: new_product
-                * code = 2: rate_product
-                * else: popular_product
-                * */
-
-            NewProductAdapter = new ProductAdapter(getActivity().getApplicationContext(), arr_NewProduct, 1);
-            PopularProductAdapter = new ProductAdapter(getActivity().getApplicationContext(), arr_PopularProduct, -1);
-            RateProductAdapter = new ProductAdapter(getActivity().getApplicationContext(), arr_RateProduct, 2);
-
-            NewProductAdapter.notifyDataSetChanged();
-            PopularProductAdapter.notifyDataSetChanged();
-            RateProductAdapter.notifyDataSetChanged();
-
-            rv_news.setAdapter(NewProductAdapter);
-            rv_popular.setAdapter(PopularProductAdapter);
-            rv_rate.setAdapter(RateProductAdapter);
-
+            displayUI(arr_NewProduct, arr_PopularProduct, arr_RateProduct);
             progressDialog.dismiss();
 
 //            if (rv_news.getChildCount() > 0 || rv_popular.getChildCount() > 0 || rv_rate.getChildCount() > 0) {
@@ -186,6 +184,26 @@ public class ShoppingFragment extends android.support.v4.app.Fragment {
 
         }
 
+    }
+
+    public void displayUI(ArrayList<Product> arr_NewProduct, ArrayList<Product> arr_PopularProduct, ArrayList<Product> arr_RateProduct) {
+        /*
+                * code = 1: new_product
+                * code = 2: rate_product
+                * else: popular_product
+                * */
+
+        NewProductAdapter = new ProductAdapter(getActivity().getApplicationContext(), arr_NewProduct, 1);
+        PopularProductAdapter = new ProductAdapter(getActivity().getApplicationContext(), arr_PopularProduct, -1);
+        RateProductAdapter = new ProductAdapter(getActivity().getApplicationContext(), arr_RateProduct, 2);
+
+//        NewProductAdapter.notifyDataSetChanged();
+//        PopularProductAdapter.notifyDataSetChanged();
+//        RateProductAdapter.notifyDataSetChanged();
+
+        rv_news.setAdapter(NewProductAdapter);
+        rv_popular.setAdapter(PopularProductAdapter);
+        rv_rate.setAdapter(RateProductAdapter);
     }
 
     @Override
@@ -282,10 +300,9 @@ public class ShoppingFragment extends android.support.v4.app.Fragment {
                     for (int i = 0; i < response.length(); i++) {
                         try {
                             JSONObject jsonObject = response.getJSONObject(i);
-                            links = jsonObject.getString("link_advs");
-                            adv_links[i] = links;
+                            link = jsonObject.getString("link_advs");
                             ImageView imgView = new ImageView(getActivity().getApplicationContext());
-                            Picasso.with(getActivity().getApplicationContext()).load(adv_links[i]).into(imgView);
+                            Picasso.with(getActivity().getApplicationContext()).load(link).into(imgView);
                             imgView.setScaleType(ImageView.ScaleType.FIT_XY);
                             viewFlipper.addView(imgView);
                         } catch (JSONException e) {
