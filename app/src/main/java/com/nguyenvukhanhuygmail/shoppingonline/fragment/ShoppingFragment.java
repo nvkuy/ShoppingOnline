@@ -160,11 +160,11 @@ public class ShoppingFragment extends android.support.v4.app.Fragment {
             showAdvs();
 
             //show new product
-            showProduct(Server.new_product_path, arr_NewProduct);
+            getProduct(Server.new_product_path, arr_NewProduct);
             //show popular product
-            showProduct(Server.popular_product_path, arr_PopularProduct);
+            getProduct(Server.popular_product_path, arr_PopularProduct);
             //show rate product
-            showProduct(Server.rate_product_path, arr_RateProduct);
+            getProduct(Server.rate_product_path, arr_RateProduct);
 
             return null;
         }
@@ -226,7 +226,7 @@ public class ShoppingFragment extends android.support.v4.app.Fragment {
 //        getActivity().overridePendingTransition(Slide_in, Slide_out);
     }
 
-    private void showProduct(final String url, final ArrayList<Product> arrProduct) {
+    private void getProduct(final String url, final ArrayList<Product> arrProduct) {
 
         RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(url, new Response.Listener<JSONArray>() {
