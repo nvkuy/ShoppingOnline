@@ -1,5 +1,6 @@
 package com.nguyenvukhanhuygmail.shoppingonline.activity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -10,6 +11,7 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -88,8 +90,6 @@ public class MainActivity extends AppCompatActivity implements ShoppingFragment.
     ImageView user_icon, user_wall;
     MaterialSearchView searchView;
 
-    boolean isFirst = true;
-
     int id = 0;
     String Category_name = "";
     String Category_image = "";
@@ -132,37 +132,54 @@ public class MainActivity extends AppCompatActivity implements ShoppingFragment.
 
     }
 
+    private void showDialogRestartApp(String charge) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Đã có sự thay đổi về " + charge + ".");
+        builder.setMessage("Khởi động lại và cập nhật?");
+        builder.setCancelable(false);
+        builder.setPositiveButton("Khởi động ngay!", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                Intent intent = getBaseContext().getPackageManager()
+                        .getLaunchIntentForPackage( getBaseContext().getPackageName() );
+                if (intent != null) {
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                }
+                startActivity(intent);
+            }
+        });
+        builder.setNegativeButton("Để sau!", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.dismiss();
+            }
+        });
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+    }
+
     private void display_TabBar() {
 
         tabLayout.addTab(tabLayout.newTab().setText(tab_name[0]).setIcon(tab_icon[0]));
         tabLayout.addTab(tabLayout.newTab().setText(tab_name[1]).setIcon(tab_icon[1]));
 //        tabLayout.addTab(tabLayout.newTab().setText(tab_name[2]).setIcon(tab_icon[2]));
 
+
         mData.child("Users").child(user.getUid()).child("shipper_mode").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-//                if (Boolean.parseBoolean(dataSnapshot.getValue().toString())) {
-//                    ((ViewGroup) tabLayout.getChildAt(0)).getChildAt(2).setVisibility(View.VISIBLE);
-//                    if (tabLayout.getTabCount() < 3) {
-//                        tabLayout.addTab(tabLayout.newTab().setText(tab_name[2]).setIcon(tab_icon[2]));
-//                        tabbar_adapter.notifyDataSetChanged();
-//                    }
-////                    tabLayout.addTab(tabLayout.newTab().setText(tab_name[2]).setIcon(tab_icon[2]));
-//                } else {
-//                    try {
-//                        tabLayout.removeTabAt(2);
-//                        tabbar_adapter.notifyDataSetChanged();
-////                        ((ViewGroup) tabLayout.getChildAt(0)).getChildAt(2).setVisibility(View.GONE);
-//                    } catch (Exception e) {
-//                        //khi tab 3 ko tồn tại
-//                    }
-//                }
-
-//                if (!isFirst) {
-//                    recreate();
-//                }
-//
-//                isFirst = false;
+                if (Boolean.parseBoolean(dataSnapshot.getValue().toString())) {
+                    tabLayout.addTab(tabLayout.newTab().setText(tab_name[2]).setIcon(tab_icon[2]));
+                    tabbar_adapter.notifyDataSetChanged();
+                } else {
+                    try {
+                        tabLayout.removeTabAt(2);
+                        tabbar_adapter.notifyDataSetChanged();
+                    } catch (Exception e) {
+                        //khi tab 3 ko tồn tại
+                    }
+                }
 
             }
 
@@ -173,7 +190,6 @@ public class MainActivity extends AppCompatActivity implements ShoppingFragment.
         });
 
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
-
         tabbar_adapter = new Tabbar_Adapter(getSupportFragmentManager(), tabLayout.getTabCount());
         pager.setAdapter(tabbar_adapter);
 

@@ -59,6 +59,7 @@ public class SearchProductFragment extends android.support.v4.app.Fragment {
     double rate_point = 0;
     int product_left = 0;
     int category_id = 0;
+    int date = 0;
 
     final int Slide_in = R.anim.slide_in;
     final int Slide_out = R.anim.slide_out;
@@ -198,8 +199,9 @@ public class SearchProductFragment extends android.support.v4.app.Fragment {
                             rate_point = jsonObject.getDouble("rate_point");
                             product_left = jsonObject.getInt("product_left");
                             category_id = jsonObject.getInt("category_id");
+                            date = jsonObject.getInt("date");
 
-                            arrAllProduct.add(new Product(product_id, product_name, product_price, product_image, product_description, orders, rate_point, product_left, category_id));
+                            arrAllProduct.add(new Product(product_id, product_name, product_price, product_image, product_description, orders, rate_point, product_left, category_id, date));
 
                         } catch (JSONException e) {
                             e.printStackTrace();

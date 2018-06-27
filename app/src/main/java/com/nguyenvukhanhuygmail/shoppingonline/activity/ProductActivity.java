@@ -72,6 +72,11 @@ public class ProductActivity extends AppCompatActivity {
             finish();
         }
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
 
     }
 
@@ -161,8 +166,8 @@ public class ProductActivity extends AppCompatActivity {
                                     jsonArray.getJSONObject(i).getInt("orders"),
                                     jsonArray.getJSONObject(i).getDouble("rate_point"),
                                     jsonArray.getJSONObject(i).getInt("product_left"),
-                                    jsonArray.getJSONObject(i).getInt("category_id")
-
+                                    jsonArray.getJSONObject(i).getInt("category_id"),
+                                    jsonArray.getJSONObject(i).getInt("date")
                             ));
 
 //                            Log.d("json_arr", String.valueOf(arr_product.size()));

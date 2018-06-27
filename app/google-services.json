@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "359295282056",
+    "firebase_url": "https://shopping-online-6c182.firebaseio.com",
+    "project_id": "shopping-online-6c182",
+    "storage_bucket": "shopping-online-6c182.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:359295282056:android:c2c5f17bbee0ee3e",
+        "android_client_info": {
+          "package_name": "com.nguyenvukhanhuygmail.shoppingonline"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "359295282056-dc1utmo567au7ikek5p1tskngcdnm2sv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBqaBgdqu0jAfpQOojco1uJutkKwMJyWwI"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

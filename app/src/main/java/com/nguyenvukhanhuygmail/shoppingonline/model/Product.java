@@ -17,8 +17,9 @@ public class Product implements Serializable {
     private double rate_point;
     private int product_left;
     private int category_id;
+    private int date;
 
-    public Product(int product_id, String product_name, int product_price, String product_image, String product_description, int orders, double rate_point, int product_left, int category_id) {
+    public Product(int product_id, String product_name, int product_price, String product_image, String product_description, int orders, double rate_point, int product_left, int category_id, int date) {
         this.product_id = product_id;
         this.product_name = product_name;
         this.product_price = product_price;
@@ -28,6 +29,7 @@ public class Product implements Serializable {
         this.rate_point = rate_point;
         this.product_left = product_left;
         this.category_id = category_id;
+        this.date = date;
     }
 
     public int getProduct_id() {
@@ -108,6 +110,15 @@ public class Product implements Serializable {
 
     public Product setCategory_id(int category_id) {
         this.category_id = category_id;
+        return this;
+    }
+
+    public int getDate() {
+        return date;
+    }
+
+    public Product setDate(int date) {
+        this.date = date;
         return this;
     }
 }

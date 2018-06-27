@@ -78,6 +78,7 @@ public class ShoppingFragment extends android.support.v4.app.Fragment {
     double rate_point = 0;
     int product_left = 0;
     int category_id = 0;
+    int date = 0;
 
     ArrayList<Product> arr_NewProduct, arr_PopularProduct, arr_RateProduct;
     ProductAdapter NewProductAdapter, PopularProductAdapter, RateProductAdapter;
@@ -134,9 +135,6 @@ public class ShoppingFragment extends android.support.v4.app.Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
-        new ProgressFrag().execute();
-        onRV_ItemClick();
 
     }
 
@@ -210,6 +208,8 @@ public class ShoppingFragment extends android.support.v4.app.Fragment {
     public void onResume() {
         super.onResume();
         // new ProgressFrag().execute();
+        new ProgressFrag().execute();
+        onRV_ItemClick();
 
     }
 
@@ -248,8 +248,9 @@ public class ShoppingFragment extends android.support.v4.app.Fragment {
                             rate_point = jsonObject.getDouble("rate_point");
                             product_left = jsonObject.getInt("product_left");
                             category_id = jsonObject.getInt("category_id");
+                            date = jsonObject.getInt("date");
 
-                            arrProduct.add(i, new Product(product_id, product_name, product_price, product_image, product_description, orders, rate_point, product_left, category_id));
+                            arrProduct.add(i, new Product(product_id, product_name, product_price, product_image, product_description, orders, rate_point, product_left, category_id, date));
 
 //                            if (code == 1) {
 //
