@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -66,7 +67,7 @@ public class ShoppingFragment extends android.support.v4.app.Fragment {
     RecyclerView rv_popular, rv_news, rv_rate;
 
     String link;
-    boolean isFirst = true;
+//    boolean isFirst = true;
     //String[] adv_links = new String[5];
 
     int product_id = 0;
@@ -84,6 +85,13 @@ public class ShoppingFragment extends android.support.v4.app.Fragment {
     ProductAdapter NewProductAdapter, PopularProductAdapter, RateProductAdapter;
 
     private OnFragmentInteractionListener mListener;
+
+//    private Socket mSocket;
+//    {
+//        try {
+//            mSocket = IO.socket("http://" + Server.mIP + ":3000/");
+//        } catch (URISyntaxException e) {}
+//    }
 
     public ShoppingFragment() {
         // Required empty public constructor
@@ -105,6 +113,11 @@ public class ShoppingFragment extends android.support.v4.app.Fragment {
         args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
     }
 
     @Override
@@ -164,6 +177,16 @@ public class ShoppingFragment extends android.support.v4.app.Fragment {
             //show rate product
             getProduct(Server.rate_product_path, arr_RateProduct);
 
+            /*
+                * code = 1: new_product
+                * code = 2: rate_product
+                * else: popular_product
+                * */
+
+            NewProductAdapter = new ProductAdapter(getActivity().getApplicationContext(), arr_NewProduct, 1);
+            PopularProductAdapter = new ProductAdapter(getActivity().getApplicationContext(), arr_PopularProduct, -1);
+            RateProductAdapter = new ProductAdapter(getActivity().getApplicationContext(), arr_RateProduct, 2);
+
             return null;
         }
 
@@ -171,7 +194,7 @@ public class ShoppingFragment extends android.support.v4.app.Fragment {
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
 
-            displayUI(arr_NewProduct, arr_PopularProduct, arr_RateProduct);
+            displayUI();
             progressDialog.dismiss();
 
 //            if (rv_news.getChildCount() > 0 || rv_popular.getChildCount() > 0 || rv_rate.getChildCount() > 0) {
@@ -184,16 +207,7 @@ public class ShoppingFragment extends android.support.v4.app.Fragment {
 
     }
 
-    public void displayUI(ArrayList<Product> arr_NewProduct, ArrayList<Product> arr_PopularProduct, ArrayList<Product> arr_RateProduct) {
-        /*
-                * code = 1: new_product
-                * code = 2: rate_product
-                * else: popular_product
-                * */
-
-        NewProductAdapter = new ProductAdapter(getActivity().getApplicationContext(), arr_NewProduct, 1);
-        PopularProductAdapter = new ProductAdapter(getActivity().getApplicationContext(), arr_PopularProduct, -1);
-        RateProductAdapter = new ProductAdapter(getActivity().getApplicationContext(), arr_RateProduct, 2);
+    public void displayUI() {
 
 //        NewProductAdapter.notifyDataSetChanged();
 //        PopularProductAdapter.notifyDataSetChanged();
@@ -207,7 +221,6 @@ public class ShoppingFragment extends android.support.v4.app.Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        // new ProgressFrag().execute();
         new ProgressFrag().execute();
         onRV_ItemClick();
 
@@ -292,6 +305,37 @@ public class ShoppingFragment extends android.support.v4.app.Fragment {
 
     }
 
+//    private void getProduct(String event, final ArrayList<Product> arrProduct) {
+//
+//        mSocket.on(event, new Emitter.Listener() {
+//            @Override
+//            public void call(Object... args) {
+//
+//                for (int i = 0; i < args.length; i++) {
+//                    JSONObject jsonObject = (JSONObject) args[i];
+//
+//                    try {
+//                        product_id = jsonObject.getInt("product_id");
+//                        product_name = jsonObject.getString("product_name");
+//                        product_price = jsonObject.getInt("product_price");
+//                        product_image = jsonObject.getString("product_image");
+//                        product_description = jsonObject.getString("product_description");
+//                        orders = jsonObject.getInt("orders");
+//                        rate_point = jsonObject.getDouble("rate_point");
+//                        product_left = jsonObject.getInt("product_left");
+//                        category_id = jsonObject.getInt("category_id");
+//                        date = jsonObject.getInt("date");
+//                    } catch (JSONException e) {
+//                        e.printStackTrace();
+//                    }
+//
+//                    arrProduct.add(i, new Product(product_id, product_name, product_price, product_image, product_description, orders, rate_point, product_left, category_id, date));
+//                }
+//            }
+//        });
+//
+//    }
+
     private void showAdvs() {
         RequestQueue requesQuese = Volley.newRequestQueue(getActivity().getApplicationContext());
         JsonArrayRequest jsArrRequest = new JsonArrayRequest(Server.adv_path, new Response.Listener<JSONArray>() {
@@ -315,7 +359,7 @@ public class ShoppingFragment extends android.support.v4.app.Fragment {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getActivity().getApplication(), String.valueOf(error), Toast.LENGTH_LONG).show();
+                Log.d("Err", error.getMessage());
             }
         });
 
@@ -366,6 +410,16 @@ public class ShoppingFragment extends android.support.v4.app.Fragment {
 
         viewFlipper.setInAnimation(anim_in);
         viewFlipper.setOutAnimation(anim_out);
+
+//        mSocket.connect();
+
+//        mSocket.on("test", new Emitter.Listener() {
+//            @Override
+//            public void call(Object... args) {
+//                Log.d("test", String.valueOf(args));
+//            }
+//        });
+
     }
 
     @Override

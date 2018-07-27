@@ -14,13 +14,11 @@ import com.nguyenvukhanhuygmail.shoppingonline.fragment.ShoppingFragment;
 
 public class Tabbar_Adapter  extends FragmentStatePagerAdapter{
 
-    private int mNumOfTabs;
+    private int mNumOfTabs = 2;
 
-    public Tabbar_Adapter(FragmentManager fm, int NumOfTabs) {
+    public Tabbar_Adapter(FragmentManager fm) {
 
         super(fm);
-        this.mNumOfTabs = NumOfTabs;
-
     }
 
     @Override
@@ -35,6 +33,11 @@ public class Tabbar_Adapter  extends FragmentStatePagerAdapter{
             default:
                 return null;
         }
+    }
+
+    public void updateNumOfTabs(int NumOfTabs) {
+        mNumOfTabs = NumOfTabs;
+        notifyDataSetChanged();
     }
 
     @Override
